@@ -1,0 +1,145 @@
+Corollary “Identity of +”: 0 + a = a
+Proof:
+  By “Definition of + for 0”
+  
+Corollary “Identity of ·”: 1 · a = a
+Proof:
+  By “Left-identity of ·”
+
+Corollary “Zero of ·”: 0 · a = 0
+Proof:
+  By “Definition of · for 0”
+
+Theorem “Successor is non-decreasing”: a ≤ suc a
+Proof:
+  By induction on `a : ℕ`:
+    Base case `0 ≤ suc 0`:
+        0 ≤ suc 0 — This is “Zero is least element”
+    Induction step `suc a ≤ suc suc a`:
+        suc a ≤ suc suc a 
+      =⟨ “Isotonicity of successor”⟩
+        a ≤ suc a — This is Induction hypothesis 
+
+Theorem “Successor is increasing”: a < suc a
+Proof:
+  By “Less than successor”
+
+Theorem “Predecessor”:  pred n = n - 1
+Proof:
+  By induction on `n : ℕ`:
+    Base case `pred 0 = 0 - 1`:
+        pred 0 
+      = ⟨ “Predecessor of zero”⟩
+        0
+      = ⟨ “Subtraction from zero”⟩
+        0 - 1
+    Induction step `pred (suc n) = suc n - 1`:
+         pred (suc n) 
+       =⟨ “Predecessor of successor” ⟩
+         n
+       =⟨ “Right-identity of subtraction” ⟩
+         n - 0
+       =⟨ “Subtraction of successor from successor” ⟩
+         suc n - suc 0
+       =⟨ Fact `suc 0 = 1` ⟩
+         suc n - 1
+
+Theorem “Predecessor is non-increasing”: pred n ≤ n
+Proof:
+  By induction on `n : ℕ`:
+    Base case `pred 0 ≤ 0`:
+        pred 0 ≤ 0
+      =⟨ “Predecessor of zero” ⟩
+        0 ≤ 0 — This is “Zero is least element”  
+    Induction step:
+        pred (suc n) ≤ suc n
+      =⟨ “Predecessor of successor” ⟩
+        n ≤ suc n — This is “Successor is non-decreasing”
+
+Theorem “Predecessor of non-zero”:
+    n ≠ 0  ≡  suc (pred n) = n
+Proof:
+  By induction on `n : ℕ`:
+    Base case `0 ≠ 0  ≡  suc (pred 0) = 0`:
+        suc (pred 0) = 0
+      =⟨ “Predecessor of zero” ⟩
+        suc 0 = 0
+      =⟨ “Zero is not successor” ⟩
+        false
+      =⟨ Fact `0 ≠ 0 ≡ false` ⟩
+        0 ≠ 0    
+    Induction step `suc n ≠ 0  ≡  suc (pred (suc n)) = suc n`:
+        suc n ≠ 0  ≡  suc (pred (suc n)) = suc n
+      =⟨ “Zero is not successor”⟩
+        true ≡  suc (pred (suc n)) = suc n
+      =⟨ “Identity of ≡”⟩
+        suc (pred (suc n)) = suc n
+      =⟨ “Predecessor of successor”⟩
+        suc n = suc n — This is “Reflexivity of =”
+
+Theorem “Monotonicity of predecessor”: a ≤ b ⇒ pred a ≤ pred b
+Proof:
+  By induction on `a : ℕ`:
+    Base case `0 ≤ b ⇒ pred 0 ≤ pred b`:
+        0 ≤ b ⇒ pred 0 ≤ pred b
+      =⟨ “Predecessor of zero” ⟩
+        0 ≤ b ⇒ 0 ≤ pred b
+      =⟨ “Zero is least element” ⟩
+        true ⇒ true — This is “Reflexivity of ⇒”
+    Induction step `suc a ≤ b ⇒ pred (suc a) ≤ pred b`:
+      By induction on `b : ℕ`:
+        Base case `suc a ≤ 0 ⇒ pred (suc a) ≤ pred 0`:
+            suc a ≤ 0 ⇒ pred (suc a) ≤ pred 0
+          =⟨ “Zero is unique least element” ⟩
+            suc a = 0 ⇒ pred (suc a) ≤ pred 0
+          =⟨ “Zero is not successor” ⟩
+            false ⇒ pred (suc a) ≤ pred 0
+          =⟨ “ex falso quodlibet” ⟩
+            true
+        Induction step `suc a ≤ suc b ⇒ pred (suc a) ≤ pred (suc b)`:
+            suc a ≤ suc b ⇒ pred (suc a) ≤ pred (suc b)
+          =⟨ “Isotonicity of successor”⟩
+            a ≤ b ⇒ pred (suc a) ≤ pred (suc b)
+          =⟨ “Predecessor of successor”⟩
+            a ≤ b ⇒ a ≤ b — This is “Reflexivity of ⇒”
+ 
+ 
+Theorem “Non-<-monotonicity of predecessor”:
+    ¬ (a < b ⇒ pred a < pred b)[a, b ≔ 0, 1]
+Proof:
+    ¬ (a < b ⇒ pred a < pred b)[a, b ≔ 0, 1]
+  =⟨ Substitution ⟩
+    ¬ (0 < 1 ⇒ pred 0 < pred 1)
+  =⟨ “Predecessor” ⟩
+    ¬ (0 < 1 ⇒ 0 - 1 < 1 - 1)
+  =⟨ “Self-cancellation of subtraction” ⟩
+    ¬ (0 < 1 ⇒ 0 - 1 < 0)
+  =⟨ “Subtraction from zero” ⟩
+    ¬ (0 < 1 ⇒ 0 < 0)
+  =⟨ “Nothing is less than zero”  ⟩
+    ¬ (0 < 1 ⇒ false)
+  =⟨ Fact `1 = suc 0`  ⟩
+    ¬ (0 < suc 0 ⇒ false)
+  =⟨ “Zero is less than successor”  ⟩
+    ¬ (true ⇒ false)
+  =⟨ “Left-identity of ⇒” ⟩
+    ¬ false
+  =⟨ “Negation of `false`”⟩ 
+    true
+
+Theorem “<-Monotonicity of predecessor”:
+    suc a < b ⇒ pred (suc a) < pred b
+Proof:
+  By induction on `b : ℕ`:
+    Base case `suc a < 0 ⇒ pred (suc a) < pred 0`:
+        suc a < 0
+      =⟨ “Nothing is less than zero” ⟩
+        false
+      ⇒⟨ “ex falso quodlibet”⟩
+        pred (suc a) < pred 0 
+    Induction step `suc a < suc b ⇒ pred (suc a) < pred (suc b)`:
+        suc a < suc b ⇒ pred (suc a) < pred (suc b)
+      =⟨ “<-Isotonicity of successor”⟩
+        a < b ⇒ pred (suc a) < pred (suc b)
+      =⟨ “Predecessor of successor”⟩
+        a < b ⇒ a < b — This is “Reflexivity of ⇒”

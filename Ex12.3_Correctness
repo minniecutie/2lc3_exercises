@@ -1,0 +1,217 @@
+Precedence 100 for: _‥_
+Non-associating: _‥_
+Declaration: _‥_ : ℕ → ℕ → set ℕ
+
+Axiom “Definition of ‥”:  m ‥ n  =  { i ❙ m ≤ i ≤ n }
+
+Theorem “Membership in ‥”:  i ∈ m ‥ n  ≡  m ≤ i ≤ n
+Proof:
+    i ∈ m ‥ n
+  =⟨ “Definition of ‥” ⟩
+    i ∈ { a ❙ m ≤ a ≤ n }
+  =⟨ “Simple membership” ⟩
+    (m ≤ a ≤ n)[a ≔ i]
+  =⟨ Substitution ⟩   
+     m ≤ i ≤ n
+
+Theorem “Membership in 0 ‥”:  i ∈ 0 ‥ n  ≡  i ≤ n
+Proof:
+    i ∈ 0 ‥ n
+  =⟨ “Membership in ‥” ⟩
+    0 ≤ i ≤ n
+  =⟨ “Zero is least element”, “Identity of ∧” ⟩
+    i ≤ n  
+
+Precedence 97 for: _⇴_
+Associating to the right: _⇴_
+Declaration: _⇴_ : set A → set B → set (A ↔ B)
+
+Axiom “Definition of ⇴”:
+  X ⇴ Y  =  { f ❙ f ˘ ⨾ f ⊆ id Y  ∧  Dom f = X }
+
+The type of length-(k + 1) arrays with element type A can then be modeled as the following set:
+    (0 ‥ k) ⇴ ⌞ A ⌟
+Array lookup a[i] then is just partial function application, as seen in A6.2:
+   a @ i
+Array update a[i] := E can be formalised via relation override _⊕_ (seen in Ex9,4):
+    a := a ⊕ { ⟨ i , E ⟩ }
+There is no easier way to reason about array manipulations in Hoare logic!
+
+
+Using conventional array notation, the program in the following theorem would look as follows:
+    z := xs[i] ⍮
+    xs[i] := xs[j] ⍮
+    xs[j] := z
+To prove this correctness theorem, you may need to prove additional properties beyond what is provided in Ref9.2 about ⊕ etc.:
+
+
+Lemma “Dom of singleton relation”: Dom { ⟨ i, j ⟩ } = { i }
+Proof:
+  Using “Set extensionality”:
+    For any `x`:
+        x ∈ Dom { ⟨ i, j ⟩ }
+      =⟨ “Membership in `Dom`” ⟩
+        ∃ y • x ⦗ { ⟨ i, j ⟩ } ⦘ y
+      =⟨ “Singleton relation” ⟩
+        ∃ y • x = i ∧ j = y
+      =⟨ “Trading for ∃”, “One-point rule for ∃” ⟩
+        (x = i)[y ≔ j] 
+      =⟨ Substitution ⟩
+         x = i  
+      =⟨ “Singleton set membership” ⟩ 
+        x ∈ { i }
+
+Lemma “Idempotency of ⊕”: R ⊕ R = R
+Proof:
+  Using “Relation extensionality”:
+    For any `x`, `y`:
+        x ⦗ R ⊕ R ⦘ y
+      =⟨ “Relation override” ⟩
+        (¬ (x ∈ Dom R) ∧ x ⦗ R ⦘ y) ∨ x ⦗ R ⦘ y
+      =⟨ “Absorption” (3.43b) ⟩
+        x ⦗ R ⦘ y
+
+Lemma “Repeated ⊕”: (R ⊕ S) ⊕ S = R ⊕ S
+Proof:
+    (R ⊕ S) ⊕ S
+  =⟨ “Associativity of ⊕” ⟩
+    R ⊕ (S ⊕ S)
+  =⟨ “Idempotency of ⊕” ⟩
+    R ⊕ S
+
+Theorem “Singletons ⊕”:
+    ¬ (i = j)  ⇒  { ⟨ i, x ⟩ } ⊕ { ⟨ j, y ⟩ }
+                = { ⟨ i , x ⟩, ⟨ j , y ⟩ }
+Proof:
+  Assuming `¬ (i = j)`:
+    Side proof for (1) `Dom { ⟨ j, y ⟩ } ⩤ { ⟨ i, x ⟩ } = { ⟨ i, x ⟩ }`:
+      Using “Relation extensionality”:
+        For any `a`, `b`:
+            a ⦗ Dom { ⟨ j, y ⟩ } ⩤ { ⟨ i, x ⟩ } ⦘ b
+          ≡⟨ “Dom of singleton relation” ⟩
+            a ⦗ { j } ⩤ { ⟨ i, x ⟩ } ⦘ b
+          ≡ ⟨ “Relationship via ⩤” ⟩ 
+            ¬ (a ∈ { j }) ∧ a ⦗ { ⟨ i, x ⟩ } ⦘ b
+          ≡⟨ “Singleton set membership”, “Singleton relation” ⟩
+            ¬ (a = j) ∧ a = i ∧ x = b
+          ≡⟨ Substitution ⟩
+            (¬ (a = j))[a ≔ a] ∧ a = i ∧ x = b
+          ≡⟨ “Replacement”, substitution ⟩
+            (¬ (i = j)) ∧ a = i ∧ x = b
+          ≡⟨ Assumption `¬ (i = j)`, “Identity of ∧” ⟩
+            a = i ∧ x = b
+          ≡⟨ “Singleton relation” ⟩
+            a ⦗ { ⟨ i, x ⟩ } ⦘ b
+    Continuing:
+        { ⟨ i, x ⟩ } ⊕ { ⟨ j, y ⟩ }
+      =⟨ “Definition of ⊕” ⟩
+        (Dom { ⟨ j, y ⟩ } ⩤ { ⟨ i, x ⟩ }) ∪ { ⟨ j, y ⟩ }
+      =⟨ Local property (1) ⟩
+        { ⟨ i , x ⟩ } ∪ { ⟨ j , y ⟩ }
+      =⟨ “Set extensionality” with subproof:
+          For any `p`:
+              p ∈ { ⟨ i , x ⟩ } ∪ { ⟨ j , y ⟩ }
+            ≡⟨ “Union”, “Singleton set membership” ⟩
+              p = ⟨ i , x ⟩ ∨ p = ⟨ j , y ⟩
+            ≡⟨ “Simple membership”, substitution ⟩
+              p ∈ { ⟨ i , x ⟩, ⟨ j , y ⟩ }
+        ⟩
+        { ⟨ i , x ⟩, ⟨ j , y ⟩ }
+
+Theorem “Array swap”:
+       i ≤ k ≥ j  ∧  xs = xs₀ ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+    ⇒⁅ z := xs @ i ⍮
+       xs := xs ⊕ { ⟨ i, xs @ j ⟩ } ⍮
+       xs := xs ⊕ { ⟨ j, z ⟩ }
+     ⁆
+      xs = xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+Proof:
+      xs = xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+  ⁅ xs := xs ⊕ { ⟨ j, z ⟩ } ⁆⇐ ⟨ “Assignment” with substitution ⟩
+      xs ⊕ { ⟨ j, z ⟩ } = xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+  ⁅ xs := xs ⊕ { ⟨ i, xs @ j ⟩ } ⁆⇐ ⟨ “Assignment” with substitution ⟩
+      (xs  ⊕ { ⟨ i, xs @ j ⟩ }) ⊕ { ⟨ j, z ⟩ } = xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+  ⁅ z := xs @ i ⁆⇐ ⟨ “Assignment” with substitution ⟩
+      (xs  ⊕ { ⟨ i, xs @ j ⟩ }) ⊕ { ⟨ j, xs @ i ⟩ } = xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+  ⇐⟨ Subproof:
+      Assuming (1) `i ≤ k ≥ j  ∧  xs = xs₀ ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟`:
+        By cases: `i = j`, `¬ (i = j)`
+          Completeness: By “LEM”
+          Case `i = j`:
+              (xs  ⊕ { ⟨ i, xs @ j ⟩ }) ⊕ { ⟨ j, xs @ i ⟩ }
+            =⟨ Assumption `i = j` ⟩
+              (xs  ⊕ { ⟨ i, xs @ i ⟩ }) ⊕ { ⟨ i, xs @ i ⟩ }
+            =⟨ “Repeated ⊕”, assumption (1) ⟩
+              xs₀ ⊕ { ⟨ i , xs₀ @ i ⟩ }
+            =⟨ “Idempotency of ∨” ⟩
+              xs₀ ⊕ { ⟨ i , xs₀ @ i ⟩, ⟨ i , xs₀ @ i ⟩ }
+            =⟨ Assumption `i = j` ⟩
+              xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+          Case `¬ (i = j)`:
+              (xs  ⊕ { ⟨ i, xs @ j ⟩ }) ⊕ { ⟨ j, xs @ i ⟩ }
+            =⟨ “Associativity of ⊕” ⟩
+              xs  ⊕ ({ ⟨ i, xs @ j ⟩ } ⊕ { ⟨ j, xs @ i ⟩ })
+            =⟨ “Singletons ⊕” with assumption `¬ (i = j)`, assumption (1) ⟩
+              xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs₀ @ i ⟩ }
+    ⟩
+    i ≤ k ≥ j  ∧  xs = xs₀ ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+
+Declaration: sorted : (ℕ ↔ ℕ) → 𝔹
+Axiom “Definition of `sorted`”:
+    sorted R   ≡   ∀ i • ∀ j ❙ i < j • ∀ m • ∀ n ❙ i ⦗ R ⦘ m ∧ j ⦗ R ⦘ n • m ≤ n
+
+Theorem “Sorting 0”:
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+  ⇒⁅  p := 0 ⍮
+      while p ≠ k do
+        xs := xs ⊕ { ⟨ p, 42 ⟩ } ⍮
+        p := p + 1
+      od
+    ⁆
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted xs
+Proof:
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+  ⇒⟨ ? ⟩
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted ((0 ‥ 0) ◁ xs)
+  ⇒⁅ p := 0 ⁆ ⟨ “Assignment” with substitution ⟩
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted ((0 ‥ p) ◁ xs)
+      ∧ ?
+  ⇒⁅ while p ≠ k do
+        xs := xs ⊕ { ⟨ p, 42 ⟩ } ⍮
+        p := p + 1
+      od
+    ⁆ ⟨ “While” with subproof:
+          ?
+    ⟩
+    ¬ (p ≠ k) ∧  xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted ((0 ‥ p) ◁ xs)
+      ∧ ?
+  ⇒⟨ ? ⟩
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted xs
+
+Theorem “Sorting 0'”:
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+  ⇒⁅ while true do
+        xs := xs ⊕ { ⟨ 0, 42 ⟩ }
+      od
+    ⁆
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted xs
+      ∧ ⟅ p ❙ p ∈ xs • snd p ⟆ = ⟅ p ❙ p ∈ xs₀ • snd p ⟆
+Proof:
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+  ⇒⟨ “Right-zero of ⇒” ⟩
+    true
+  ⇒⁅ while true do
+        xs := xs ⊕ { ⟨ 0, 42 ⟩ }
+     od ⁆ ⟨ “While” with subproof:
+               true ∧ true
+             =⟨ “Idempotency of ∧” ⟩
+               true 
+             ⇒⁅ xs := xs ⊕ { ⟨ 0, 42 ⟩ } ⁆⟨ “Assignment” with Substitution ⟩
+               true            
+    ⟩
+    ¬ true ∧ true
+  =⟨ “Contradiction” ⟩
+    false
+  ⇒⟨ “ex falso quodlibet” ⟩  
+    xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟  ∧  sorted xs
+      ∧ ⟅ p ❙ p ∈ xs • snd p ⟆ = ⟅ p ❙ p ∈ xs₀ • snd p ⟆ 

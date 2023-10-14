@@ -1,0 +1,92 @@
+Axiom “Leibniz for ∑ range”:
+    (∀ x • R₁ ≡ R₂) ⇒ (∑ x ❙ R₁ • E) = (∑ x ❙ R₂ • E)
+
+Axiom “Leibniz for ∑ body”:
+    (∀ x • R ⇒ E₁ = E₂) ⇒ (∑ x ❙ R • E₁) = (∑ x ❙ R • E₂)
+
+Axiom “Empty range for ∑”:
+  (∑ x ❙ false • E)  =  0
+
+Axiom “One-point rule for ∑”:
+  (∑ x ❙ x = D • E)  =  E[x ≔ D]
+
+Axiom “Distributivity of ∑ over +”:
+  (∑ x ❙ R • E₁ + E₂) = (∑ x ❙ R • E₁) + (∑ x ❙ R • E₂)
+
+Axiom “Range split for ∑”:
+     (∑ x ❙ Q ∨ R  • E)  +  (∑ x ❙ Q ∧ R  • E)
+   = (∑ x ❙ Q      • E)  +  (∑ x ❙ R      • E)
+
+Theorem “Disjoint range split for ∑”:
+   (∀ x • Q ∧ R ≡ false) ⇒
+   ((∑ x ❙ Q ∨ R • E) = (∑ x ❙ Q • E) + (∑ x ❙ R • E))
+Proof:
+  Assuming `(∀ x • Q ∧ R ≡ false)`:
+      (∑ x ❙ Q • E) + (∑ x ❙ R • E)
+    =⟨ “Range split for ∑” ⟩
+      (∑ x ❙ Q ∨ R • E) + (∑ x ❙ Q ∧ R • E)
+    =⟨ Subproof for `(∑ x ❙ Q ∧ R • E) = (∑ x ❙ false • E)`:
+              (∑ x ❙ Q ∧ R • E) = (∑ x ❙ false • E)
+           ⇐⟨ “Leibniz for ∑ range” ⟩
+              (∀ x • Q ∧ R ≡ false)  — This is Assumption `(∀ x • Q ∧ R ≡ false)`
+      ⟩
+      (∑ x ❙ Q ∨ R • E) + (∑ x ❙ false • E)
+    =⟨ “Empty range for ∑” ⟩
+      (∑ x ❙ Q ∨ R • E) + 0
+    =⟨ “Identity of +” ⟩
+      (∑ x ❙ Q ∨ R • E)
+      
+Axiom “Nesting for ∑”:
+    (∑ x ❙ Q • (∑ y ❙ R • E))
+  = (∑ x, y ❙ Q ∧ R • E)
+
+Theorem “Replacement in ∑”:
+    (∑ x ❙ R ∧ e = f • E[y ≔ e])
+  = (∑ x ❙ R ∧ e = f • E[y ≔ f])
+Proof:
+    (∑ x ❙ R ∧ e = f • E[y ≔ e])
+  =⟨ “One-point rule for ∑” ⟩
+    (∑ x ❙ R ∧ e = f • (∑ y ❙ y = e • E))
+  =⟨ “Nesting for ∑” ⟩
+    (∑ x, y ❙ R ∧ e = f ∧ y = e • E)
+  =⟨ Substitution ⟩
+    (∑ x, y ❙ R ∧ e = f ∧ (y = z)[z ≔ e] • E)
+  =⟨ “Replacement” (3.84a) ⟩
+    (∑ x, y ❙ R ∧ e = f ∧ (y = z)[z ≔ f] • E)
+  =⟨ Substitution ⟩
+    (∑ x, y ❙ R ∧ e = f ∧ y = f • E)
+  =⟨ “Nesting for ∑” ⟩
+    (∑ x ❙ R ∧ e = f • (∑ y ❙ y = f • E))
+  =⟨ “One-point rule for ∑” ⟩
+    (∑ x ❙ R ∧ e = f • E[y ≔ f])
+      
+Axiom “Dummy list permutation for ∑”:
+   (∑ x, y ❙ R • E) = (∑ y, x ❙ R • E)
+   
+Theorem “Interchange of dummies for ∑”:
+    (∑ x ❙ Q • (∑ y ❙ R • P))
+  = (∑ y ❙ R • (∑ x ❙ Q • P))
+Proof:
+    (∑ x ❙ Q • (∑ y ❙ R • P))
+  =⟨ “Nesting for ∑” ⟩
+    (∑ x, y ❙ Q ∧ R • P)
+  =⟨ “Symmetry of ∧” and “Dummy list permutation for ∑” ⟩
+    (∑ y, x ❙ R ∧ Q • P)
+  =⟨ “Nesting for ∑” ⟩
+    (∑ y ❙ R • (∑ x ❙ Q • P))
+
+Axiom “Dummy renaming for ∑”, “α-conversion for ∑”:
+  (∑ x ❙ R • E) = (∑ y ❙ R[x ≔ y] • E[x ≔ y])
+
+Axiom “Distributivity of · over ∑”:
+    a · (∑ x ❙ R • E) = (∑ x ❙ R • a · E)
+
+Theorem “Zero ∑ body”: (∑ x ❙ R • 0) = 0
+Proof:
+    (∑ x ❙ R • 0) 
+  =⟨ “Zero of ·” ⟩
+    (∑ x ❙ R • 0 · 0)
+  =⟨ “Distributivity of · over ∑” ⟩
+    0 · (∑ x ❙ R • 0)
+  =⟨ “Zero of ·” ⟩
+    0   

@@ -1,0 +1,70 @@
+Calculation:
+    (p ∧ ¬ (q ∧ ¬ r)) ∨ (q ∧ (r ∨ ¬ p))
+  ≡⟨ “De Morgan” (3.47a) ⟩
+    (p ∧ (¬ q ∨ ¬ ¬ r)) ∨ (q ∧ (r ∨ ¬ p))
+  ≡⟨ “Double negation” ⟩
+    (p ∧ (¬ q ∨ r)) ∨ (q ∧ (r ∨ ¬ p))
+  ≡⟨ “Distributivity of ∨ over ∧” (3.45a) ⟩
+    ((p ∧ (¬ q ∨ r)) ∨ q)
+    ∧
+    ((p ∧ (¬ q ∨ r)) ∨ r ∨ ¬ p)
+  ≡⟨ “Distributivity of ∨ over ∧” (3.45b) ⟩
+    (p ∨ q) ∧ (¬ q ∨ r ∨ q)
+    ∧
+    (p ∨ r ∨ ¬ p) ∧ (¬ q ∨ r ∨ r ∨ ¬ p)
+  ≡⟨ “Symmetry of ∨” ⟩
+    (p ∨ q) ∧ (q ∨ ¬ q ∨ r)
+    ∧
+    (p ∨ ¬ p ∨ r) ∧ (¬ q ∨ r ∨ r ∨ ¬ p)
+  ≡⟨ “Excluded middle” ⟩
+    (p ∨ q) ∧ (true ∨ r)
+    ∧
+    (true ∨ r) ∧ (¬ q ∨ r ∨ r ∨ ¬ p)
+  ≡⟨ “Zero of ∨” ⟩
+    (p ∨ q) ∧ true
+    ∧
+    true ∧ (¬ q ∨ r ∨ r ∨ ¬ p)
+  ≡⟨ “Identity of ∧” ⟩
+    (p ∨ q) ∧ (¬ q ∨ r ∨ r ∨ ¬ p)
+  ≡⟨ “Idempotency of ∨” ⟩
+    (p ∨ q) ∧ (¬ q ∨ r ∨ ¬ p)
+
+Calculation:
+    ¬ (p ∨ ¬ (q ∨ (p ∧ ¬ r)))
+  =⟨ “De Morgan” ⟩
+    ¬ p ∧ ¬ ¬ (q ∨ (p ∧ ¬ r))
+  =⟨ “Double negation” ⟩
+    ¬ p ∧ (q ∨ (p ∧ ¬ r))
+  =⟨ “Distributivity of ∨ over ∧” ⟩
+    ¬ p ∧ (q ∨ p) ∧ (q ∨ ¬ r)
+
+Calculation:
+    (p ∧ r) ∨ ¬ q ∨ (q ∧ ¬ r)
+  =⟨ “Distributivity of ∨ over ∧” ⟩ 
+    (p ∧ r) ∨ ((¬ q ∨ q) ∧ (¬ q ∨ ¬ r))
+  =⟨ “Symmetry of ∨” ⟩ 
+    (p ∧ r) ∨ ((q ∨ ¬ q) ∧ (¬ q ∨ ¬ r))
+  =⟨ “LEM” ⟩ 
+    (p ∧ r) ∨ (true ∧ (¬ q ∨ ¬ r))
+  =⟨ “Identity of ∧” ⟩ 
+    (p ∧ r) ∨ (¬ q ∨ ¬ r)
+  =⟨ “Distributivity of ∨ over ∧” ⟩ 
+    (p ∨ (¬ q ∨ ¬ r)) ∧ (r ∨ (¬ q ∨ ¬ r))
+  =⟨ “Reflexivity of =” ⟩ 
+    (p ∨ ¬ q ∨ ¬ r) ∧ (r ∨ ¬ q ∨ ¬ r)
+  =⟨ “Symmetry of ∨” ⟩ 
+    (p ∨ ¬ q ∨ ¬ r) ∧ (r ∨ ¬ r ∨ ¬ q)
+  =⟨ “LEM” ⟩ 
+    (p ∨ ¬ q ∨ ¬ r) ∧ (true ∨ ¬ q)
+  =⟨ “Zero of ∨” ⟩ 
+    (p ∨ ¬ q ∨ ¬ r) ∧ true
+  =⟨ “Identity of ∧” ⟩ 
+    p ∨ ¬ q ∨ ¬ r
+
+Theorem “Unique identity of disjunction”: di ≡ false
+Proof:
+    di
+  ≡⟨ “Identity of ∨” ⟩
+    false ∨ di
+  ≡⟨ “New right-identity of ∨” ⟩
+    false

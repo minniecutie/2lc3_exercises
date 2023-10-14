@@ -1,0 +1,239 @@
+Theorem “Non-zero multiplication”: a ≠ 0 ⇒ b ≠ 0 ⇒ a · b ≠ 0
+Proof:
+  Assuming `a ≠ 0`, `b ≠ 0`:
+      a · b ≠ 0
+    ≡⟨ “Definition of ≠” ⟩
+      ¬ (a · b = 0)
+    ≡⟨ “Zero of ·” ⟩
+      ¬ (a · b = a · 0)
+    ≡⟨ “Cancellation of ·” with assumption `a ≠ 0` ⟩
+      ¬ (b = 0)
+    ≡⟨ “Definition of ≠”, Assumption `b ≠ 0` ⟩
+      true
+
+Theorem (15.33b) “Positivity under unary minus”:
+    b ≠ 0 ⇒ (pos (- b) ≡ ¬ pos b)
+Proof: By (15.33), “Commutativity of ¬ with ≡”
+
+Theorem (15.33c) “Positivity under unary minus”:
+    (pos (- b) ≡ pos b) ⇒ b = 0
+Proof: By (15.33), “Commutativity of ¬ with ≡”,
+       “Definition of ≠”, “Contrapositive”
+
+Theorem “Positive implies non-zero”: pos a ⇒ a ≠ 0
+Proof:
+    pos a ⇒ a ≠ 0
+  ≡⟨ “Contrapositive” , “Definition of ≠”, “Double negation” ⟩
+    a = 0 ⇒ ¬ pos a
+  ≡⟨ Subproof:
+      Assuming `a = 0`:
+        By assumption `a = 0` and “Non-positivity of 0”
+    ⟩
+    true
+
+Theorem (15.34) “Positivity of squares”: b ≠ 0 ⇒ pos (b · b)
+Proof:
+  Assuming `b ≠ 0`:
+    By cases: `pos b`, `¬ pos b`
+      Completeness: By “Excluded middle”
+      Case `pos b`:
+        By “Positivity under ·” (15.31) with assumption `pos b`
+      Case `¬ pos b`:
+          pos (b · b)
+        ≡⟨ (15.23) `- a · - b = a · b` ⟩
+          pos ((- b) · (- b))
+        ⇐⟨ “Positivity under ·” (15.31) ⟩
+          pos (- b) ∧ pos (- b)
+        ≡⟨ “Idempotency of ∧”, “Double negation” ⟩
+          ¬ ¬ pos (- b)
+        ≡⟨ “Positivity under unary minus” (15.33) with assumption `b ≠ 0` ⟩
+          ¬ pos b      — This is assumption `¬ pos b`
+
+Theorem (15.34) “Positivity of squares”: b ≠ 0 ⇒ pos (b · b)
+Proof:
+  Assuming `b ≠ 0`:
+    By cases: `pos b`, `¬ pos b`
+      Completeness:
+           pos b  ∨  ¬ pos b
+         ≡⟨ “Excluded middle” ⟩
+           true
+      Case `pos b`:
+        By (15.31) with Assumption `pos b`
+      Case `¬ pos b`:
+          true
+        ≡⟨ Assumption `¬ pos b` ⟩
+          ¬ pos b
+        ≡⟨ (15.33b) with Assumption `b ≠ 0` ⟩
+          pos (- b)
+        ≡⟨ “Idempotency of ∧” ⟩
+          pos (- b) ∧ pos (- b)
+        ⇒⟨ “Positivity under ·” ⟩
+          pos ((- b) · (- b))
+        ≡⟨ (15.23) ⟩
+          pos (b · b)
+
+Theorem (15.34) “Positivity of squares”: b ≠ 0 ⇒ pos (b · b)
+Proof:
+  Assuming `b ≠ 0`:
+    By cases: `pos b`, `¬ pos b`
+      Completeness: By “LEM”
+      Case `pos b`:
+          pos b ∧ pos b ⇒ pos (b · b) — This is (15.31)
+        ≡⟨ Assumption `pos b` ⟩
+          true ∧ true ⇒ pos (b · b)
+        ≡⟨ “Identity of ∧”, “Left-identity of ⇒” ⟩
+          pos (b · b)
+      Case `¬ pos b`:
+          true
+        ≡⟨ Assumption `¬ pos b` ⟩
+          ¬ pos b
+        ≡⟨ (15.33b) with Assumption `b ≠ 0` ⟩
+          pos (- b)
+        ≡⟨ “Idempotency of ∧” ⟩
+          pos (- b) ∧ pos (- b)
+        ⇒⟨ “Positivity under ·” ⟩
+          pos ((- b) · (- b))
+        ≡⟨ (15.23) ⟩
+          pos (b · b)
+
+
+Corollary “Positivity of 1”: pos 1
+Proof:
+    pos 1
+  ≡⟨ Fact `1 = 1 · 1` ⟩
+    pos (1 · 1)
+  ≡⟨ “Left-identity of ⇒”, Fact `1 ≠ 0` ⟩
+    1 ≠ 0 ⇒ pos (1 · 1) — This is “Positivity of squares”
+
+Theorem “Positivity”: pos a ≡ a ≠ 0 ∧ ¬ pos (- a)
+Proof:
+    a ≠ 0 ∧ ¬ pos (- a)
+  ≡⟨ “Positivity under unary minus” with (3.62) ⟩
+    a ≠ 0 ∧ pos a
+  ≡⟨ “Positive implies non-zero” with (3.60) ⟩
+    pos a
+
+Theorem (15.35) “Positivity under positive ·”:
+    pos a ⇒ (pos b ≡ pos (a · b))
+Proof:
+  Assuming `pos a`:
+      pos b ≡ pos (a · b)
+    ≡⟨ “Mutual implication” ⟩
+      (pos b ⇒ pos (a · b)) ∧ (pos (a · b) ⇒ pos b)
+    ≡⟨ “Identity of ∧” , Assumption `pos a`⟩
+      (pos a ∧ pos b ⇒ pos (a · b)) ∧ (pos (a · b) ⇒ pos b)
+    ≡⟨ “Positivity under ·” ⟩
+      true ∧ (pos (a · b) ⇒ pos b)
+    ≡⟨ “Identity of ∧” ⟩
+      pos (a · b) ⇒ pos b
+    ≡⟨ “Contrapositive” ⟩
+      ¬ pos b ⇒ ¬ pos (a · b)
+    ≡⟨ Subproof for `¬ pos b ⇒ ¬ pos (a · b)`:
+        By cases: `b = 0`, `b ≠ 0`
+          Completeness: By “Definition of ≠”, “Excluded middle”
+          Case `b = 0`:
+              ¬ pos b ⇒ ¬ pos (a · b)
+            ≡⟨ Assumption `b = 0`, “Zero of ·” ⟩
+              ¬ pos 0 ⇒ ¬ pos 0  — This is “Reflexivity of ⇒”
+          Case `b ≠ 0`:
+              ¬ pos b
+            ≡⟨ “Positivity under unary minus” with Assumption `b ≠ 0` ⟩
+              pos (- b)
+            ≡⟨ “Identity of ∧” , Assumption `pos a` ⟩
+              pos a ∧ pos (- b)
+            ⇒⟨ “Positivity under ·” ⟩
+              pos (a · - b)
+            ≡⟨ (15.20) ⟩
+              pos (- (a · b))
+            ≡⟨ “Positivity under unary minus” with subproof for `a · b ≠ 0`:
+                    a · b ≠ 0
+                  ⇐⟨ “Shunting”, “Non-zero multiplication” ⟩
+                    a ≠ 0 ∧ b ≠ 0
+                  ≡⟨ “Identity of ∧” , Assumption `b ≠ 0` ⟩
+                    a ≠ 0
+                  ≡⟨ “Positive implies non-zero” with Assumption `pos a` ⟩
+                    true
+              ⟩
+              ¬ pos (a · b)
+      ⟩
+      true
+
+Theorem (15.35) “Positivity under positive ·”:
+    pos a ⇒ (pos b ≡ pos (a · b))
+Proof:
+  Assuming `pos a`:
+    Using “Mutual implication”:
+      Subproof for `pos b ⇒ pos (a · b)`:
+          pos b ⇒ pos (a · b)
+        ⇐⟨ “Positivity under ·” with “Shunting” ⟩
+          pos a      — This is Assumption `pos a`
+      Subproof for `pos (a · b) ⇒ pos b`:
+        Using “Contrapositive”:
+          Subproof for `¬ pos b ⇒ ¬ pos (a · b)`:
+            By cases: `b = 0`, `b ≠ 0`
+              Completeness: By “Definition of ≠”, “LEM”
+              Case `b = 0`:
+                  ¬ pos b ⇒ ¬ pos (a · b)
+                ≡⟨ Assumption `b = 0` , “Zero of ·” ⟩
+                  ¬ pos 0 ⇒ ¬ pos 0  — This is “Reflexivity of ⇒”
+              Case `b ≠ 0`:
+                  ¬ pos b
+                ≡⟨ “Positivity under unary minus” with Assumption `b ≠ 0` ⟩
+                  pos (- b)
+                ≡⟨ “Identity of ∧”, Assumption `pos a` ⟩
+                  pos a ∧ pos (- b)
+                ⇒⟨ “Positivity under ·” ⟩
+                  pos (a · - b)
+                ≡⟨ (15.20) ⟩
+                  pos (- (a · b))
+                ≡⟨ “Positivity under unary minus” with subproof for `a · b ≠ 0`:
+                        a · b ≠ 0
+                      ⇐⟨ “Non-zero multiplication” with “Shunting” ⟩
+                        a ≠ 0 ∧ b ≠ 0
+                      ≡⟨ “Identity of ∧”, Assumption `b ≠ 0` ⟩
+                        a ≠ 0
+                      ⇐⟨ “Positive implies non-zero” ⟩
+                        pos a   — This is Assumption `pos a`
+                  ⟩
+                  ¬ pos (a · b)
+
+
+Theorem (15.35) “Positivity under positive ·”:
+  pos a ⇒ (pos b ≡ pos (a · b))
+Proof:
+  Assuming `pos a`:
+    Using “Mutual implication”:
+      Subproof for `pos b ⇒ pos (a · b)`:
+          pos b ⇒ pos (a · b)
+        ⇐⟨  “Positivity under ·” with “Shunting” ⟩
+          pos a      — This is Assumption `pos a`
+      Subproof for `pos (a · b) ⇒ pos b`:
+        Using “Contrapositive”:
+          Subproof for `¬ pos b ⇒ ¬ pos (a · b)`:
+            By cases: `b = 0`, `b ≠ 0`
+              Completeness: By “Definition of ≠”, “LEM”
+              Case `b = 0`:
+                  ¬ pos b ⇒ ¬ pos (a · b)
+                ≡⟨ Assumption `b = 0` , “Zero of ·” ⟩
+                  ¬ pos 0 ⇒ ¬ pos 0  — This is “Reflexivity of ⇒”
+              Case `b ≠ 0`:
+                Side proof for `a · b ≠ 0`:
+                    a · b ≠ 0
+                  ⇐⟨ “Shunting”, “Non-zero multiplication” ⟩
+                    a ≠ 0 ∧ b ≠ 0
+                  ≡⟨ “Identity of ∧”, Assumption `b ≠ 0` ⟩
+                    a ≠ 0
+                  ⇐⟨ “Positive implies non-zero” ⟩
+                    pos a   — This is Assumption `pos a`
+                Continuing with goal `¬ pos b ⇒ ¬ pos (a · b)`:
+                    ¬ pos b
+                  ≡⟨ “Positivity under unary minus” with Assumption `b ≠ 0` ⟩
+                    pos (- b)
+                  ≡⟨ “Identity of ∧”, Assumption `pos a` ⟩
+                    pos a ∧ pos (- b)
+                  ⇒⟨ “Positivity under ·” ⟩
+                    pos (a · - b)
+                  ≡⟨ (15.20) ⟩
+                    pos (- (a · b))
+                  ≡⟨ “Positivity under unary minus” with local property `a · b ≠ 0` ⟩
+                    ¬ pos (a · b)

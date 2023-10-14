@@ -1,0 +1,156 @@
+Calculation:
+    ∑ i : ℕ ❙ 1 ≤ i < 4 • i · i
+  =⟨ Quantification expansion ⟩
+      (i · i)[i ≔ 1]
+    + (i · i)[i ≔ 2]
+    + (i · i)[i ≔ 3]
+  =⟨ Substitution ⟩
+    1 · 1 + 2 · 2 + 3 · 3
+  =⟨ Evaluation ⟩
+    1 + 4 + 9
+  =⟨ Evaluation ⟩
+    14
+
+Calculation:
+    ∑ i : ℕ ❙ 5 ≤ i < 8 • 3 · i
+  =⟨ Quantification expansion, Substitution ⟩
+      3 · 5 + 3 · 6 + 3 · 7
+  =⟨ Evaluation ⟩
+      54
+
+Calculation:
+    ∑ i, j : ℕ ❙ 2 ≤ i < 4 ∧ 5 ≤ j < 7 • i · j
+  =⟨ Quantification expansion, Substitution ⟩
+     2 · 5 + 2 · 6 + 3 · 5 + 3 · 6
+  =⟨ Evaluation ⟩
+     55
+  
+Calculation:
+    ∑ i, j : ℕ ❙ 2 ≤ i < 4 ∧ 5 ≤ j < 7 • i · j
+  =⟨ Quantification expansion, Substitution ⟩
+     2 · 5 + 2 · 6 + 3 · 5 + 3 · 6
+  =⟨ Evaluation ⟩
+     55
+
+Calculation:
+    ∏ i : ℕ ❙ 5 ≤ i < 9 • i
+  =⟨ Quantification expansion, Substitution ⟩
+    5 · 6 · 7 · 8
+  =⟨ Evaluation ⟩ 
+    1680
+
+Calculation:
+    ∑ i : ℕ ❙ 6 ≤ i ≤ 9 • (8 - i) + (i - 8)
+  =⟨ Quantification expansion, Substitution ⟩
+      (8 - 6) + (6 - 8) + (8 - 7) + (7 - 8) 
+    + (8 - 8) + (8 - 8) + (8 - 9) + (9 - 8)
+  =⟨ Evaluation ⟩
+      2 + 0 + 1 + 0 + 0 + 0 + 0 + 1
+  =⟨ Evaluation ⟩
+      4
+ 
+Calculation:
+    ∏ i : ℕ ❙ 1 ≤ i < 7 • i
+  =⟨ Quantification expansion, Substitution, Evaluation ⟩ 
+    720
+
+Calculation:
+    ∏ i : ℕ ❙ 4 ≤ i < 7 • i + (5 - i)
+  =⟨ Quantification expansion, Substitution ⟩
+    (4 + (5 - 4)) · (5 + (5 - 5)) · (6 + (5 - 6))
+  =⟨ Evaluation ⟩
+    (4 + 1) · (5 + 0) · (6 + 0)
+  =⟨ Evaluation ⟩
+    150
+
+Calculation:
+    ∏ i : ℕ ❙ 7 ≤ i < 13 • i + (10 - i)
+  =⟨ Quantification expansion, Substitution ⟩
+      (7 + (10 - 7))   · (8 + (10 - 8)) 
+    · (9 + (10 - 9))   · (10 + (10 - 10)) 
+    · (11 + (10 - 11)) · (12 + (10 - 12))
+  =⟨ Evaluation ⟩
+      (7 + 3) · (8 + 2) · (9 + 1) 
+     · (10 + 0) · (11 + 0) · (12 + 0)
+  =⟨ Evaluation ⟩
+     10 · 10 · 10 · 10 · 11 · 12
+  =⟨ Evaluation ⟩
+     1320000
+  
+ 
+Calculation:
+    ∑ i : ℕ ❙ i ≤ 100 • i
+  =⟨ Quantification expansion, Substitution, Evaluation⟩
+    5050 
+
+Calculation:
+    ∃ i : ℕ ❙ 4 ≤ i < 9 • i · (i + 1) = 12
+  =⟨ Quantification expansion, Substitution ⟩
+      (4 · (4 + 1) = 12) ∨ (5 · (5 + 1) = 12)
+    ∨ (6 · (6 + 1) = 12) ∨ (7 · (7 + 1) = 12)
+    ∨ (8 · (8 + 1) = 12)
+  =⟨ Evaluation ⟩ 
+      (4 · 5 = 12) ∨ (5 · 6 = 12)
+    ∨ (6 · 7 = 12) ∨ (7 · 8 = 12)
+    ∨ (8 · 9 = 12)
+  =⟨ Evaluation ⟩ 
+      (20 = 12) ∨ (30 = 12)
+    ∨ (42 = 12) ∨ (56 = 12)
+    ∨ (72 = 12)
+  =⟨ Evaluation ⟩ 
+     false ∨ false ∨ false ∨ false ∨ false
+  =⟨ “Identity of ∨”⟩
+     false 
+
+Calculation:
+    ∃ i : ℕ ❙ 2 ≤ i < 10 • i · (i + 1) = 12
+  =⟨ Quantification expansion, Substitution, Evaluation ⟩ 
+      (2 · 3 = 12) ∨ (3 · 4 = 12) ∨ (4 · 5 = 12) ∨ (5 · 6 = 12)
+    ∨ (6 · 7 = 12) ∨ (7 · 8 = 12) ∨ (8 · 9 = 12) ∨ (9 · 10 = 12)
+  =⟨ Evaluation, “Identity of ∨”⟩
+    false ∨ true
+  =⟨ “Zero of ∨”⟩
+    true
+ 
+Calculation:
+    ∀ i : ℕ ❙ 11 ≤ i < 22 • i · (i - 7) > 42
+  =⟨ Quantification expansion, Substitution, Evaluation, “Zero of ∨”⟩
+    true 
+
+Calculation:
+    ∃ i : ℕ ❙ 2 ≤ i < 9
+            • (i - 7) · j = 5
+  =⟨ Quantification expansion, Substitution, 
+     Evaluation ⟩
+        (0 · j = 5) ∨ (0 · j = 5)
+      ∨ (0 · j = 5) ∨ (0 · j = 5)
+      ∨ (0 · j = 5) ∨ (0 · j = 5) 
+      ∨ (1 · j = 5) 
+  =⟨ “Idempotency of ∨” ⟩
+      (0 · j = 5) ∨ (1 · j = 5)
+  =⟨ “Definition of · for 0”  ⟩
+      (0 = 5) ∨ (1 · j = 5)
+  =⟨ Fact `0 = 5 ≡ false` ⟩
+      false ∨ (1 · j = 5)
+  =⟨ “Identity of ∨” ⟩
+      1 · j = 5
+  =⟨ “Left-identity of ·” ⟩
+      j = 5
+
+Calculation:
+    ∀ i : ℕ ❙ 3 ≤ i < 9
+            • (i - 5) · (8 - i) < 2 ∨ j = i
+  = ⟨ Quantification expansion, Substitution, Evaluation⟩
+       (0 · 5 < 2 ∨ j = 3) ∧ (0 · 4 < 2 ∨ j = 4)
+     ∧ (0 · 3 < 2 ∨ j = 5) ∧ (1 · 2 < 2 ∨ j = 6)
+     ∧ (2 · 1 < 2 ∨ j = 7) ∧ (3 · 0 < 2 ∨ j = 8)
+  = ⟨ Evaluation ⟩
+       (true ∨ j = 3) ∧ (true ∨ j = 4)
+     ∧ (true ∨ j = 5) ∧ (false ∨ j = 6)
+     ∧ (false ∨ j = 7) ∧ (true ∨ j = 8)
+  = ⟨ “Zero of ∨”, “Identity of ∨” ⟩
+       true ∧ true
+     ∧ true ∧ (j = 6)
+     ∧ (j = 7) ∧ true
+  = ⟨ “Identity of ∧” ⟩
+       (j = 6) ∧ (j = 7)

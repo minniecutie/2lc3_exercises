@@ -1,0 +1,110 @@
+Calculation:
+    (a + (b · c)  =  (a + b) · (a + c))[a, b, c ≔ 1, 1, 1]
+  =⟨ Substitution ⟩
+    1 + (1 · 1)  =  (1 + 1) · (1 + 1)
+  =⟨ Fact `1 · 1 = 1` ⟩
+    1 + 1  =  (1 + 1) · (1 + 1)
+  =⟨ Fact `1 + 1 = 2` ⟩
+    2 =  2 · 2
+  =⟨ Fact `2 · 2 = 4` ⟩
+    2 = 4
+  =⟨ Fact `(2 = 4) = false` ⟩
+    false
+    
+    
+Calculation:
+    (6 + a) · (7 - a)
+  =⟨ “Distributivity of · over -” ⟩
+    (6 + a) · 7 - (6 + a) · a
+  =⟨ “Distributivity of · over +” ⟩
+    6 · 7 + a · 7 - (6 · a + a · a)
+  =⟨ “Subtraction of addition” ⟩
+    (6 · 7 + a · 7 - 6 · a) - a · a
+  =⟨ “Mutual associativity of + and -” ⟩
+    (6 · 7 + (a · 7 - 6 · a)) - a · a
+  =⟨ “Distributivity of · over -” ⟩
+    (6 · 7 + (7 - 6) · a) - a · a
+  =⟨ Fact `7 - 6 = 1` ⟩
+    (6 · 7 + 1 · a) - a · a
+  =⟨ “Identity of ·” ⟩
+    6 · 7 + a - a · a
+  =⟨ Fact `6 · 7 = 42` ⟩
+    42 + a - a · a
+    
+Calculation:
+    (5 - a) · (4 + a)
+  =⟨ “Distributivity of · over -” ⟩ 
+    5 · (4 + a) - a · (4 + a)
+  =⟨ “Distributivity of · over +” ⟩ 
+    5 · 4 + 5 · a - (a · 4 + a · a)
+  =⟨ Fact `5 · 4 = 20` ⟩
+    20 + 5 · a - (a · 4 + a · a)
+  =⟨ “Subtraction of addition” ⟩
+    20 + 5 · a - 4 · a - a · a
+  =⟨ “Mutual associativity of + and -” ⟩
+    20 + (5 · a - 4 · a) - a · a
+  =⟨ “Distributivity of · over -” ⟩
+    20 + (5 - 4) · a - a · a
+  =⟨ Fact `5 - 4 = 1` ⟩
+    20 + 1 · a - a · a 
+  =⟨ “Identity of ·” ⟩
+    20 + a - a · a 
+    
+ Calculation: (2nd way)
+    (5 - a) · (4 + a)
+  =⟨ “Distributivity of · over +” ⟩
+    (5 - a) · 4 + (5 - a) · a
+  =⟨ “Distributivity of · over -” ⟩
+    (5 · 4 - a · 4) + (5 · a - a · a)
+  =⟨ Fact `5 · 4 = 20` ⟩
+    (20 - a · 4) + (5 · a - a · a)
+  =⟨ “Mutual associativity of + and -” ⟩ ╍╍╍ a + (b - c) = (a + b) - c
+    (20 - a · 4 + 5 · a) - a · a
+  =⟨ “Mutual associativity of + and -” ⟩ 
+    (20 + (5 · a - a · 4)) - a · a
+  =⟨ “Distributivity of · over -” ⟩ 
+    (20 + (5 - 4) · a) - a · a
+  =⟨ Fact `5 - 4 = 1` ⟩ 
+    (20 + 1 · a) - a · a
+  =⟨ “Identity of ·” ⟩
+    20 + a - a · a 
+    
+Calculation:
+    (x + 1) · (x - 1)
+  =⟨ “Distributivity of · over +” ⟩
+    x · (x - 1) + 1 · (x - 1)
+  =⟨ “Distributivity of · over -” ⟩
+    x · x - x · 1 + (1 · x - 1 · 1)
+  =⟨ Fact `1 · 1 = 1`⟩
+    x · x - x · 1 + (1 · x - 1)
+  =⟨ “Mutual associativity of + and -” ⟩
+    x · x - x · 1 + 1 · x - 1
+  =⟨ “Mutual associativity of + and -” ⟩
+    1 · x - x · 1 + x · x - 1
+  =⟨ “Distributivity of · over -” ⟩
+    x · (1 - 1) + x · x - 1
+  =⟨ Fact `1 - 1 = 0` ⟩
+    x · 0 + x · x - 1
+  =⟨ “Zero of ·” ⟩
+    0 + x · x - 1
+  =⟨ “Identity of +” ⟩
+    x · x - 1
+  
+Calculation:
+    (2 · x + 5) · 3 - 4 · x
+  = ⟨ “Distributivity of · over +” ⟩
+    (2 · x) · 3 + 5 · 3 - 4 · x
+  = ⟨ “Symmetry of ·” ⟩
+    (x · 2) · 3 + 5 · 3 - 4 · x
+  = ⟨ “Associativity of ·” ⟩
+    x · (2 · 3) + 5 · 3 - 4 · x
+  = ⟨ Fact `2 · 3 = 6` ⟩
+    x · 6 + 5 · 3 - 4 · x
+  = ⟨ Fact `5 · 3 = 15` ⟩
+    x · 6 + 15 - 4 · x
+  = ⟨ “Mutual associativity of + and -” ⟩
+    x · 6 - 4 · x + 15
+  = ⟨ “Distributivity of · over -” ⟩
+    (6 - 4) · x + 15
+  = ⟨ Fact `6 - 4 = 2` ⟩
+    2 · x + 15

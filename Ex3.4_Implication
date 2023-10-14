@@ -1,0 +1,357 @@
+Theorem (3.59) “Definition of ⇒”: p ⇒ q ≡ ¬ p ∨ q
+Proof:
+    p ⇒ q
+  =⟨ “Definition of ⇒” ⟩
+    p ∨ q ≡ q
+  =⟨ (3.32) ⟩
+    ¬ p ∨ q
+
+Theorem (3.60) “Definition of ⇒”: p ⇒ q ≡ p ∧ q ≡ p
+Proof:
+    p ⇒ q
+  =⟨ “Definition of ⇒” ⟩
+    p ∨ q ≡ q
+  =⟨ “Golden rule” ⟩
+    p ∧ q ≡ p
+
+Theorem (3.61) “Contrapositive”: p ⇒ q ≡ ¬ q ⇒ ¬ p
+Proof:
+    p ⇒ q
+  =⟨ “Definition of ⇒” ⟩
+    ¬ p ∨ q 
+  =⟨ “Symmetry of ∨” ⟩
+    q ∨ ¬ p
+  =⟨ “Definition of ⇒” ⟩
+    ¬ q ⇒ ¬ p 
+ 
+Theorem (3.62): p ⇒ (q ≡ r) ≡ p ∧ q ≡ p ∧ r
+Proof:
+    p ⇒ (q ≡ r)
+  =⟨ “Definition of ⇒” ⟩
+    ¬ p ∨ (q ≡ r)
+  =⟨ “Distributivity of ∨ over ≡” ⟩
+    ¬ p ∨ q ≡ ¬ p ∨ r
+  =⟨ (3.32) ⟩
+    (q ∨ p ≡ q) ≡ (r ∨ p ≡ r)
+  =⟨ “Golden rule” ⟩
+    q ∧ p ≡ p ≡ p ≡ p ∧ r
+  =⟨ “Identity of ≡” ⟩
+    q ∧ p ≡ true ≡ p ∧ r
+  =⟨ “Identity of ≡” ⟩
+    p ∧ q ≡ p ∧ r
+
+Theorem (3.63) “Distributivity of ⇒ over ≡”: p ⇒ (q ≡ r) ≡ p ⇒ q ≡ p ⇒ r
+Proof:
+    p ⇒ (q ≡ r)
+  =⟨ “Definition of ⇒” ⟩
+    ¬ p ∨ (q ≡ r)
+  =⟨ “Distributivity of ∨ over ≡” ⟩
+    ¬ p ∨ q ≡ ¬ p ∨ r
+  =⟨ “Definition of ⇒” ⟩
+    p ⇒ q ≡ p ⇒ r
+
+Theorem (3.64): p ⇒ (q ⇒ r) ≡ (p ⇒ q) ⇒ (p ⇒ r)
+Proof:
+    (p ⇒ q) ⇒ (p ⇒ r)
+  =⟨ “Definition of ⇒” ⟩
+    ¬ (¬ p ∨ q) ∨ (¬ p ∨ r)
+  =⟨ “De Morgan” ⟩
+    (¬ ¬ p ∧ ¬ q) ∨ (¬ p ∨ r)
+  =⟨ “Double negation” ⟩
+    (p ∧ ¬ q) ∨ (¬ p ∨ r)
+  =⟨ “Distributivity of ∨ over ∧” ⟩
+    ((p ∨ ¬ p) ∧ (¬ q ∨ ¬ p)) ∨ r
+  =⟨ “LEM” ⟩
+    (true ∧ (¬ q ∨ ¬ p)) ∨ r
+  =⟨ “Identity of ∧”⟩
+    (¬ q ∨ ¬ p) ∨ r
+  =⟨ “Definition of ⇒”⟩
+    p ⇒ (q ⇒ r)
+
+Theorem (3.65) “Shunting”: p ∧ q ⇒ r ≡ p ⇒ (q ⇒ r)
+Proof:
+    p ∧ q ⇒ r
+  =⟨ “Definition of ⇒” (3.59) ⟩ 
+    ¬ (p ∧ q) ∨ r
+  =⟨ “De Morgan” ⟩
+     ¬ p ∨ ¬ q ∨ r
+  =⟨ “Definition of ⇒” (3.59) ⟩
+     ¬ p ∨ (q ⇒ r)
+  =⟨ “Definition of ⇒” (3.59) ⟩
+     p ⇒ (q ⇒ r)
+
+Theorem (3.66): p ∧ (p ⇒ q) ≡ p ∧ q
+Proof: 
+    p ∧ (p ⇒ q)
+  =⟨ “Definition of ⇒” (3.59) ⟩
+    p ∧ (¬ p ∨ q)
+  =⟨ “Absorption” (3.44a)⟩
+    p ∧ q
+
+Theorem (3.67): p ∧ (q ⇒ p) ≡ p
+Proof: 
+    p ∧ (q ⇒ p) 
+  =⟨ “Definition of ⇒” ⟩
+    p ∧ (¬ q ∨ p)
+  =⟨ “Absorption” (3.43a) ⟩
+    p
+   
+Theorem (3.68): p ∨ (p ⇒ q) ≡ true
+Proof:
+    p ∨ (p ⇒ q)
+  =⟨ “Definition of ⇒” (3.59) ⟩
+    p ∨ (¬ p ∨ q)
+  =⟨ “LEM” ⟩
+    true ∨ q
+  =⟨ “Zero of ∨” ⟩
+    true
+
+Theorem (3.69): p ∨ (q ⇒ p) ≡ q ⇒ p
+Proof: 
+    p ∨ (q ⇒ p)
+  =⟨ “Definition of ⇒” ⟩
+    p ∨ (¬ q ∨ p)
+  =⟨ “Idempotency of ∨” ⟩
+    ¬ q ∨ p
+  =⟨ “Definition of ⇒” (3.59) ⟩
+    q ⇒ p
+
+Theorem (3.70): p ∨ q ⇒ p ∧ q ≡ p ≡ q
+Proof: 
+    p ∨ q ⇒ p ∧ q 
+  =⟨ “Definition of ⇒” ⟩
+    ¬ (p ∨ q) ∨ (p ∧ q)
+  =⟨ “De Morgan” ⟩
+    (¬ p ∧ ¬ q) ∨ (p ∧ q)
+  =⟨ “Alternative definition of ≡” ⟩
+    p ≡ q
+
+Theorem (3.71) “Reflexivity of ⇒”: (p ⇒ p) ≡ true
+Proof:
+    p ⇒ p 
+  =⟨ “Definition of ⇒” ⟩
+    ¬ p ∨ p 
+  =⟨ “LEM”⟩
+    true 
+
+Theorem (3.72) “Right zero of ⇒”: (p ⇒ true) ≡ true
+Proof: 
+    p ⇒ true
+  =⟨ “Definition of ⇒”⟩
+    ¬ p ∨ true
+  =⟨ “Zero of ∨”⟩
+    true
+ 
+Theorem (3.73) “Left identity of ⇒”: (true ⇒ p) ≡ p
+Proof:
+    true ⇒ p 
+  =⟨ “Definition of ⇒”⟩
+    ¬ true ∨ p
+  =⟨ “Definition of `false`”⟩
+    false ∨ p
+  =⟨ “Identity of ∨”⟩
+    p
+
+Theorem (3.74) “Definition of ¬ from ⇒”: (p ⇒ false) ≡ ¬ p
+Proof:
+    p ⇒ false
+  =⟨ “Definition of ⇒”⟩
+    ¬ p ∨ false
+  =⟨ “Identity of ∨”⟩
+    ¬ p
+ 
+Theorem (3.75) “ex falso quodlibet”: (false ⇒ p) ≡ true
+Proof:
+    false ⇒ p 
+  =⟨ “Definition of ⇒” ⟩ 
+    ¬ false ∨ p 
+  =⟨ “Negation of `false`” ⟩ 
+    true ∨ p
+  =⟨ “Zero of ∨” ⟩ 
+    true 
+ 
+Theorem (3.76) (3.76a) “Weakening” “Strengthening”: p ⇒ p ∨ q
+Proof: 
+    p ⇒ p ∨ q
+  =⟨ “Definition of ⇒” ⟩
+    ¬ p ∨ p ∨ q
+  =⟨ “LEM” ⟩
+    true ∨ q
+  =⟨ “Zero of ∨” ⟩
+    true
+
+Theorem (3.76) (3.76b) “Weakening” “Strengthening”: p ∧ q ⇒ p
+Proof:
+    p ∧ q ⇒ p
+  =⟨ “Definition of ⇒” ⟩
+    ¬ (p ∧ q) ∨ p
+  =⟨ “De Morgan” ⟩
+    ¬ p ∨ ¬ q ∨ p
+  =⟨ “LEM” ⟩
+    true ∨ ¬ q 
+  =⟨ “Zero of ∨”⟩
+    true 
+
+Theorem (3.76) (3.76c) “Weakening” “Strengthening”: p ∧ q ⇒ p ∨ q
+Proof: 
+    p ∧ q ⇒ p ∨ q 
+  =⟨ “Definition of ⇒” ⟩
+    ¬ (p ∧ q) ∨ (p ∨ q)
+  =⟨ “De Morgan” ⟩
+    (¬ p ∨ ¬ q) ∨ (p ∨ q)
+  =⟨ “LEM” ⟩
+    true ∨ true
+  =⟨ “Zero of ∨” ⟩
+    true
+ 
+Theorem (3.76) (3.76d) “Weakening” “Strengthening”: p ∨ (q ∧ r) ⇒ p ∨ q
+Proof:
+    p ∨ (q ∧ r) ⇒ p ∨ q
+  =⟨ “Distributivity of ∨ over ∧”⟩
+    (p ∨ q) ∧ (p ∨ r) ⇒ p ∨ q
+  =⟨ (3.76b) ⟩
+    true
+    
+Theorem (3.76) (3.76e) “Weakening” “Strengthening”: p ∧ q ⇒ p ∧ (q ∨ r)
+Proof: 
+    p ∧ q ⇒ p ∧ (q ∨ r)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    p ∧ q ⇒ (p ∧ q) ∨ (p ∧ r)
+  =⟨ “Weakening” (3.76a) ⟩
+    true
+ 
+Theorem (3.77) “Modus ponens”: p ∧ (p ⇒ q) ⇒ q
+Proof: 
+    p ∧ (p ⇒ q) ⇒ q
+  =⟨ “Definition of ⇒” ⟩
+    p ∧ (¬ p ∨ q) ⇒ q 
+  =⟨ “Absorption” ⟩
+    p ∧ q ⇒ q 
+  =⟨ “Strengthening” ⟩
+    true
+    
+Theorem (3.78): (p ⇒ r) ∧ (q ⇒ r) ≡ (p ∨ q ⇒ r)
+Proof:
+    (p ⇒ r) ∧ (q ⇒ r)
+  =⟨ “Definition of ⇒” ⟩ 
+    (¬ p ∨ r) ∧ (¬ q ∨ r)
+  =⟨ “Distributivity of ∨ over ∧” ⟩ 
+    (¬ p ∧ ¬ q) ∨ r
+  =⟨ “De Morgan” ⟩ 
+    ¬ (p ∨ q) ∨ r
+  =⟨ “Definition of ⇒” ⟩ 
+    p ∨ q ⇒ r
+
+Theorem (3.79): (p ⇒ r) ∧ (¬ p ⇒ r) ≡ r
+Proof:
+    (p ⇒ r) ∧ (¬ p ⇒ r) 
+  =⟨ “Definition of ⇒” ⟩
+    (¬ p ∨ r) ∧ (¬ ¬ p ∨ r)
+  =⟨ “Distributivity of ∨ over ∧” ⟩
+    (¬ p ∧ ¬ ¬ p) ∨ r
+  =⟨ “De Morgan” ⟩
+    ¬ (p ∨ ¬ p) ∨ r
+  =⟨ “LEM” ⟩
+    ¬ true ∨ r
+  =⟨ “Definition of `false`” ⟩
+    false ∨ r
+  =⟨ “Identity of ∨” ⟩
+    r
+
+Theorem (3.80) “Mutual implication”: (p ⇒ q) ∧ (q ⇒ p) ≡ p ≡ q
+Proof:
+    (p ⇒ q) ∧ (q ⇒ p)
+  =⟨ “Definition of ⇒” ⟩
+    (¬ p ∨ q) ∧ (¬ q ∨ p)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    ((¬ p ∨ q) ∧ ¬ q) ∨ ((¬ p ∨ q) ∧ p)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    ((¬ p ∧ ¬ q) ∨ (q ∧ ¬ q)) ∨ ((¬ p ∧ p) ∨ (q ∧ p))
+  =⟨ “Contradiction” ⟩
+    ((¬ p ∧ ¬ q) ∨ false) ∨ (false ∨ (q ∧ p))
+  =⟨ “Identity of ∨” ⟩
+    (¬ p ∧ ¬ q) ∨ (q ∧ p)
+  =⟨ “Alternative definition of ≡” ⟩
+    p ≡ q
+
+Theorem (3.81) “Antisymmetry of ⇒”: (p ⇒ q) ∧ (q ⇒ p) ≡ (p ≡ q)
+Proof:
+    ((p ⇒ q) ∧ (q ⇒ p)) ≡ (p ≡ q)
+  =⟨ “Mutual implication” (3.80)⟩
+    (p ≡ q) ≡ (p ≡ q)
+  =⟨ “Identity of ≡”⟩
+    true
+
+Theorem (3.82) (3.82a) “Transitivity of ⇒”: (p ⇒ q) ∧ (q ⇒ r) ⇒ (p ⇒ r)
+Proof:
+    (p ⇒ q) ∧ (q ⇒ r) ⇒ (p ⇒ r)
+  =⟨ “Shunting” with `p, q ≔ (p ⇒ q) ∧ (q ⇒ r), p`⟩
+    (p ⇒ q) ∧ (q ⇒ r) ∧ p ⇒ r
+  =⟨ (3.66) ⟩
+    p ∧ q ∧ (q ⇒ r) ⇒ r
+  =⟨ (3.66) ⟩
+    p ∧ q ∧ r ⇒ r
+  =⟨ “Definition of ⇒” ⟩
+    ¬ (p ∧ q ∧ r) ∨ r
+  =⟨ “De Morgan” ⟩
+    ¬ (p ∧ q) ∨ ¬ r ∨ r
+  =⟨ “LEM” ⟩
+    ¬ (p ∧ q) ∨ true
+  =⟨ “Zero of ∨”  ⟩
+    true
+
+Theorem (3.82) (3.82b) “Transitivity of ⇒”: (p ≡ q) ∧ (q ⇒ r) ⇒ (p ⇒ r)
+Proof: 
+    (p ≡ q) ∧ (q ⇒ r) ⇒ (p ⇒ r)
+  = ⟨ “Definition of ⇒” (3.59) ⟩
+    ¬ ((p ≡ q) ∧ (q ⇒ r)) ∨ (p ⇒ r)
+  = ⟨ “De Morgan” ⟩
+    ¬ (p ≡ q) ∨ ¬ (q ⇒ r) ∨ (p ⇒ r)
+  = ⟨ “Definition of ⇒” (3.59) ⟩
+    ¬ (p ≡ q) ∨ ¬ (¬ q ∨ r) ∨ (¬ p ∨ r)
+  = ⟨ “De Morgan” ⟩
+    ¬ (p ≡ q) ∨ (¬ ¬ q ∧ ¬ r) ∨ ¬ p ∨ r
+  = ⟨ “Symmetry of ∨” ⟩
+    ¬ (p ≡ q) ∨ (¬ ¬ q ∧ ¬ r) ∨ r ∨ ¬ p
+  = ⟨ “Absorption” (3.44b) ⟩
+    ¬ (p ≡ q) ∨ (¬ ¬ q ∨ r) ∨ ¬ p
+  = ⟨ “Commutativity of ¬ with ≡” ⟩
+    (p ≡ ¬ q) ∨ (¬ ¬ q ∨ r) ∨ ¬ p
+  = ⟨ “Double negation” ⟩
+    (p ≡ ¬ q) ∨ q ∨ r ∨ ¬ p
+  = ⟨ “Distributivity of ∨ over ≡” ⟩
+    (p ∨ q ≡ ¬ q ∨ q) ∨ r ∨ ¬ p
+  = ⟨ “LEM” ⟩
+    (p ∨ q ≡ true) ∨ r ∨ ¬ p
+  = ⟨ “Identity of ≡” ⟩
+    p ∨ q  ∨ r ∨ ¬ p
+  = ⟨ “LEM” ⟩
+    true ∨ q  ∨ r
+  = ⟨ “Zero of ∨” ⟩
+    true 
+ 
+Theorem (3.82) (3.82c) “Transitivity of ⇒”: (p ⇒ q) ∧ (q ≡ r) ⇒ (p ⇒ r)
+Proof:
+    (p ⇒ q) ∧ (q ≡ r) ⇒ (p ⇒ r)
+  =⟨ “Definition of ⇒” (3.59)⟩
+    ¬ ((p ⇒ q) ∧ (q ≡ r)) ∨ (p ⇒ r)
+  =⟨ “De Morgan”⟩
+    ¬ (p ⇒ q) ∨ ¬ (q ≡ r) ∨ (p ⇒ r)
+  =⟨ “Definition of ⇒”⟩
+    ¬ (¬ p ∨ q) ∨ ¬ (q ≡ r) ∨ (¬ p ∨ r)
+  =⟨ “De Morgan”⟩
+    (¬ ¬ p ∧ ¬ q) ∨ (¬ p ∨ r) ∨ ¬ (q ≡ r) 
+  =⟨ “Absorption” ⟩
+    ¬ p ∨ ¬ q ∨ r ∨ ¬ (q ≡ r) 
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ p ∨ ¬ q ∨ r ∨ (q ≡ ¬ r)
+  =⟨ “Distributivity of ∨ over ≡” ⟩
+    ¬ p ∨ ¬ q ∨ (r ∨ q ≡ r ∨ ¬ r)
+  =⟨ “LEM” ⟩
+    ¬ p ∨ ¬ q ∨ (r ∨ q ≡ true)
+  =⟨ “Identity of ≡” ⟩
+    ¬ p ∨ ¬ q ∨ r ∨ q 
+  =⟨ “LEM” ⟩
+    ¬ p ∨ r ∨ true
+  =⟨ “Zero of ∨” ⟩
+    true  

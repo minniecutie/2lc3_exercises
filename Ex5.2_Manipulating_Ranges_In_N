@@ -1,0 +1,127 @@
+Theorem “Definition of ≤ in terms of <”:
+    a ≤ b  ≡  a < b ∨ a = b
+Proof:
+  By induction on `a : ℕ`:
+    Base case `0 ≤ b  ≡  0 < b ∨ 0 = b`:
+        0 ≤ b 
+      =⟨ “Zero is least element” ⟩
+        true
+      =⟨ “Zero is <-least element” ⟩
+        0 < b ∨ 0 = b
+    Induction step `suc a ≤ b  ≡  suc a < b ∨ suc a = b`:
+      By induction on `b : ℕ`:
+        Base case `suc a ≤ 0  ≡  suc a < 0 ∨ suc a = 0`:
+            suc a ≤ 0  
+          =⟨ “Successor is not at most zero” ⟩
+            false
+          =⟨ “Idempotency of ∨” ⟩
+            false ∨ false
+          =⟨ “Nothing is less than zero” ⟩
+            suc a < 0 ∨ false
+          =⟨ “Zero is not successor” ⟩
+            suc a < 0 ∨ suc a = 0
+        Induction step `suc a ≤ suc b  ≡  suc a < suc b ∨ suc a = suc b`:
+            suc a ≤ suc b  ≡  suc a < suc b ∨ suc a = suc b
+          =⟨ “Isotonicity of successor”⟩
+            a ≤ b ≡ suc a < suc b ∨ suc a = suc b
+          =⟨ “Cancellation of `suc`”⟩
+            a ≤ b ≡ suc a < suc b ∨ a = b
+          =⟨ “<-Isotonicity of successor” ⟩ 
+            a ≤ b ≡ a < b ∨ a = b
+          =⟨ Induction hypothesis `a ≤ b  ≡  a < b ∨ a = b` ⟩ 
+            true
+
+Theorem “Definition of ≤ in terms of `suc` and <”:
+    a ≤ b  ≡  a < suc b
+Proof:
+    a ≤ b
+  =⟨ “Definition of ≤ in terms of <”⟩ 
+    a < b ∨ a = b
+  =⟨ “Less than successor”⟩ 
+    a < suc b
+
+Lemma “Subproof”: a < b ∧ a = b ≡ false
+Proof:
+  By induction on `b : ℕ`:
+    Base case `a < 0 ∧ a = 0 ≡ false`:
+        a < 0 ∧ a = 0
+      =⟨ “Nothing is less than zero” ⟩
+        false ∧ a = 0
+      =⟨ “Zero of ∧” ⟩
+        false
+    Induction step `a < suc b ∧ a = suc b ≡ false`:
+      By induction on `a : ℕ`:
+        Base case `0 < suc b ∧ 0 = suc b ≡ false`:
+            0 < suc b ∧ 0 = suc b
+          =⟨ “Zero is not successor” ⟩
+            0 < suc b ∧ false
+          =⟨ “Zero of ∧” ⟩
+            false
+        Induction step `suc a < suc b ∧ suc a = suc b ≡ false`:
+            suc a < suc b ∧ suc a = suc b
+          =⟨ “Cancellation of `suc`” ⟩
+            suc a < suc b ∧ a = b
+          =⟨ “<-Isotonicity of successor” ⟩
+            a < b ∧ a = b
+          =⟨ Induction hypothesis `a < b ∧ a = b ≡ false` ⟩
+            false
+
+Theorem “Empty range”: a < b ≤ a ≡ false
+Proof:
+    a < b ∧ (b ≤ a)
+  =⟨ “Definition of ≤ in terms of <” ⟩
+    a < b ∧ (b < a ∨ b = a)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    (a < b ∧ b < a) ∨ (a < b ∧ a = b)
+  =⟨ “Empty range” ⟩
+    false ∨ (a < b ∧ a = b)
+  =⟨ “Identity of ∨” ⟩
+    a < b ∧ a = b
+  =⟨ “Subproof” ⟩
+    false
+
+Theorem “Split ≤-<-suc range at top”:
+   m ≤ n ⇒ (m ≤ i < suc n  ≡  m ≤ i < n  ∨  i = n)
+Proof:
+  Assuming `m ≤ n`:
+      m ≤ i < suc n
+    =⟨ “Reflexivity of =” ⟩
+      m ≤ i ∧ i < suc n
+    =⟨ “Less than successor” ⟩
+      m ≤ i ∧ (i = n ∨ i < n)
+    =⟨ “Distributivity of ∧ over ∨” ⟩
+      (m ≤ i ∧ i = n) ∨ (m ≤ i ∧ i < n)
+    =⟨ “Reflexivity of =” ⟩
+      (m ≤ i ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ Substitution ⟩
+      ((m ≤ z)[z ≔ i] ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ “Replacement” (3.84a) , Substitution ⟩
+      (m ≤ n ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ Assumption `m ≤ n` ⟩
+      (true ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ “Identity of ∧” ⟩
+      i = n ∨ (m ≤ i < n)
+
+Theorem “Split <-≤-suc range at top”:
+   m ≤ n ⇒ (m < i ≤ suc n  ≡  m < i ≤ n  ∨  i = suc n)
+Proof:
+  Assuming `m ≤ n` and using with “Definition of ≤ in terms of `suc` and <”:
+      m < i ≤ suc n
+    =⟨ “Reflexivity of =” ⟩
+      m < i ∧ (i ≤ suc n) 
+    =⟨ “Definition of ≤ in terms of <”⟩ 
+      m < i ∧ (i < suc n ∨ i = suc n)
+    =⟨ “Distributivity of ∧ over ∨” ⟩
+      (m < i ∧ i < suc n) ∨ (m < i ∧ i = suc n)
+    =⟨ Substitution ⟩  
+      (m < i ∧ i < suc n) ∨ ((m < z)[z ≔ i] ∧ i = suc n)
+    =⟨ Substitution ⟩  
+      (m < i ∧ i < suc n) ∨ ((m < z)[z ≔ i] ∧ i = suc n)
+    =⟨ “Replacement” (3.84a) , Substitution⟩
+      (m < i ∧ i < suc n) ∨ (m < suc n ∧ i = suc n) 
+    =⟨ Assumption `m ≤ n` , “Identity of ∧”⟩
+      (m < i ∧ i < suc n) ∨ i = suc n
+    =⟨ “Definition of ≤ in terms of `suc` and <” ⟩
+      (m < i ∧ i ≤ n) ∨ i = suc n
+    =⟨ “Reflexivity of =” ⟩
+      m < i ≤ n ∨ i = suc n

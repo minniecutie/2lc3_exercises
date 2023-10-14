@@ -1,0 +1,155 @@
+Theorem:
+    ∃ y : ℕ • ∀ x : ℕ • y ≤ x
+Proof:
+      ∃ y : ℕ • ∀ x : ℕ • y ≤ x
+    ⇐⟨ “∃-Introduction” ⟩
+      (∀ x : ℕ • y ≤ x)[y ≔ 0]
+    =⟨ Substitution ⟩
+      ∀ x : ℕ • 0 ≤ x
+  Proof for this:
+    For any `x : ℕ`:
+        0 ≤ x — This is “Zero is least element”
+  
+Theorem:
+    ∀ y : ℕ • ∃ x : ℕ • y ≤ x
+Proof:
+  For any `y : ℕ`:
+      ∃ x : ℕ • y ≤ x
+    ⇐⟨ “∃-Introduction” ⟩
+      (y ≤ x)[x ≔ y]
+    =⟨ Substitution ⟩
+       y ≤ y — This is “Reflexivity of ≤”  
+
+Theorem:
+    ∃ y : ℕ • ∀ x : ℕ • x + y = x
+Proof:
+      ∃ y : ℕ • ∀ x : ℕ • x + y = x
+    ⇐⟨ “∃-Introduction” ⟩
+      (∀ x : ℕ • x + y = x)[y ≔ 0]
+    =⟨ Substitution ⟩
+       ∀ x : ℕ • x + 0 = x
+  Proof for this:
+    For any `x : ℕ`:
+        x + 0 = x — This is “Identity of +”
+ 
+Theorem:
+    ∀ x : ℕ • ∃ y : ℕ • x + y = x
+Proof:
+  For any `x : ℕ`:
+       ∃ y : ℕ • x + y = x
+     ⇐⟨ “∃-Introduction” ⟩
+       (x + y = x)[y ≔ 0]
+     =⟨ Substitution ⟩
+        x + 0 = x — This is “Identity of +”   
+
+Theorem:
+    ∀ y : ℕ • ∃ x : ℕ • 1 · x = y
+Proof:
+  For any `y : ℕ`:
+      ∃ x : ℕ • 1 · x = y
+    ⇐⟨ “∃-Introduction” ⟩
+      (1 · x = y)[x ≔ y]
+    =⟨ Substitution ⟩
+       1 · y = y — This is “Identity of ·”
+
+Theorem “Existence of Upper Bounds”:
+    ∀ x : ℕ • ∀ y : ℕ •  ∃ z : ℕ • x ≤ z  ∧  y ≤ z
+Proof:
+  For any `x : ℕ`:
+    For any `y : ℕ`:
+        ∃ z : ℕ • x ≤ z  ∧  y ≤ z
+      ⇐⟨ “∃-Introduction” ⟩
+        (x ≤ z  ∧  y ≤ z)[z ≔ x + y]
+      =⟨ Substitution ⟩
+         x ≤ x + y  ∧  y ≤ x + y
+      =⟨ “Identity of +” ⟩
+         x + 0 ≤ x + y  ∧  y + 0 ≤ x + y
+      =⟨ “Isotonicity of +” , “Zero is least element”, “Idempotency of ∧”⟩ 
+         true
+         
+Theorem: ∀ x : ℕ • ∃ y : ℕ • x + y = 7 · x
+Proof:
+  For any `x : ℕ`:
+      ∃ y : ℕ • x + y = 7 · x
+    ⇐⟨ “∃-Introduction” ⟩
+      (x + y = 7 · x)[y ≔ 6 · x]
+    =⟨ Substitution, “Identity of ·” ⟩
+      (1 · x + 6 · x = 7 · x)
+    =⟨ “Distributivity of · over +” ⟩
+      ((1 + 6) · x = 7 · x)
+    =⟨ Fact `1 + 6 = 7` , “Reflexivity of =” ⟩
+      true   
+
+Theorem: (∃ y : ℕ • ∀ x : ℕ • x + y = 7 · x) ≡ false
+Proof:
+      (∃ y : ℕ • ∀ x : ℕ • x + y = 7 · x) ≡ false
+    =⟨ (3.15) ⟩
+       ¬ (∃ y : ℕ • ∀ x : ℕ • x + y = 7 · x)
+    =⟨ “Generalised De Morgan” ⟩
+       ∀ y : ℕ • ∃ x : ℕ • ¬ (x + y = 7 · x)
+  Proof for this:
+    For any `y : ℕ`:
+        ∃ x : ℕ • ¬ (x + y = 7 · x)
+      ⇐⟨ “∃-Introduction” ⟩
+        (¬ (x + y = 7 · x))[x ≔ y + 1]
+      =⟨ Substitution ⟩
+         ¬ (y + 1 + y = 7 · (y + 1))
+      =⟨ “Distributivity of · over +”, Evaluation ⟩
+         ¬ (y + 1 + y = 7 · y + 6 + 1)
+      =⟨ “Cancellation of +” ⟩    
+         ¬ (y + y = 7 · y + 6)
+      =⟨ Fact `2 + 5 = 7`, “Multiplying by 2” ⟩
+         ¬ (2 · y = (2 + 5) · y + 6) 
+      =⟨ “Distributivity of · over +” , “Identity of +”, “Cancellation of +” ⟩
+         ¬ (0 =  5 · y + 6)
+      =⟨ Fact `6 = suc 5`, “Definition of + for `suc`” ⟩
+         ¬ (0 = suc (5 · y + 5))
+      =⟨ “Zero is not successor” , “Negation of `false`” ⟩
+          true  
+ 
+Theorem: (∃ y : ℕ • ∀ x : ℕ • x + y = 7 · x) ≡ false
+Proof:
+  With (3.15) and “Generalised De Morgan”:
+    Subproof for `∀ y : ℕ • ∃ x : ℕ • ¬ (x + y = 7 · x)`:
+        For any `y : ℕ`:
+            ∃ x : ℕ • ¬ (x + y = 7 · x)
+          ⇐⟨ “∃-Introduction” ⟩
+            (¬ (x + y = 7 · x))[x ≔ y + 1]
+          =⟨ Substitution ⟩
+             ¬ (y + 1 + y = 7 · (y + 1))
+          =⟨ “Distributivity of · over +”, Evaluation ⟩
+             ¬ (y + 1 + y = 7 · y + 6 + 1)
+          =⟨ “Cancellation of +” ⟩    
+             ¬ (y + y = 7 · y + 6)
+          =⟨ Fact `2 + 5 = 7`, “Multiplying by 2” ⟩
+             ¬ (2 · y = (2 + 5) · y + 6) 
+          =⟨ “Distributivity of · over +” , “Identity of +”, “Cancellation of +” ⟩
+             ¬ (0 =  5 · y + 6)
+          =⟨ Fact `6 = suc 5`, “Definition of + for `suc`” ⟩
+             ¬ (0 = suc (5 · y + 5))
+          =⟨ “Zero is not successor” , “Negation of `false`” ⟩
+              true  
+
+Theorem: ∀ x : ℕ • ∃ y : ℕ • x + 2 · x = y · x
+Proof:
+  For any `x : ℕ`:
+      ∃ y : ℕ • x + 2 · x = y · x
+    ⇐⟨ “∃-Introduction” ⟩
+      (x + 2 · x = y · x)[y ≔ 3]
+    =⟨ Substitution ⟩
+       x + 2 · x = 3 · x
+    =⟨ “Multiplying by 2” ⟩
+       x + x + x = 3 · x — This is “Multiplying by 3”  
+       
+Theorem: ∃ y : ℕ • ∀ x : ℕ • x + 2 · x = y · x
+Proof:
+      ∃ y : ℕ • ∀ x : ℕ • x + 2 · x = y · x
+    ⇐⟨ “∃-Introduction” ⟩
+      (∀ x : ℕ • x + 2 · x = y · x)[y ≔ 3]
+    =⟨ Substitution ⟩
+       ∀ x : ℕ • x + 2 · x = 3 · x
+  Proof for this:
+    For any `x : ℕ`:
+        x + 2 · x = 3 · x
+      =⟨ “Multiplying by 2” ⟩
+        x + x + x = 3 · x — This is “Multiplying by 3”  

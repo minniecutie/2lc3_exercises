@@ -1,0 +1,225 @@
+Calculation:
+    a ⦗ R ⦘ b ⦗ S ⦘ c
+  ≡⟨ “Reflexivity of ≡” ⟩
+    a ⦗ R ⦘ b   ∧  b ⦗ S ⦘ c
+
+Axiom “Infix relationship” “Definition of `_⦗_⦘_`”:
+    a ⦗ R ⦘ b  ≡  ⟨ a , b ⟩ ∈ R
+
+Theorem “Relation inclusion”:
+    R ⊆ S  ≡  (∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `R ⊆ S ⇒ (∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)`:
+      Assuming `R ⊆ S`:
+        For any `x`, `y`:
+            x ⦗ R ⦘ y
+          =⟨ “Infix relationship” ⟩
+            ⟨ x, y ⟩ ∈ R
+          ⇒⟨ Assumption `R ⊆ S` with “Subset” ⟩
+            ⟨ x, y ⟩ ∈ S
+          =⟨ “Infix relationship” ⟩
+            x ⦗ S ⦘ y   
+    Subproof for `(∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y) ⇒ R ⊆ S `:
+          (∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)
+        =⟨ “Infix relationship” ⟩
+          (∀ x • ∀ y • ⟨ x, y ⟩ ∈ R ⇒ ⟨ x, y ⟩ ∈ S)
+        =⟨ “Fresh ∀” ⟩
+          ∀ a • (∀ x • ∀ y • ⟨ x, y ⟩ ∈ R ⇒ ⟨ x, y ⟩ ∈ S) 
+        ⇒⟨ “Monotonicity of ∀” with “Instantiation” (9.13) ⟩
+           ∀ a • ((∀ y • ⟨ x, y ⟩ ∈ R ⇒ ⟨ x, y ⟩ ∈ S)[x ≔ fst a])
+        =⟨ Substitution ⟩
+          ∀ a • (∀ y • ⟨ fst a , y ⟩ ∈ R ⇒ ⟨ fst a, y ⟩ ∈ S)
+        ⇒⟨ “Monotonicity of ∀” with “Instantiation” (9.13) ⟩
+          ∀ a • (⟨ fst a , y ⟩ ∈ R ⇒ ⟨ fst a, y ⟩ ∈ S)[y ≔ snd a]
+        =⟨ Substitution ⟩
+          ∀ a • ⟨ fst a , snd a ⟩ ∈ R ⇒ ⟨ fst a, snd a ⟩ ∈ S
+        =⟨ “Pair extensionality” ⟩
+          ∀ a • a ∈ R ⇒ a ∈ S
+        =⟨ “Subset” ⟩
+          R ⊆ S
+
+Theorem “Alternative way to prove Relation inclusion”:
+    R ⊆ S  ≡  (∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `R ⊆ S ⇒ (∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)`:
+      Assuming `R ⊆ S`:
+        For any `x`, `y`:
+            x ⦗ R ⦘ y
+          =⟨ “Infix relationship” ⟩
+            ⟨ x, y ⟩ ∈ R
+          ⇒⟨ Assumption `R ⊆ S` with “Subset” ⟩
+            ⟨ x, y ⟩ ∈ S
+          =⟨ “Infix relationship” ⟩
+            x ⦗ S ⦘ y   
+    Subproof for `(∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y) ⇒ R ⊆ S `:
+      Assuming `(∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)`:
+          R ⊆ S
+        =⟨ “Subset” ⟩
+          ∀ x • x ∈ R ⇒ x ∈ S
+        =⟨ “Pair extensionality” ⟩
+          ∀ x • ⟨fst x, snd x⟩ ∈ R ⇒ ⟨fst x, snd x⟩ ∈ S
+        =⟨ “Infix relationship” ⟩
+          ∀ x • fst x ⦗ R ⦘ snd x ⇒ fst x ⦗ S ⦘ snd x
+        =⟨ Assumption `(∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)` ⟩
+          ∀ x • true
+        =⟨ “True ∀ body” ⟩
+          true 
+
+Theorem “Relation extensionality”:
+    R = S  ≡  (∀ x • ∀ y • x ⦗ R ⦘ y  ≡  x ⦗ S ⦘ y)
+Proof:
+    R = S
+  ≡⟨ “Mutual inclusion” ⟩
+    R ⊆ S  ∧  S ⊆ R
+  ≡⟨ “Relation inclusion”, “Distributivity of ∀ over ∧” ⟩
+    ∀ x • ∀ y • (x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y) ∧ (x ⦗ S ⦘ y  ⇒  x ⦗ R ⦘ y)
+  ≡⟨ “Mutual implication” ⟩
+    ∀ x • ∀ y • x ⦗ R ⦘ y  ≡  x ⦗ S ⦘ y
+ 
+Corollary “Relation extensionality”:
+    R = S  ≡  (∀ x, y • x ⦗ R ⦘ y  ≡  x ⦗ S ⦘ y)
+Proof:
+  By “Relation extensionality”, (8.20a)
+
+Corollary “Relation inclusion”:
+    R ⊆ S  ≡  (∀ x • ∀ y ❙ x ⦗ R ⦘ y  •  x ⦗ S ⦘ y)
+Proof:
+  By “Relation inclusion”, “Trading for ∀” (9.2)
+
+Corollary “Relation inclusion”:
+    R ⊆ S  ≡  (∀ x, y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)
+Proof:
+  By “Relation inclusion”, (8.20a)
+
+Corollary “Relation inclusion”:
+    R ⊆ S  ≡  (∀ x, y ❙ x ⦗ R ⦘ y  •  x ⦗ S ⦘ y)
+Proof:
+    R ⊆ S
+  =⟨ “Relation inclusion” ⟩
+    (∀ x, y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)
+  =⟨ “Nesting for ∀” ⟩
+    (∀ x • ∀ y • x ⦗ R ⦘ y  ⇒  x ⦗ S ⦘ y)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • ∀ y ❙ x ⦗ R ⦘ y  •  x ⦗ S ⦘ y)   
+  =⟨ “Nesting for ∀” ⟩
+    (∀ x, y ❙ x ⦗ R ⦘ y  •  x ⦗ S ⦘ y)   
+
+Axiom “Relationship via ⌜_⌝”:
+    a ⦗ ⌜ f ⌝ ⦘ b  ≡  f a b
+
+Theorem “Relation union”:
+    a ⦗ R ∪ S ⦘ b  ≡  a ⦗ R ⦘ b ∨ a ⦗ S ⦘ b
+Proof:
+    a ⦗ R ∪ S ⦘ b
+  =⟨ “Infix relationship” ⟩
+    ⟨ a, b ⟩ ∈ R ∪ S
+  =⟨ “Union” ⟩
+    ⟨ a, b ⟩ ∈ R ∨ ⟨ a, b ⟩ ∈ S
+  =⟨ “Infix relationship” ⟩
+    a ⦗ R ⦘ b ∨ a ⦗ S ⦘ b 
+
+Theorem “Relation intersection”:
+    a ⦗ R ∩ S ⦘ b  ≡  a ⦗ R ⦘ b ∧ a ⦗ S ⦘ b
+Proof:
+     a ⦗ R ∩ S ⦘ b
+  =⟨ “Infix relationship” ⟩
+    ⟨ a, b ⟩ ∈ R ∩ S
+  =⟨ “Intersection” ⟩
+    ⟨ a, b ⟩ ∈ R ∧ ⟨ a, b ⟩ ∈ S
+  =⟨ “Infix relationship” ⟩
+    a ⦗ R ⦘ b ∧ a ⦗ S ⦘ b
+
+Theorem “Relation difference”:
+    a ⦗ R - S ⦘ b  ≡  a ⦗ R ⦘ b ∧ ¬ (a ⦗ S ⦘ b)
+Proof:
+    a ⦗ R - S ⦘ b
+  =⟨ “Infix relationship” ⟩
+    ⟨ a, b ⟩ ∈ R - S
+  =⟨ “Set difference” ⟩
+    ⟨ a, b ⟩ ∈ R ∧ ¬ (⟨ a, b ⟩ ∈ S)
+  =⟨ “Infix relationship” ⟩
+    a ⦗ R ⦘ b ∧ ¬ (a ⦗ S ⦘ b)    
+
+Theorem “Relation pseudocomplement”:
+    a ⦗ R ➩ S ⦘ b  ≡  a ⦗ R ⦘ b  ⇒  a ⦗ S ⦘ b
+Proof:
+     a ⦗ R ➩ S ⦘ b
+  =⟨ “Infix relationship” ⟩
+    ⟨ a, b ⟩ ∈ R ➩ S
+  =⟨ “Membership in ➩” ⟩
+    ⟨ a, b ⟩ ∈ R ⇒ ⟨ a, b ⟩ ∈ S
+  =⟨ “Infix relationship” ⟩
+    a ⦗ R ⦘ b ⇒ a ⦗ S ⦘ b
+
+Theorem “Relation complement”:
+    a ⦗ ~ R ⦘ b  ≡  ¬ (a ⦗ R ⦘ b)
+Proof:
+    a ⦗ ~ R ⦘ b 
+  =⟨ “Infix relationship” ⟩
+    ⟨ a, b ⟩ ∈ ~ R
+  =⟨ “Set complement” ⟩
+    ¬ (⟨ a, b ⟩ ∈ R)
+  =⟨ “Infix relationship” ⟩
+    ¬ (a ⦗ R ⦘ b)
+
+Theorem “Empty relation”:  a ⦗ {} ⦘ b  ≡ false
+Proof:
+  By “Infix relationship”, “Empty set”
+
+Theorem “Universal relation” “Relationship via `𝐔`”: a ⦗ 𝐔 ⦘ b
+Proof:
+  By “Infix relationship”, “Universal set”
+
+Theorem “Relationship via ×”: a ⦗ Y × Z ⦘ b  ≡  a ∈ Y ∧ b ∈ Z
+Proof:
+  By “Infix relationship”, “Membership in ×”, “Definition of `fst`”,
+     “Definition of `snd`”
+
+Theorem “Relationship via `𝐔 × 𝐔`”: a ⦗ 𝐔 × 𝐔 ⦘ b
+Proof:
+  By “Relationship via ×”, “Universal set”, “Idempotency of ∧”
+
+Theorem “Cartesian product of universal sets”: 𝐔 × 𝐔 = 𝐔
+Proof:
+  Using “Set extensionality”:
+    For any `x`:
+        x ∈ 𝐔 × 𝐔
+      =⟨ “Membership in ×” ⟩
+        fst x ∈ 𝐔 ∧ snd x ∈ 𝐔
+      =⟨ “Universal set”, “Idempotency of ∧” ⟩
+        true
+      =⟨ “Universal set” ⟩
+        x ∈ 𝐔  
+
+Lemma “Singleton relation”:
+    a₁ ⦗ { ⟨ a₂ , b₂ ⟩ } ⦘ b₁  ≡  a₁ = a₂ ∧ b₁ = b₂
+Proof:
+    a₁ ⦗ { ⟨ a₂ , b₂ ⟩ } ⦘ b₁
+  =⟨ “Infix relationship” ⟩
+    ⟨ a₁, b₁ ⟩ ∈ { ⟨ a₂ , b₂ ⟩ }
+  =⟨ “Singleton set membership” ⟩  
+    ⟨ a₁, b₁ ⟩ = ⟨ a₂ , b₂ ⟩ 
+  =⟨ “Pair equality”, “Definition of `fst`” , “Definition of `snd`” ⟩
+    a₁ = a₂ ∧ b₁ = b₂   
+
+Lemma “Singleton relation inclusion”:
+    { ⟨ a , b ⟩ } ⊆ R  ≡  a ⦗ R ⦘ b
+Proof:
+    { ⟨ a , b ⟩ } ⊆ R
+  =⟨ “Singleton set inclusion” ⟩
+    ⟨ a , b ⟩ ∈ R
+  =⟨ “Infix relationship” ⟩
+    a ⦗ R ⦘ b
+
+Axiom “Relation converse” “Relationship via ˘”:
+    y ⦗ R ˘ ⦘ x  ≡  x ⦗ R ⦘ y
+
+Axiom “Relation composition”:
+    a ⦗ R ⨾ S ⦘ c  ≡  ∃ b • a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c
+
+Axiom “Identity relation” “Relationship via 𝕀”:
+    x ⦗ 𝕀 ⦘ y  ≡  x = y
+
+Axiom “Relationship via `id`”:  x ⦗ id S ⦘ y  ≡  x = y ∈ S

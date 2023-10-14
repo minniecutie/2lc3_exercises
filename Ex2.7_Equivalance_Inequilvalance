@@ -1,0 +1,148 @@
+Theorem (3.11) “¬ connection”: ¬ p ≡ q ≡ p ≡ ¬ q
+Proof:
+    ¬ p ≡ q
+  ≡ ⟨ “Commutativity of ¬ with ≡” with `p, q ≔ p, q` ⟩
+    ¬(p ≡ q)
+  ≡ ⟨ “Symmetry of ≡” with `p, q ≔ p, q` ⟩
+    ¬(q ≡ p)
+  ≡ ⟨ “Commutativity of ¬ with ≡” with `p, q ≔ q, p` ⟩
+    ¬ q ≡ p
+
+Theorem (3.11) “Cancellation of ¬”: (¬ p ≡ ¬ q) ≡ (p ≡ q)
+Proof:
+    (¬ p ≡ ¬ q) ≡ (p ≡ q)
+  ≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ (p ≡ ¬ q) ≡ (p ≡ q)
+  ≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ (p ≡ ¬ q ≡ (p ≡ q))
+  ≡ ⟨ “Symmetry of ≡” ⟩
+    ¬ (p ≡ (p ≡ q) ≡ ¬ q)
+  ≡ ⟨ “Associativity of ≡” ⟩
+    ¬ ((p ≡ p) ≡ q ≡ ¬ q)
+  ≡ ⟨ “Identity of ≡” ⟩
+    ¬ (true ≡ q ≡ ¬ q)
+  ≡ ⟨ “Symmetry of ≡” ⟩
+    ¬ (true ≡ ¬ q ≡ q)
+  ≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ (true ≡ ¬ (q ≡ q))
+  ≡ ⟨ “Identity of ≡” ⟩
+    ¬ (true ≡ ¬ true)
+  ≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ true ≡ ¬ true
+  ≡ ⟨ “Identity of ≡”   ⟩
+    true
+
+Theorem (3.12) “Double negation”: ¬ ¬ p ≡ p
+Proof:
+    ¬ ¬ p ≡ p
+  ≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ ( ¬ p ≡ p)
+  ≡ ⟨ “Symmetry of ≡” ⟩
+    ¬ (p ≡ ¬ p)
+  ≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ p ≡ ¬ p
+  ≡ ⟨ “Identity of ≡” ⟩
+    true
+
+Theorem (3.13) “Negation of `false`”: ¬ false ≡ true
+Proof:
+    ¬ false ≡ true
+  =⟨ “Commutativity of ¬ with ≡”⟩ 
+    ¬ (false ≡ true)
+  =⟨ “Symmetry of ≡”⟩ 
+    ¬ (true ≡ false)
+  =⟨ “Commutativity of ¬ with ≡” ⟩ 
+    ¬ true ≡ false
+  =⟨ “Definition of `false`” ⟩ 
+    false ≡ false
+  =⟨ “Identity of ≡” ⟩ 
+    true
+
+Theorem (3.14): (p ≢ q) ≡ ¬ p ≡ q
+Proof:
+    (p ≢ q) 
+  =⟨ “Definition of ≢” ⟩
+    ¬ (p ≡ q)
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ p ≡ q
+   
+ 
+Theorem (3.15) “Definition of ¬ from ≡”: ¬ p ≡ p ≡ false
+Proof:
+    ¬ p ≡ p
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ (p ≡ p)
+  =⟨ “Identity of ≡” ⟩
+    ¬ true
+  =⟨ “Definition of `false`” ⟩
+    false
+
+Theorem “Identity of ≢”: (p ≢ false) ≡ p
+Proof:
+    p ≢ false
+  =⟨ “Definition of ≢” ⟩ 
+    ¬ (p ≡ false)
+  =⟨ “Commutativity of ¬ with ≡” ⟩ 
+     p ≡ ¬ false
+  =⟨ “Negation of `false`” ⟩ 
+     p ≡ true
+  =⟨ “Identity of ≡” ⟩ 
+     p 
+
+Theorem (3.16) “Symmetry of ≢”: (p ≢ q) ≡ (q ≢ p)
+Proof:
+    (p ≢ q)
+  ≡⟨ “Definition of ≢” ⟩
+    ¬ (p ≡ q)
+  ≡⟨ “Symmetry of ≡” ⟩
+    ¬ (q ≡ p)
+  ≡⟨ “Definition of ≢” ⟩
+    q ≢  p
+    
+Theorem (3.17) “Associativity of ≢”: ((p ≢ q) ≢ r) ≡ (p ≢ (q ≢ r))
+Proof:
+    ((p ≢ q) ≢ r) 
+  ≡⟨ “Symmetry of ≢”⟩ 
+    r ≢  (p ≢ q)
+  ≡⟨ “Definition of ≢”⟩ 
+    r ≢  ¬ (p ≡ q)
+  ≡⟨ “Symmetry of ≡”⟩ 
+    r ≢  ¬ (q ≡ p)
+  ≡⟨ “Definition of ≢”⟩ 
+    ¬ (r ≡ ¬ (q ≡ p))
+  ≡⟨ “Commutativity of ¬ with ≡”⟩ 
+    ¬ (r ≡ ¬ q ≡ p)
+  ≡⟨ “Associativity of ≡”⟩ 
+    ¬ ((r ≡ ¬ q) ≡ p)
+  ≡⟨ “Definition of ≢” ⟩ 
+    (r ≡ ¬ q) ≢ p
+  ≡⟨ “Symmetry of ≡” ⟩ 
+    (¬ q ≡ r) ≢ p
+  ≡⟨ “Commutativity of ¬ with ≡” ⟩ 
+    ¬ (q ≡ r) ≢ p
+  ≡⟨ “Definition of ≢” ⟩ 
+    (q ≢ r) ≢ p
+  ≡⟨ “Symmetry of ≢” ⟩ 
+    p ≢ (q ≢ r)
+
+Theorem (3.18) “Mutual associativity of ≡ with ≢”: ((p ≢ q) ≡ r) ≡ (p ≢ (q ≡ r))
+Proof:
+    ((p ≢ q) ≡ r) ≡ (p ≢ (q ≡ r))
+  =⟨ “Definition of ≢” ⟩
+     (¬(p ≡ q) ≡ r) ≡ ¬(p ≡ (q ≡ r))
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+     ¬((p ≡ q) ≡ r) ≡ ¬(p ≡ (q ≡ r))
+  =⟨ “Cancellation of ¬” ⟩
+     ((p ≡ q) ≡ r) ≡ (p ≡ (q ≡ r)) — This is “Associativity of ≡”
+
+Theorem (3.19) “Mutual interchangeability of ≡ with ≢”: (p ≢ q ≡ r) ≡ (p ≡ q ≢ r)
+Proof:
+    (p ≢ q ≡ r) ≡ (p ≡ q ≢ r)
+  = ⟨ “Definition of ≢” ⟩
+    ¬(p ≡ (q ≡ r)) ≡ (p ≡ ¬(q ≡ r))
+  = ⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬(p ≡ (q ≡ r)) ≡ ¬(p ≡ (q ≡ r))
+  = ⟨ “Cancellation of ¬” ⟩
+    (p ≡ (q ≡ r)) ≡ (p ≡ (q ≡ r))
+  = ⟨ “Identity of ≡” ⟩
+    true

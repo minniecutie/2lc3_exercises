@@ -1,0 +1,211 @@
+## Those are the lemmas that should be given as axioms, but in fact they aren't, so I will proof them.
+## They are not used in this exercise. 
+
+Lemma “Definition of `reverse` for ▹”: y ◃ reverse xs = reverse (xs ▹ y)
+Proof:
+  By induction on `xs : Seq A`:
+    Base case `y ◃ reverse 𝜖 = reverse (𝜖 ▹ y)`:
+        y ◃ reverse 𝜖 = reverse (𝜖 ▹ y)
+      =⟨ “Definition of `reverse` for 𝜖”, “Definition of ▹ for 𝜖” ⟩
+        y ◃ 𝜖 = reverse (y ◃ 𝜖)
+      =⟨ “Definition of `reverse` for ◃” ⟩
+        y ◃ 𝜖 = reverse 𝜖 ▹ y
+      =⟨ “Definition of `reverse` for 𝜖”⟩  
+        y ◃ 𝜖 = 𝜖 ▹ y — This is “Definition of ▹ for 𝜖”
+    Induction step `∀ x : A • y ◃ reverse (x ◃ xs) = reverse ((x ◃ xs) ▹ y)`:
+      For any `x : A`:
+          reverse ((x ◃ xs) ▹ y)
+        =⟨ “Definition of ▹ for ◃” ⟩
+          reverse (x ◃ (xs ▹ y))
+        =⟨ “Definition of `reverse` for ◃” ⟩
+          reverse (xs ▹ y) ▹ x
+        =⟨ Induction hypothesis ⟩
+          (y ◃ reverse xs) ▹ x
+        =⟨ “Definition of ▹ for ◃” ⟩  
+          y ◃ (reverse xs ▹ x)
+        =⟨ “Definition of `reverse` for ◃” ⟩ 
+          y ◃ reverse (x ◃ xs)
+
+Lemma “Double reverse”: xs = reverse (reverse xs)
+Proof:
+  By induction on `xs : Seq A`:
+    Base case `𝜖 = reverse (reverse 𝜖)`:
+      By “Definition of `reverse` for 𝜖”, “Reflexivity of =”
+    Induction step `∀ x : A • x ◃ xs = reverse (reverse (x ◃ xs))`:
+      For any `x : A`:
+          reverse (reverse (x ◃ xs))
+        =⟨ “Definition of `reverse` for ◃” ⟩
+          reverse (reverse xs ▹ x)
+        =⟨ “Definition of `reverse` for ▹” ⟩  
+          x ◃ reverse (reverse xs)
+        =⟨ Induction hypothesis ⟩
+          x ◃ xs   
+
+Lemma “Cancellation of ▹”: xs ▹ x = ys ▹ y ≡  x = y ∧ xs = ys
+Proof:
+  By induction on `xs : Seq A`:
+    Base case `𝜖 ▹ x = ys ▹ y ≡  x = y ∧ 𝜖 = ys`:
+      By induction on `ys : Seq A`:
+        Base case `𝜖 ▹ x = 𝜖 ▹ y ≡  x = y ∧ 𝜖 = 𝜖`:
+            𝜖 ▹ x = 𝜖 ▹ y
+          =⟨ “Definition of ▹ for 𝜖” ⟩ 
+            x ◃ 𝜖 = y ◃ 𝜖 
+          =⟨ “Cancellation of ◃” ⟩
+            x = y ∧ 𝜖 = 𝜖  
+        Induction step `∀ t : A • 𝜖 ▹ x = (t ◃ ys) ▹ y ≡  x = y ∧ 𝜖 = (t ◃ ys)`:
+          For any `t : A`:
+              𝜖 ▹ x = (t ◃ ys) ▹ y
+            =⟨ “Definition of ▹ for 𝜖” , “Definition of ▹ for ◃” ⟩
+              x ◃ 𝜖 = t ◃ (ys ▹ y)
+            =⟨ “Cancellation of ◃” ⟩
+              x = t ∧ 𝜖 = ys ▹ y
+            =⟨ “Snoc is not empty”, “Zero of ∧” ⟩
+              false
+            =⟨ “Zero of ∧”, “Cons is not empty” ⟩
+              x = y ∧ 𝜖 = (t ◃ ys)    
+    Induction step `∀ t : A • (t ◃ xs) ▹ x = ys ▹ y ≡  x = y ∧ (t ◃ xs) = ys`:
+      For any `t`:
+        By induction on `ys : Seq A`:
+          Base case `(t ◃ xs) ▹ x = 𝜖 ▹ y ≡  x = y ∧ (t ◃ xs) = 𝜖`:
+              (t ◃ xs) ▹ x = 𝜖 ▹ y
+            =⟨ “Definition of ▹ for 𝜖” , “Definition of ▹ for ◃” ⟩
+              t ◃ (xs ▹ x) = y ◃ 𝜖 
+            =⟨ “Cancellation of ◃” ⟩
+              t = y ∧ xs ▹ x = 𝜖 
+            =⟨ “Snoc is not empty”, “Zero of ∧” ⟩
+              false
+            =⟨ “Zero of ∧”, “Cons is not empty” ⟩
+              x = y ∧ (t ◃ xs) = 𝜖     
+          Induction step `∀ k • (t ◃ xs) ▹ x = (k ◃ ys) ▹ y ≡  x = y ∧ (t ◃ xs) = (k ◃ ys)`:
+            For any `k`:
+                (t ◃ xs) ▹ x = (k ◃ ys) ▹ y
+              =⟨ “Definition of ▹ for ◃” ⟩ 
+                 t ◃ (xs ▹ x) = k ◃ (ys ▹ y)
+              =⟨ “Cancellation of ◃” ⟩
+                 t = k ∧ xs ▹ x = ys ▹ y
+              =⟨ Induction hypothesis `xs ▹ x = ys ▹ y ≡  x = y ∧ xs = ys` ⟩  
+                 t = k ∧ x = y ∧ xs = ys
+              =⟨ “Cancellation of ◃” ⟩
+                 x = y ∧ (t ◃ xs) = (k ◃ ys) 
+
+Lemma “Reverse equal”: xs = ys ≡ reverse xs = reverse ys
+Proof:
+  By induction on `xs : Seq A`:
+    Base case `𝜖 = ys ≡ reverse 𝜖 = reverse ys`:
+      By induction on `ys : Seq A`:
+        Base case `𝜖 = 𝜖 ≡ reverse 𝜖 = reverse 𝜖`:
+          By “Definition of `reverse` for 𝜖”, “Reflexivity of =”
+        Induction step `∀ y : A • 𝜖 = y ◃ ys ≡ reverse 𝜖 = reverse (y ◃ ys)`:
+          For any `y : A`:
+              reverse 𝜖 = reverse (y ◃ ys)
+            =⟨ “Definition of `reverse` for ◃” , “Definition of `reverse` for 𝜖” ⟩
+              𝜖 = reverse ys ▹ y
+            =⟨ “Snoc is not empty” ⟩
+              false
+            =⟨ “Cons is not empty” ⟩
+              𝜖 = y ◃ ys        
+    Induction step `∀ x : A • x ◃ xs = ys ≡ reverse (x ◃ xs) = reverse ys`:
+      For any `x : A`:
+        By induction on `ys : Seq A`:
+          Base case `x ◃ xs = 𝜖 ≡ reverse (x ◃ xs) = reverse 𝜖`:
+              reverse (x ◃ xs) = reverse 𝜖
+            =⟨ “Definition of `reverse` for ◃” , “Definition of `reverse` for 𝜖” ⟩
+              reverse xs ▹ x = 𝜖 
+            =⟨ “Snoc is not empty” ⟩
+              false
+            =⟨ “Cons is not empty” ⟩
+              x ◃ xs = 𝜖   
+          Induction step `∀ y : A • x ◃ xs = y ◃ ys ≡ reverse (x ◃ xs) = reverse (y ◃ ys)`:
+            For any `y : A`:
+                reverse (x ◃ xs) = reverse (y ◃ ys)
+              =⟨ “Definition of `reverse` for ◃” ⟩
+                reverse xs ▹ x = reverse ys ▹ y
+              =⟨ “Cancellation of ▹” ⟩ 
+                reverse xs = reverse ys ∧ x = y
+              =⟨ Induction hypothesis `xs = ys ≡ reverse xs = reverse ys` ⟩
+                xs = ys ∧ x = y
+              =⟨ “Cancellation of ◃” ⟩
+                x ◃ xs = y ◃ ys    
+
+## End lemmas
+
+## While-loop examples
+Theorem “While-example”:
+      Pre
+    ⇒⁅  INIT ⍮
+        while B
+          do
+            C
+          od ⍮
+        FINAL
+      ⁆
+      Post
+Proof:
+    Pre    ╍╍╍  Precondition
+  ⇒⁅ INIT ⁆  ⟨ ? ⟩
+    Q      ╍╍╍  Invariant
+  ⇒⁅ while B do
+        C
+      od ⁆   ⟨ “While” with subproof:
+          B ∧ Q     ╍╍╍  Loop condition and invariant
+        ⇒⁅ C ⁆  ⟨ ? ⟩
+          Q         ╍╍╍  Invariant
+    ⟩
+    ¬ B ∧ Q   ╍╍╍ Negated loop condition, and invariant
+  ⇒⁅ FINAL ⁆  ⟨ ? ⟩
+    Post      ╍╍╍  Postcondition
+    
+## End example
+
+
+Theorem “Proper initialisation for `rev`”:
+      xs = xs₀
+    ⇒⁅ ys := 𝜖 ⁆
+      reverse xs ⌢ ys = reverse xs₀
+Proof:
+    xs = xs₀
+  ⇒⟨ “Leibniz” ⟩
+    (reverse z)[z ≔ xs] = (reverse z)[z ≔ xs₀]
+  =⟨ Substitution ⟩   
+    reverse xs = reverse xs₀
+  =⟨ “Right-identity of ⌢” ⟩ 
+    reverse xs ⌢ 𝜖 = reverse xs₀
+  ⇒⁅ ys := 𝜖 ⁆ ⟨ “Assignment” with Substitution ⟩ 
+    reverse xs ⌢ ys = reverse xs₀
+ 
+ 
+Theorem “Reversing of singly-linked lists”:
+      xs = xs₀
+    ⇒⁅  ys := 𝜖 ⍮
+        while xs ≠ 𝜖
+          do
+            ys := head xs ◃ ys ⍮
+            xs := tail xs
+          od
+      ⁆
+      ys = reverse xs₀
+Proof:
+    xs = xs₀    ╍╍╍  Precondition
+  ⇒⟨ “Leibniz” ⟩
+    (reverse z)[z ≔ xs] = (reverse z)[z ≔ xs₀]
+  =⟨ Substitution ⟩ 
+    reverse xs = reverse xs₀
+  =⟨ “Right-identity of ⌢” ⟩ 
+    reverse xs ⌢ 𝜖 = reverse xs₀
+  ⇒⁅ ys := 𝜖 ⁆  ⟨ “Assignment” with Substitution ⟩
+    reverse xs ⌢ ys = reverse xs₀     ╍╍╍  Invariant
+  ⇒⁅ while xs ≠ 𝜖 do
+        ys := head xs ◃ ys ⍮
+        xs := tail xs
+      od ⁆⟨ “While” with “Invariant for `rev`” ⟩
+    ¬ (xs ≠ 𝜖)  ∧  reverse xs ⌢ ys = reverse xs₀   ╍╍╍ Negated loop condition, and invariant
+  =⟨ “Definition of ≠”, “Double negation” ⟩
+    xs = 𝜖 ∧ reverse xs ⌢ ys = reverse xs₀
+  =⟨ Substitution ⟩
+    xs = 𝜖 ∧ (reverse ds ⌢ ys = reverse xs₀)[ds ≔ xs]
+  =⟨ “Replacement” (3.84a) , Substitution ⟩
+    xs = 𝜖 ∧ reverse 𝜖 ⌢ ys = reverse xs₀
+  =⟨ “Definition of `reverse` for 𝜖”, “Left-identity of ⌢” ⟩
+    xs = 𝜖 ∧ ys = reverse xs₀ 
+  ⇒⟨ “Weakening” (3.76b) ⟩
+    ys = reverse xs₀      ╍╍╍  Postcondition

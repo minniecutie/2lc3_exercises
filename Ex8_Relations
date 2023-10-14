@@ -1,0 +1,329 @@
+Theorem “Isotonicity of ˘”:  R ⊆ S   ≡   R ˘ ⊆ S ˘
+Proof:
+    R ⊆ S
+  =⟨ “Relation inclusion” ⟩
+    ∀ x, y • x ⦗ R ⦘ y ⇒ x ⦗ S ⦘ y 
+  =⟨ “Relation converse” ⟩
+    ∀ x, y • y ⦗ R ˘ ⦘ x ⇒ y ⦗ S ˘ ⦘ x
+  =⟨ “Dummy list permutation for ∀” ⟩
+    ∀ y, x • y ⦗ R ˘ ⦘ x ⇒ y ⦗ S ˘ ⦘ x 
+  =⟨ “Relation inclusion” ⟩
+    R ˘ ⊆ S ˘    
+
+Theorem “Domain of converse”: Dom (R ˘) = Ran R
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ x • x ∈ Dom (R ˘) ≡ x ∈ Ran R`:
+      For any `x`:
+          x ∈ Dom (R ˘)
+        =⟨ “Membership in `Dom`” ⟩
+          ∃ y • x ⦗ R ˘ ⦘ y
+        =⟨ “Relation converse” ⟩
+          ∃ y • y ⦗ R ⦘ x
+        =⟨ “Membership in `Ran`” ⟩
+          x ∈ Ran R
+          
+Theorem “Converse of ∪”:     (R ∪ S) ˘  =  R ˘ ∪ S ˘
+Proof:
+  Using “Relation extensionality”:
+    Subproof for `(∀ x • (∀ y • x ⦗ (R ∪ S) ˘ ⦘ y ≡ x ⦗ R ˘ ∪ S ˘ ⦘ y ))`:
+      For any `x`, `y`:
+          x ⦗ (R ∪ S) ˘ ⦘ y
+        =⟨ “Relation converse” ⟩
+          y ⦗ (R ∪ S) ⦘ x
+        =⟨ “Relation union” ⟩
+          y ⦗ R ⦘ x ∨ y ⦗ S ⦘ x
+        =⟨ “Relation converse” ⟩ 
+          x ⦗ R ˘ ⦘ y ∨ x ⦗ S ˘ ⦘ y 
+        =⟨ “Relation union” ⟩ 
+          x ⦗ R ˘ ∪ S ˘ ⦘ y
+ 
+Theorem “Distributivity of ⨾ over ∪”: Q ⨾ (R ∪ S)  =  Q ⨾ R  ∪  Q ⨾ S
+Proof:
+  Using “Relation extensionality”:
+    Subproof for `(∀ x • (∀ y • x ⦗ Q ⨾ (R ∪ S) ⦘ y ≡ x ⦗ Q ⨾ R  ∪  Q ⨾ S ⦘ y ))`:
+      For any `x`, `y`:
+          x ⦗ Q ⨾ (R ∪ S) ⦘ y
+        =⟨ “Relation composition” ⟩
+          ∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ∪ S ⦘ y
+        =⟨ “Relation union” ⟩
+          ∃ z • x ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∨ z ⦗ S ⦘ y)
+        =⟨ “Distributivity of ∧ over ∨” ⟩
+          ∃ z • (x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y) ∨ (x ⦗ Q ⦘ z ∧ z ⦗ S ⦘ y)
+        =⟨ “Distributivity of ∃ over ∨” ⟩   
+          (∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y) ∨ (∃ z • x ⦗ Q ⦘ z ∧ z ⦗ S ⦘ y)
+        =⟨ “Relation composition” ⟩ 
+          x ⦗ Q ⨾ R ⦘ y ∨ x ⦗ Q ⨾ S ⦘ y
+        =⟨ “Relation union” ⟩ 
+          x ⦗ Q ⨾ R  ∪  Q ⨾ S ⦘ y
+        
+Lemma “Simple”: (∃ x • y ∧ z) ⇒ (∃ x • y) ∧ (∃ x • z)
+Proof:
+    ∃ x • y ∧ z
+  =⟨ “Idempotency of ∧” ⟩
+    (∃ x • y ∧ z) ∧ (∃ x • y ∧ z)
+  ⇒⟨ “Monotonicity of ∧” with “Monotonicity of ∃” 
+      with “Weakening” (3.76b) ⟩
+    (∃ x • y) ∧ (∃ x • z) 
+
+Theorem “Sub-distributivity of ⨾ over ∩”: Q ⨾ (R ∩ S)  ⊆  Q ⨾ R  ∩  Q ⨾ S
+Proof:
+  Using “Relation inclusion”:
+    Subproof for `∀ x • ∀ y • x ⦗ Q ⨾ (R ∩ S) ⦘ y ⇒ x ⦗ Q ⨾ R  ∩  Q ⨾ S ⦘ y`:
+      For any `x`, `y`:
+          x ⦗ Q ⨾ (R ∩ S) ⦘ y
+        =⟨ “Relation composition” ⟩
+          ∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ∩ S ⦘ y
+        =⟨ “Relation intersection” ⟩
+          ∃ z • x ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∧ z ⦗ S ⦘ y)
+        =⟨ “Idempotency of ∧” ⟩
+          ∃ z • (x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y) ∧ (x ⦗ Q ⦘ z ∧ z ⦗ S ⦘ y)
+        ⇒⟨ “Simple” ⟩  
+          (∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y) ∧ (∃ z • x ⦗ Q ⦘ z ∧ z ⦗ S ⦘ y)
+        =⟨ “Relation composition” ⟩   
+          x ⦗ Q ⨾ R ⦘ y ∧ x ⦗ Q ⨾ S ⦘ y
+        =⟨ “Relation intersection” ⟩ 
+          x ⦗ Q ⨾ R  ∩  Q ⨾ S ⦘ y
+        
+Theorem “Left-identity of ⨾” “Identity of ⨾”:
+    𝕀 ⨾ R = R
+Proof:
+  Using “Relation extensionality”:
+    Subproof for `∀ x • ∀ y • x ⦗ 𝕀 ⨾ R ⦘ y ≡ x ⦗ R ⦘ y`:
+      For any `x`, `y`:
+          x ⦗ 𝕀 ⨾ R ⦘ y
+        =⟨ “Relation composition” ⟩
+          ∃ z • x ⦗ 𝕀 ⦘ z ∧ z ⦗ R ⦘ y
+        =⟨ “Relationship via 𝕀” ⟩
+          ∃ z • x = z ∧ z ⦗ R ⦘ y
+        =⟨ Substitution ⟩
+          ∃ z • x = z ∧ (t ⦗ R ⦘ y)[t ≔ z]
+        =⟨ “Replacement” (3.84a) ⟩
+          ∃ z • x = z ∧ (t ⦗ R ⦘ y)[t ≔ x] 
+        =⟨ Substitution ⟩
+          ∃ z • x = z ∧ x ⦗ R ⦘ y
+        =⟨ “Trading for ∃” ⟩
+          ∃ z ❙ x = z • x ⦗ R ⦘ y
+        =⟨ “One-point rule for ∃” ⟩
+          (x ⦗ R ⦘ y)[z ≔ x]
+        =⟨ Substitution ⟩
+           x ⦗ R ⦘ y
+      
+Theorem “Right-identity of ⨾” “Identity of ⨾”:
+    R ⨾ 𝕀 = R
+Proof:
+  Using “Relation extensionality”:
+    Subproof for `∀ x • ∀ y • x ⦗ R ⨾ 𝕀 ⦘ y ≡ x ⦗ R ⦘ y`:
+      For any `x`, `y`:
+          x ⦗ R ⨾ 𝕀 ⦘ y
+        =⟨ “Relation composition” ⟩
+          ∃ z • x ⦗ R ⦘ z ∧ z ⦗ 𝕀 ⦘ y
+        =⟨ “Relationship via 𝕀” ⟩
+          ∃ z • x ⦗ R ⦘ z ∧ z = y
+        =⟨ Substitution ⟩
+          ∃ z • z = y ∧ (x ⦗ R ⦘ t)[t ≔ z]
+        =⟨ “Replacement” (3.84a) ⟩
+          ∃ z • z = y ∧ (x ⦗ R ⦘ t)[t ≔ y] 
+        =⟨ Substitution ⟩
+          ∃ z • z = y ∧ x ⦗ R ⦘ y
+        =⟨ “Trading for ∃” ⟩
+          ∃ z ❙ z = y • x ⦗ R ⦘ y
+        =⟨ “One-point rule for ∃” ⟩
+          (x ⦗ R ⦘ y)[z ≔ y]
+        =⟨ Substitution ⟩
+           x ⦗ R ⦘ y
+           
+Theorem “𝕀 is reflexive”: reflexive 𝕀
+Proof:
+    reflexive 𝕀
+  ≡⟨ “Definition of reflexivity” ⟩
+    ∀ x • x ⦗ 𝕀 ⦘ x
+  ≡⟨ “Relationship via 𝕀” ⟩
+    ∀ x • x = x
+  ≡⟨ “Reflexivity of =” ⟩
+    ∀ x • true
+  — This is “True ∀ body”
+  
+Theorem “𝕀 is reflexive”: reflexive 𝕀
+Proof:
+  Using “Definition of reflexivity”:
+    Subproof for `∀ x • x ⦗ 𝕀 ⦘ x`:
+      For any `x`:
+          x ⦗ 𝕀 ⦘ x
+        ≡⟨ “Relationship via 𝕀” ⟩
+          x = x  — This is “Reflexivity of =”
+          
+Theorem “𝕀 is reflexive”: reflexive 𝕀
+Proof:
+  Using “Definition of reflexivity”:
+    For any `x`:
+        x ⦗ 𝕀 ⦘ x
+      ≡⟨ “Relationship via 𝕀” ⟩
+        x = x  — This is “Reflexivity of =”
+        
+Theorem “Reflexivity”:  reflexive R  ≡  𝕀 ⊆ R
+Proof:
+    𝕀 ⊆ R
+  =⟨ “Relation inclusion” ⟩
+    ∀ x • ∀ y • x ⦗ 𝕀 ⦘ y ⇒ x ⦗ R ⦘ y
+  =⟨ “Relationship via 𝕀” ⟩
+    ∀ x • ∀ y • x = y ⇒ x ⦗ R ⦘ y
+  =⟨ Substitution ⟩
+    ∀ x • ∀ y • x = y ⇒ (x ⦗ R ⦘ z)[z ≔ y]
+  =⟨ “Replacement” (3.84b) ⟩
+    ∀ x • ∀ y • x = y ⇒ (x ⦗ R ⦘ z)[z ≔ x]
+  =⟨ Substitution ⟩ 
+    ∀ x • ∀ y • x = y ⇒ x ⦗ R ⦘ x
+  =⟨ “Trading for ∀” (9.2) ⟩ 
+    ∀ x • ∀ y ❙ y = x • x ⦗ R ⦘ x
+  =⟨ “One-point rule for ∀” ⟩
+    ∀ x • (x ⦗ R ⦘ x)[y ≔ x]
+  =⟨ Substitution ⟩
+    ∀ x • x ⦗ R ⦘ x  
+  =⟨ “Definition of reflexivity” ⟩ 
+    reflexive R
+    
+Theorem “Composition of reflexive relations”:
+  reflexive R ⇒ reflexive S ⇒ reflexive (R ⨾ S)
+Proof:
+  Assuming `reflexive R`:
+    Assuming `reflexive S`:
+      Using “Definition of reflexivity”:
+        For any `x`:
+            x ⦗ R ⨾ S ⦘ x
+          =⟨ “Relation composition” ⟩
+            ∃ y • x ⦗ R ⦘ y ∧ y ⦗ S ⦘ x
+          ⇐⟨ “∃-Introduction” ⟩
+            (x ⦗ R ⦘ y ∧ y ⦗ S ⦘ x)[y ≔ x]
+          =⟨ Substitution ⟩
+            x ⦗ R ⦘ x ∧ x ⦗ S ⦘ x  
+          =⟨ Assumption `reflexive R` with “Definition of reflexivity” ⟩
+            true ∧ x ⦗ S ⦘ x
+          =⟨ Assumption `reflexive S` with “Definition of reflexivity” ⟩
+            true ∧ true
+          =⟨ “Idempotency of ∧” ⟩
+            true 
+               
+Theorem “Composition of reflexive relations”:
+  reflexive R ⇒ reflexive S ⇒ reflexive (R ⨾ S)
+Proof:
+  Assuming `reflexive R` and using with “Definition of reflexivity”:
+    Assuming `reflexive S` and using with “Definition of reflexivity”:
+      Using “Definition of reflexivity”:
+        For any `x`:
+            x ⦗ R ⨾ S ⦘ x
+          =⟨ “Relation composition” ⟩
+            ∃ y • x ⦗ R ⦘ y ∧ y ⦗ S ⦘ x
+          ⇐⟨ “∃-Introduction” ⟩
+            (x ⦗ R ⦘ y ∧ y ⦗ S ⦘ x)[y ≔ x]
+          =⟨ Substitution ⟩
+            x ⦗ R ⦘ x ∧ x ⦗ S ⦘ x  
+          =⟨ Assumption `reflexive R` ⟩
+            true ∧ x ⦗ S ⦘ x
+          =⟨ Assumption `reflexive S` ⟩
+            true ∧ true
+          =⟨ “Idempotency of ∧” ⟩
+            true 
+
+Theorem “Converse of reflexive relations”:
+  reflexive R ⇒ reflexive (R ˘)
+Proof:
+  Assuming `reflexive R` and using with “Definition of reflexivity”:
+    Using “Definition of reflexivity”:
+      For any `x`:
+          x ⦗ R ˘ ⦘ x
+        =⟨ “Relation converse” ⟩
+          x ⦗ R ⦘ x  
+        =⟨ Assumption `reflexive R` ⟩
+          true
+          
+Theorem “Converse reflects reflectivity”:
+  reflexive (R ˘) ⇒ reflexive R
+Proof:
+  Assuming `reflexive (R ˘)` and using with “Definition of reflexivity”:
+    Using “Definition of reflexivity”:
+      For any `x`:
+          x ⦗ R ⦘ x
+        =⟨ “Relation converse” ⟩
+          x ⦗ R ˘ ⦘ x  
+        =⟨ Assumption `reflexive (R ˘)` ⟩
+          true
+
+Declaration: transitive : A ↔ A  →  𝔹
+Axiom “Definition of transitivity”:
+    transitive R   ≡  ∀ x • ∀ y • ∀ z •
+                        x ⦗ R ⦘ y ⦗ R ⦘ z  ⇒  x ⦗ R ⦘ z
+
+Theorem “Converse of transitive relations”:
+    transitive R ⇒ transitive (R ˘)
+Proof:
+  Assuming `transitive R` and using with “Definition of transitivity”:
+    Using “Definition of transitivity”:
+      For any `x`, `y`, `z`:
+          x ⦗ R ˘ ⦘ y ⦗ R ˘ ⦘ z
+        =⟨ “Relation converse” ⟩
+          y ⦗ R ⦘ x ∧ z ⦗ R ⦘ y
+        ⇒⟨ Assumption  `transitive R` ⟩
+          z ⦗ R ⦘ x
+        =⟨ “Relation converse” ⟩
+          x ⦗ R ˘ ⦘ z
+          
+Theorem “Transitivity”:
+  transitive R   ≡   R ⨾ R ⊆ R
+Proof:
+    R ⨾ R ⊆ R
+  =⟨ “Relation inclusion” ⟩
+    ∀ x • ∀ y • x ⦗ R ⨾ R ⦘ y ⇒ x ⦗ R ⦘ y
+  =⟨ “Relation composition” ⟩
+    ∀ x • ∀ y • (∃ z • x ⦗ R ⦘ z ∧ z ⦗ R ⦘ y ) ⇒ x ⦗ R ⦘ y
+  =⟨ “Witness” ⟩
+    ∀ x • ∀ y • ∀ z • x ⦗ R ⦘ z ∧ z ⦗ R ⦘ y  ⇒ x ⦗ R ⦘ y  
+  =⟨ “Interchange of dummies for ∀” ⟩
+    ∀ x • ∀ z • ∀ y • x ⦗ R ⦘ z ∧ z ⦗ R ⦘ y  ⇒ x ⦗ R ⦘ y 
+  =⟨ “Definition of transitivity” ⟩   
+    transitive R
+    
+Theorem (R1): ∀ b : B • ∀ c : C •
+  (∀ a : A ❙ a ⦗ R ⦘ b • a ⦗ S ⦘ c)  ≡  b ⦗ ~ (R ˘ ⨾ ~ S) ⦘ c
+Proof:
+  For any `b`, `c`:
+      b ⦗ ~ (R ˘ ⨾ ~ S) ⦘ c
+    =⟨ “Relation complement” ⟩
+      ¬ (b ⦗ (R ˘ ⨾ ~ S) ⦘ c)
+    =⟨ “Relation composition” ⟩
+      ¬ (∃ a : A • b ⦗ R ˘ ⦘ a ∧ a ⦗ ~ S ⦘ c)
+    =⟨ “Relation converse” ⟩
+      ¬ (∃ a : A • a ⦗ R ⦘ b ∧ a ⦗ ~ S ⦘ c)
+    =⟨ “Relation complement” ⟩
+      ¬ (∃ a : A • a ⦗ R ⦘ b ∧ ¬ (a ⦗ S ⦘ c))
+    =⟨ “Generalised De Morgan” (9.18b) ⟩
+      ∀ a : A • ¬ (a ⦗ R ⦘ b ∧ ¬ (a ⦗ S ⦘ c))  
+    =⟨ “De Morgan” ⟩
+      ∀ a : A • ¬ (a ⦗ R ⦘ b) ∨  ¬ ¬ (a ⦗ S ⦘ c) 
+    =⟨ “Double negation” ⟩
+      ∀ a : A • ¬ (a ⦗ R ⦘ b) ∨ (a ⦗ S ⦘ c)
+    =⟨ “Trading for ∀” (9.3a) ⟩
+      (∀ a : A ❙ a ⦗ R ⦘ b • a ⦗ S ⦘ c)
+      
+Theorem (R2): R ⨾ ~ (R ˘ ⨾ ~ S) ⊆ S
+Proof:
+  Using “Relation inclusion”:
+    For any `a`, `c`:
+        a ⦗ R ⨾ ~ (R ˘ ⨾ ~ S) ⦘ c
+      =⟨ “Relation composition” ⟩
+        ∃ b • a ⦗ R ⦘ b ∧ b ⦗ ~ (R ˘ ⨾ ~ S) ⦘ c
+      =⟨ (R1) ⟩
+        ∃ b • a ⦗ R ⦘ b ∧ (∀ x ❙ x ⦗ R ⦘ b • x ⦗ S ⦘ c)
+      =⟨ “Trading for ∀” (9.2) ⟩
+        ∃ b • a ⦗ R ⦘ b ∧ (∀ x • x ⦗ R ⦘ b ⇒ x ⦗ S ⦘ c) 
+      ⇒⟨ “Monotonicity of ∃” with “Monotonicity of ∧” 
+         with “Instantiation” (9.13) ⟩
+        ∃ b • a ⦗ R ⦘ b ∧ (x ⦗ R ⦘ b ⇒ x ⦗ S ⦘ c)[x ≔ a]
+      =⟨ Substitution ⟩
+        ∃ b • a ⦗ R ⦘ b ∧ (a ⦗ R ⦘ b ⇒ a ⦗ S ⦘ c)  
+      =⟨ (3.66) ⟩ 
+        ∃ b • a ⦗ R ⦘ b ∧ a ⦗ S ⦘ c
+      =⟨ “Distributivity of ∧ over ∃” ⟩ 
+        a ⦗ S ⦘ c ∧ ∃ b • a ⦗ R ⦘ b
+      ⇒⟨ “Weakening” (3.76b) ⟩
+        a ⦗ S ⦘ c 

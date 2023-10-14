@@ -1,0 +1,655 @@
+Theorem (11.7) (11.7s) “Simple Membership”:
+   e ∈ { x ❙ P }  ≡ P[x ≔ e]
+Proof:
+    e ∈ { x ❙ P }
+  ≡⟨ “Set Abbreviation” ⟩
+    e ∈ { x ❙ P • x }
+  ≡⟨ “Set membership” ⟩
+    ∃ x ❙ P • e = x
+  ≡⟨ “Trading for ∃” (9.19) ⟩ ╍╍╍ Apply twice with Symmetry of ∧
+    ∃ x ❙ x = e • P 
+  ≡⟨ “One-point rule for ∃” ⟩
+    P [x ≔ e]
+
+Theorem (11.7) (11.7x) “Simple Membership”:
+   x ∈ { x ❙ P }  ≡ P
+Proof:
+    x ∈ { x ❙ P }
+  ≡⟨ “Simple Membership” (11.7s) ⟩
+    P [x ≔ x]
+  ≡⟨ Substitution ⟩
+    P
+
+Theorem (11.7) (11.7∀) “Simple Membership”:
+   ∀ x • x ∈ { x ❙ P }  ≡ P
+Proof:
+  For any `x`:
+      x ∈ { x ❙ P }
+    ≡⟨ “Simple Membership” (11.7s) ⟩
+      P [x ≔ x]
+    ≡⟨ Substitution ⟩
+      P
+
+Lemma “Membership in two-element set enumeration”: x ∈ {x, y}
+Proof:
+    x ∈ {x, y}
+  =⟨ “Reflexivity of =” ⟩
+    x ∈ {z ❙ z = x ∨ z = y}
+  =⟨ “Simple Membership” (11.7s) ⟩
+    (z = x ∨ z = y)[z ≔ x]
+  =⟨ Substitution ⟩
+     x = x ∨ x = y
+  =⟨ “Reflexivity of =” , “Zero of ∨” ⟩
+     true
+
+Lemma “Membership in set enumeration”: x ∈ {u ❙ u = x ∨ R}
+Proof:
+    x ∈ {u ❙ u = x ∨ R}
+  ≡⟨ “Simple Membership” ⟩
+    (u = x ∨ R)[u ≔ x]
+  ≡⟨ Substitution, “Reflexivity of =”, “Zero of ∨” ⟩
+    true
+    
+Theorem (11.6) “Mathematical formulation of set comprehension”:
+     {x ❙ P • E } = { y ❙ (∃ x ❙ P • y = E) }
+Proof:
+  Using “Set extensionality”:
+    Subproof for `(∀ e • e ∈ {x ❙ P • E } ≡ e ∈ { y ❙ (∃ x ❙ P • y = E) })`:
+      For any `e`:
+          e ∈ { y ❙ (∃ x ❙ P • y = E) }
+        =⟨ “Simple Membership” (11.7s) ⟩
+          (∃ x ❙ P • y = E)[y ≔ e]
+        =⟨ Substitution ⟩ 
+          ∃ x ❙ P • e = E
+        =⟨ “Set membership” ⟩ 
+          e ∈ { x ❙ P • E }
+          
+Theorem (11.9) “Simple set comprehension equality”:
+    {x ❙ Q} = {x ❙ R}  ≡  (∀ x • Q ≡ R)
+Proof:
+    {x ❙ Q} = {x ❙ R}
+  ≡⟨ “Set extensionality” ⟩
+    ∀ x • x ∈ { x ❙ Q }  ≡  x ∈ { x ❙ R } 
+  ≡⟨ “Simple Membership” ⟩
+    ∀ x • Q ≡ R
+    
+Theorem “Subset” “Definition of ⊆” “Set inclusion”:
+   S ⊆ T  ≡  (∀ e • e ∈ S ⇒ e ∈ T)
+Proof:
+    S ⊆ T
+  =⟨ “Subset” ⟩
+    (∀ e ❙ e ∈ S • e ∈ T)
+  =⟨ “Trading for ∀” (9.2) ⟩
+     ∀ e • e ∈ S ⇒ e ∈ T 
+     
+Theorem “Subset membership” “Casting”:
+    X ⊆ Y ⇒ x ∈ X ⇒ x ∈ Y
+Proof:
+    X ⊆ Y
+  =⟨ “Subset” ⟩
+    (∀ e ❙ e ∈ X • e ∈ Y) 
+  ⇒⟨ “Instantiation” (9.13b) ⟩
+    (e ∈ X ⇒ e ∈ Y)[e ≔ x]
+  =⟨ Substitution ⟩ 
+    x ∈ X ⇒ x ∈ Y
+    
+Theorem (11.58) “Reflexivity of ⊆”: X ⊆ X
+Proof:
+    X ⊆ X 
+  =⟨ “Subset” ⟩
+    ∀ e • e ∈ X ⇒ e ∈ X
+  =⟨ “Reflexivity of ⇒”, “True ∀ body” ⟩
+    true
+
+Theorem (11.59) “Transitivity of ⊆” “Antitonicity of ⊆”: X ⊆ Y ⇒ Y ⊆ Z ⇒ X ⊆ Z
+Proof:
+  Assuming `X ⊆ Y`, `Y ⊆ Z`:
+    Using “Set inclusion”:
+      Subproof for `∀ e ❙ e ∈ X • e ∈ Z`:
+        For any `e` satisfying `e ∈ X`:
+            e ∈ X  — This is assumption `e ∈ X`
+          ⇒⟨ “Subset membership” with Assumption `X ⊆ Y` ⟩
+            e ∈ Y
+          ⇒⟨ “Subset membership” with Assumption `Y ⊆ Z` ⟩
+            e ∈ Z
+
+Theorem (11.59) “Flipped transitivity of ⊆” “Monotonicity of ⊆”: Y ⊆ Z ⇒ X ⊆ Y ⇒ X ⊆ Z
+Proof:
+    Y ⊆ Z ⇒ X ⊆ Y ⇒ X ⊆ Z
+  =⟨ “Shunting” ⟩
+    (Y ⊆ Z ∧ X ⊆ Y) ⇒ X ⊆ Z 
+  =⟨ “Shunting” ⟩
+    X ⊆ Y ⇒ Y ⊆ Z ⇒ X ⊆ Z
+  =⟨ “Transitivity of ⊆” ⟩
+    true
+    
+Theorem (11.57) “Antisymmetry of ⊆”: X ⊆ Y ⇒ Y ⊆ X ⇒ X = Y
+Proof:
+  Assuming `X ⊆ Y` and using with “Set inclusion”,
+           `Y ⊆ X` and using with “Set inclusion”:
+    Using “Set extensionality”:
+      Subproof for `∀ e • e ∈ X ≡ e ∈ Y`:
+        For any `e`:
+          By “Mutual implication”
+            with assumptions `X ⊆ Y` and `Y ⊆ X`
+            
+Theorem “Empty set”: {} = {x ❙ false}
+Proof:
+  By “Reflexivity of =”
+
+Theorem “Empty set”: x ∈ {}  ≡  false
+Proof:
+    x ∈ {}
+  =⟨ “Empty set” ⟩
+    x ∈ {x ❙ false}
+  =⟨ “Simple Membership” (11.7∀) ⟩
+    false
+
+Theorem “Empty set is least” “Bottom set”: {} ⊆ X
+Proof:
+    {} ⊆ X
+  =⟨ “Subset” ⟩
+    ∀ e • e ∈ {} ⇒ e ∈ X
+  =⟨ “Empty set” ⟩
+    ∀ e • false ⇒ e ∈ X
+  =⟨ “ex falso quodlibet”, “True ∀ body” ⟩ 
+    true
+
+Theorem “Universal set”: x ∈ 𝐔
+Proof: By “Universal set”, “Simple Membership”, Substitution
+
+Theorem “Universal set is greatest” “Top set”: X ⊆ 𝐔
+Proof:
+    X ⊆ 𝐔
+  =⟨ “Subset” ⟩
+    ∀ e • e ∈ X ⇒ e ∈ 𝐔
+  =⟨ “Universal set” ⟩
+    ∀ e • e ∈ X ⇒ true
+  =⟨ “Right-zero of ⇒”, “True ∀ body” ⟩
+    true   
+
+Theorem (11.56) “Simple set comprehension inclusion”:
+  {x ❙ P} ⊆ {x ❙ Q}  ≡  (∀ x • P ⇒ Q)
+Proof:
+    {x ❙ P} ⊆ {x ❙ Q}
+  ≡⟨ “Subset” ⟩
+    ( ∀ x ❙ x ∈ { x ❙ P } • x ∈ { x ❙ Q } )
+  ≡⟨ “Simple Membership” ⟩
+    ( ∀ x ❙ P • Q )
+  ≡⟨ “Trading for ∀” (9.2) ⟩
+    ∀ x • P ⇒ Q
+
+Lemma “Singleton set membership”:
+    x ∈ { y }  ≡  x = y
+Proof:
+    x ∈ { y } 
+  =⟨ “Reflexivity of =” ⟩
+    x ∈ { z ❙ z = y }
+  =⟨ “Simple Membership” ⟩
+    (z = y)[z ≔ x]
+  =⟨ Substitution ⟩ 
+     x = y
+     
+Lemma “Singleton set inclusion”:
+    { x } ⊆ S  ≡  x ∈ S
+Proof:
+    { x } ⊆ S 
+  =⟨ “Subset” ⟩
+    ∀ e • e ∈ { x } ⇒ e ∈ S
+  =⟨ “Singleton set membership” ⟩
+    ∀ e • e = x ⇒ e ∈ S
+  =⟨ “Trading for ∀” (9.2) ⟩
+    ∀ e ❙ e = x • e ∈ S
+  =⟨ “One-point rule for ∀” ⟩
+    (e ∈ S)[e ≔ x]
+  =⟨ Substitution ⟩
+     x ∈ S
+ 
+Theorem (11.19) “Self-inverse of complement”: ~ (~ S) = S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e  •  e ∈ ~ (~ S)  ≡  e ∈ S`:
+      For any `e`:
+          e ∈ ~ (~ S)
+        =⟨ “Complement” ⟩
+          ¬ (e ∈ ~ S)
+        =⟨ “Complement” ⟩
+          ¬ ¬ (e ∈ S)
+        =⟨ “Double negation” ⟩
+          e ∈ S   
+
+Theorem “Lower ~ connection for ⊆”:
+    ~ X ⊆ Y  ≡  ~ Y ⊆ X
+Proof:
+    ~ X ⊆ Y
+  =⟨ “Set inclusion” ⟩
+    ∀ e • e ∈ ~ X ⇒ e ∈ Y 
+  =⟨ “Contrapositive” ⟩
+    ∀ e • ¬ (e ∈ Y) ⇒ ¬ (e ∈ ~ X)
+  =⟨ “Complement” ⟩
+    ∀ e • e ∈ ~ Y ⇒ e ∈ ~ ~ X
+  =⟨ “Self-inverse of complement” ⟩
+    ∀ e • e ∈ ~ Y ⇒ e ∈ X
+  =⟨ “Set inclusion” ⟩ 
+    ~ Y ⊆ X
+
+Theorem “Upper ~ connection for ⊆”:
+    X ⊆ ~ Y  ≡  Y ⊆ ~ X
+Proof:
+    X ⊆ ~ Y
+  ≡⟨ “Lower ~ connection for ⊆” , “Self-inverse of complement” ⟩
+    Y ⊆ ~ X
+
+Theorem (11.26) “Symmetry of ∪”: S ∪ T = T ∪ S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∪ T ≡ e ∈ T ∪ S`:
+      For any `e`:
+          e ∈ S ∪ T
+        =⟨ “Union” ⟩
+          e ∈ S ∨ e ∈ T
+        =⟨ “Union” ⟩
+          e ∈ T ∪ S  
+
+Theorem (11.27) “Associativity of ∪”: S ∪ (T ∪ W) = (S ∪ T) ∪ W
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∪ (T ∪ W) ≡ e ∈ (S ∪ T) ∪ W`:
+      For any `e`:
+          e ∈ S ∪ (T ∪ W)
+        =⟨ “Union” ⟩
+          e ∈ S ∨ e ∈ T ∨ e ∈ W
+        =⟨ “Union” ⟩
+          e ∈ (S ∪ T) ∪ W
+      
+Theorem (11.28) “Idempotency of ∪”: S ∪ S = S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∪ S ≡ e ∈ S`:
+      For any `e`:
+          e ∈ S ∪ S
+        =⟨ “Union” ⟩
+          e ∈ S ∨ e ∈ S
+        =⟨ “Idempotency of ∨” ⟩
+          e ∈ S
+          
+Theorem (11.30) “Zero of ∪”: S ∪ 𝐔 = 𝐔
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∪ 𝐔 ≡ e ∈ 𝐔`:
+      For any `e`:
+          e ∈ S ∪ 𝐔
+        =⟨ “Union” ⟩
+          e ∈ S ∨ e ∈ 𝐔
+        =⟨ “Universal set” ⟩
+          e ∈ S ∨ true
+        =⟨ “Zero of ∨” ⟩
+          true
+        =⟨ “Universal set” ⟩
+          e ∈ 𝐔
+          
+Theorem (11.30) “Identity of ∪”: S ∪ {} = S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∪ {} ≡ e ∈ S`:
+      For any `e`:
+          e ∈ S ∪ {}
+        =⟨ “Union” ⟩
+          e ∈ S ∨ e ∈ {}
+        =⟨ “Empty set” ⟩
+          e ∈ S ∨ false
+        =⟨ “Identity of ∨” ⟩
+          e ∈ S
+
+Theorem (11.31) “Weakening of ∪”: S ⊆ S ∪ T
+Proof:
+  Using “Subset”:
+    Subproof for `∀ e • e ∈ S ⇒ e ∈ S ∪ T`:
+      For any `e`:
+          e ∈ S 
+        ⇒⟨ “Strengthening” (3.76a) ⟩
+          e ∈ S ∨ e ∈ T
+        =⟨ “Union” ⟩
+          e ∈ S ∪ T
+          
+Theorem (11.32) “LEM of ∪”: S ∪ ~ S = 𝐔
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∪ ~ S ≡ e ∈ 𝐔`:
+      For any `e`:
+          e ∈ S ∪ ~ S
+        =⟨ “Union” ⟩
+          e ∈ S ∨ e ∈ ~ S
+        =⟨ “Complement” ⟩
+          e ∈ S ∨ ¬ (e ∈ S)
+        =⟨ “LEM” ⟩
+          true
+        =⟨ “Universal set” ⟩ 
+          e ∈ 𝐔
+
+Theorem (11.33) “Symmetry of ∩”: S ∩ T = T ∩ S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ T ≡ e ∈ T ∩ S`:
+      For any `e`:
+          e ∈ S ∩ T
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ T
+        =⟨ “Intersection” ⟩
+          e ∈ T ∩ S
+          
+Theorem (11.34) “Associativity of ∩”: S ∩ (T ∩ W) = (S ∩ T) ∩ W
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ (T ∩ W) ≡ e ∈ (S ∩ T) ∩ W`:
+      For any `e`:
+          e ∈ S ∩ (T ∩ W)
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ T ∧ e ∈ W
+        =⟨ “Intersection” ⟩
+          e ∈ (S ∩ T) ∩ W
+          
+Theorem (11.35) “Idempotency of ∩”: S ∩ S = S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ S ≡ e ∈ S`:
+      For any `e`:
+          e ∈ S ∩ S
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ S
+        =⟨ “Idempotency of ∧” ⟩
+          e ∈ S
+          
+Theorem (11.36) “Zero of ∩”: S ∩ {} = {}
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ {} ≡ e ∈ {}`:
+      For any `e`:
+          e ∈ S ∩ {}
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ {}
+        =⟨ “Empty set” ⟩ 
+          e ∈ S ∧ false
+        =⟨ “Zero of ∧” , “Empty set” ⟩
+          e ∈ {} 
+
+Theorem (11.37) “Identity of ∩”: S ∩ 𝐔 = S
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ 𝐔 ≡ e ∈ S`:
+      For any `e`:
+          e ∈ S ∩ 𝐔
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ 𝐔
+        =⟨ “Universal set” ⟩
+          e ∈ S ∧ true
+        =⟨ “Identity of ∧” ⟩
+          e ∈ S
+          
+Theorem (11.38) “Weakening of ∩”: S ∩ T ⊆ S
+Proof:
+  Using “Subset”:
+    Subproof for `∀ e • e ∈ S ∩ T ⇒ e ∈ S`:
+      For any `e`:
+          e ∈ S ∩ T
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ T 
+        ⇒⟨ “Weakening” (3.76b) ⟩
+          e ∈ S
+          
+Theorem (11.39) “Contradiction of ∩”: S ∩ ~ S = {}
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ ~ S ≡ e ∈ {}`:
+      For any `e`:
+          e ∈ S ∩ ~ S
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ ~ S
+        =⟨ “Complement” ⟩
+          e ∈ S ∧ ¬ (e ∈ S)
+        =⟨ “Contradiction” ⟩
+          false
+        =⟨ “Empty set” ⟩ 
+          e ∈ {}
+          
+Theorem “Golden rule for ∩ and ∪”: S ∩ T = S  ≡  T = S ∪ T
+Proof:
+    S ∩ T = S
+  =⟨ “Set extensionality” ⟩
+    ∀ e • e ∈ S ∩ T ≡ e ∈ S 
+  =⟨ “Intersection” ⟩
+    ∀ e • e ∈ S ∧ e ∈ T ≡ e ∈ S
+  =⟨ “Golden rule” ⟩
+    ∀ e • e ∈ S ∨ e ∈ T ≡ e ∈ T
+  =⟨ “Union” ⟩
+    ∀ e • e ∈ S ∪ T ≡ e ∈ T
+  =⟨ “Set extensionality” ⟩     
+    T = S ∪ T
+    
+Theorem “Set inclusion via ∩”:  S ⊆ T  ≡  S ∩ T = S
+Proof:
+    S ⊆ T 
+  =⟨ “Subset” ⟩ 
+    ∀ e • e ∈ S ⇒ e ∈ T
+  =⟨ “Definition of ⇒” (3.60) ⟩
+    ∀ e • e ∈ S ∧ e ∈ T ≡ e ∈ S
+  =⟨ “Intersection” ⟩
+    ∀ e • e ∈ S ∩ T ≡ e ∈ S
+  =⟨ “Set extensionality” ⟩
+    S ∩ T = S
+    
+Theorem “Set inclusion via ∪”:  S ⊆ T  ≡  S ∪ T = T
+Proof: 
+    S ⊆ T 
+  =⟨ “Subset” ⟩ 
+    ∀ e • e ∈ S ⇒ e ∈ T
+  =⟨ “Definition of ⇒” (3.57) ⟩
+    ∀ e • e ∈ S ∨ e ∈ T ≡ e ∈ T
+  =⟨ “Union” ⟩
+    ∀ e • e ∈ S ∪ T ≡ e ∈ T
+  =⟨ “Set extensionality” ⟩
+    S ∪ T = T 
+
+Theorem “Monotonicity of ∩”: S ⊆ T  ⇒  S ∩ U ⊆ T ∩ U
+Proof:
+    S ⊆ T
+  =⟨ “Subset” ⟩
+    ∀ e • e ∈ S ⇒ e ∈ T 
+  ⇒⟨ “Monotonicity of ∀” with “Monotonicity of ∧” ⟩
+    ∀ e • e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ U 
+  =⟨ “Intersection” ⟩
+    ∀ e • e ∈ S ∩ U ⇒ e ∈ T ∩ U
+  =⟨ “Subset” ⟩
+    S ∩ U ⊆ T ∩ U
+ 
+Theorem “Monotonicity of ∩”: S ⊆ T  ⇒  U ⊆ V  ⇒  S ∩ U ⊆ T ∩ V
+Proof:
+  Assuming `S ⊆ T` and using with “Subset”,
+           `U ⊆ V` and using with “Subset”:
+        S ∩ U ⊆ T ∩ V
+      =⟨ “Subset” ⟩
+        ∀ e • e ∈ S ∩ U ⇒ e ∈ T ∩ V
+      =⟨ “Intersection” ⟩
+        ∀ e • e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ V
+    Proof for this:
+      For any `e`:
+          e ∈ S ∧ e ∈ U
+        ⇒⟨ “Monotonicity of ∧” 
+            with Assumption `S ⊆ T`⟩
+          e ∈ T ∧ e ∈ U
+        ⇒⟨ “Monotonicity of ∧” 
+            with Assumption `U ⊆ V`⟩
+          e ∈ T ∧ e ∈ V
+
+Theorem “Reflexivity of ⊆”: S = T ⇒ S ⊆ T
+Proof:
+    S = T 
+  =⟨ “Set extensionality” ⟩
+    ∀ e • e ∈ S ≡ e ∈ T
+  =⟨ “Mutual implication” ⟩
+    ∀ e • (e ∈ S ⇒ e ∈ T) ∧ (e ∈ T ⇒ e ∈ S)
+  ⇒⟨ “Monotonicity of ∀” with “Weakening” (3.76b) ⟩ 
+    ∀ e • (e ∈ S ⇒ e ∈ T)
+  =⟨ “Subset” ⟩  
+    S ⊆ T
+    
+Lemma “Split implication”: (a ∧ c) ⇒ b ≡ (a ∧ ¬ b) ⇒ (a ∧ ¬ c)
+Proof:
+    (a ∧ c) ⇒ b
+  =⟨ “Shunting” ⟩
+    a ⇒ (c ⇒ b)
+  =⟨ “Material implication” ⟩
+    ¬ a ∨ (¬ c ∨ b)
+  =⟨ “LEM”, “Identity of ∧” ⟩ 
+    b ∨ ((¬ a ∨ a) ∧ (¬ a ∨ ¬ c))
+  =⟨ “Distributivity of ∨ over ∧” ⟩ 
+    (b ∨ ¬ a) ∨ (a ∧ ¬ c)
+  =⟨ “Material implication”, “De Morgan”, “Double negation” ⟩ 
+    (a ∧ ¬ b) ⇒ (a ∧ ¬ c)
+
+Theorem (11.61): S ⊂ T  ≡  S ⊆ T ∧ ¬ (T ⊆ S)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `S ⊂ T  ⇒  S ⊆ T ∧ ¬ (T ⊆ S)`:
+          S ⊂ T 
+        =⟨ “Proper subset” ⟩
+          S ⊆ T ∧ S ≠ T
+        =⟨ “Definition of ≠” ⟩
+          S ⊆ T ∧ ¬ (S = T) 
+        ⇒⟨ “Split implication” with “Antisymmetry of ⊆” with “Shunting” ⟩
+          S ⊆ T ∧ ¬ (T ⊆ S)   
+    Subproof for `S ⊆ T ∧ ¬ (T ⊆ S)  ⇒  S ⊂ T`:
+          S ⊂ T 
+        =⟨ “Proper subset” ⟩
+          S ⊆ T ∧ S ≠ T
+        =⟨ “Definition of ≠” ⟩
+          S ⊆ T ∧ ¬ (S = T) 
+        ⇐⟨ “Monotonicity of ∧” with “Reflexivity of ⊆” with “Contrapositive” ⟩
+          S ⊆ T ∧ ¬ (T ⊆ S)
+ 
+Theorem (11.63) “Inclusion in terms of ⊂”:
+    S ⊆ T  ≡  S ⊂ T ∨ S = T
+Proof:
+    S ⊂ T ∨ S = T
+  ≡⟨ “Proper subset”, “Definition of ≠” ⟩
+    (S ⊆ T ∧ ¬ (S = T)) ∨ S = T
+  ≡⟨ “Absorption” ⟩
+    S ⊆ T ∨ S = T
+  ≡⟨ “Reflexivity of ⊆” with (3.57) ⟩
+    S ⊆ T
+    
+Lemma “Alternative Transitivity”: X ⊆ Y ⇒ ¬ (Z ⊆ Y) ⇒ ¬ (Z ⊆ X)
+Proof:
+    X ⊆ Y ⇒ ¬ (Z ⊆ Y) ⇒ ¬ (Z ⊆ X)
+  =⟨ “Contrapositive” ⟩
+    X ⊆ Y ⇒ (Z ⊆ X ⇒ Z ⊆ Y)
+  =⟨ “Shunting” ⟩
+    (Z ⊆ X ∧ X ⊆ Y) ⇒ Z ⊆ Y 
+  =⟨ “Shunting” ⟩
+    Z ⊆ X ⇒ X ⊆ Y ⇒ Z ⊆ Y 
+  =⟨ “Transitivity of ⊆” ⟩
+    true  
+     
+Theorem (11.70) “Transitivity of ⊆ with ⊂”:
+    X ⊆ Y ⇒ Y ⊂ Z ⇒ X ⊂ Z
+Proof:
+  Assuming `X ⊆ Y`:
+      Y ⊂ Z
+    =⟨ (11.61) ⟩
+      Y ⊆ Z ∧ ¬ (Z ⊆ Y)  
+    ⇒⟨ “Monotonicity of ∧” with 
+       “Transitivity of ⊆” with Assumption `X ⊆ Y`  ⟩
+      X ⊆ Z ∧ ¬ (Z ⊆ Y)
+    ⇒⟨ “Monotonicity of ∧” 
+        with “Alternative Transitivity”
+        with Assumption `X ⊆ Y` ⟩
+      X ⊆ Z ∧ ¬ (Z ⊆ X)
+    =⟨ (11.61) ⟩
+      X ⊂ Z  
+
+Theorem (11.52): S ∩ (T - S) = {}
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ e • e ∈ S ∩ (T - S) ≡ e ∈ {}`:
+      For any `e`:
+          e ∈ S ∩ (T - S)
+        =⟨ “Intersection” ⟩
+          e ∈ S ∧ e ∈ (T - S)
+        =⟨ “Set difference” ⟩
+          e ∈ S ∧ e ∈ T ∧ ¬ (e ∈ S)
+        =⟨ “Contradiction”, “Zero of ∧” ⟩
+          false
+        =⟨ “Empty set” ⟩
+          e ∈ {}
+ 
+Theorem “Membership in ➩”:
+    x ∈ A ➩ B  ≡  x ∈ A ⇒ x ∈ B
+Proof:
+    x ∈ A ➩ B
+  =⟨ “Singleton set inclusion” ⟩
+    {x} ⊆ (A ➩ B)
+  =⟨ “Characterisation of ➩” ⟩
+    ({x} ∩ A) ⊆ B
+  =⟨ “Subset” ⟩     
+    ∀ e • e ∈ {x} ∩ A ⇒ e ∈ B
+  =⟨ “Intersection” , “Trading for ∀” ⟩
+    ∀ e ❙ e ∈ {x} • e ∈ A ⇒ e ∈ B
+  =⟨ “Singleton set membership” ⟩
+    ∀ e ❙ e = x • e ∈ A ⇒ e ∈ B 
+  =⟨ “One-point rule for ∀” ⟩
+    (e ∈ A ⇒ e ∈ B)[e ≔ x]
+  =⟨ Substitution ⟩
+     x ∈ A ⇒ x ∈ B
+     
+Theorem “Definition of ➩”:
+    A ➩ B  =  ~ A ∪ B
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ x • x ∈ A ➩ B ≡ x ∈ ~ A ∪ B`:
+      For any `x`:
+          x ∈ A ➩ B
+        =⟨ “Membership in ➩” ⟩ 
+          x ∈ A ⇒ x ∈ B
+        =⟨ “Material implication” ⟩
+          ¬ (x ∈ A) ∨ x ∈ B
+        =⟨ “Complement”, “Union” ⟩
+          x ∈ ~ A ∪ B 
+
+Theorem “Pseudocomplement of union”:
+    (A ∪ B) ➩ C  =  (A ➩ C) ∩ (B ➩ C)
+Proof:
+  Using “Set extensionality”:
+    Subproof for `∀ x • x ∈ (A ∪ B) ➩ C ≡ x ∈ (A ➩ C) ∩ (B ➩ C)`:
+      For any `x`:
+          x ∈ (A ∪ B) ➩ C
+        =⟨ “Membership in ➩” ⟩ 
+          x ∈ (A ∪ B) ⇒ x ∈ C
+        =⟨ “Material implication” ⟩
+          ¬ (x ∈ (A ∪ B)) ∨ x ∈ C
+        =⟨ “Union” , “De Morgan” ⟩
+          (¬ (x ∈ A) ∧ ¬ (x ∈ B)) ∨ x ∈ C
+        =⟨ “Distributivity of ∨ over ∧” ⟩
+          (¬ (x ∈ A) ∨ x ∈ C) ∧ (¬ (x ∈ B) ∨ x ∈ C)
+        =⟨ “Material implication” ⟩
+          (x ∈ A ⇒ x ∈ C) ∧ (x ∈ B ⇒ x ∈ C)
+        =⟨ “Membership in ➩” ⟩ 
+           x ∈ (A ➩ C) ∧ x ∈ (B ➩ C)
+        =⟨ “Intersection” ⟩
+           x ∈ (A ➩ C) ∩ (B ➩ C) 
+
+Theorem “Monotonicity of ➩”:
+    B ⊆ C  ⇒  A ➩ B ⊆ A ➩ C
+Proof:
+  Assuming `B ⊆ C`:
+        A ➩ B ⊆ A ➩ C
+      =⟨ “Subset” ⟩
+        ∀ x ❙ x ∈ A ➩ B • x ∈ A ➩ C
+      =⟨ “Membership in ➩” ⟩
+        ∀ x ❙ x ∈ A ⇒ x ∈ B • x ∈ A ⇒ x ∈ C
+    Proof for this:
+      For any `x` satisfying `x ∈ A ⇒ x ∈ B`:
+          x ∈ A
+        ⇒⟨ Assumption `x ∈ A ⇒ x ∈ B`⟩
+          x ∈ B
+        ⇒⟨ “Casting” with Assumption `B ⊆ C` ⟩
+          x ∈ C

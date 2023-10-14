@@ -1,0 +1,509 @@
+Axiom “Bag membership”:
+    F ⋿ ⟅ x ❙ R • E ⟆  ≡  (∃ x ❙ R • F = E)
+Axiom “Bag membership”:
+    F ⋿ ⟅ x, y ❙ R • E ⟆  ≡  (∃ x, y ❙ R • F = E)
+
+Theorem “Bag abbreviation”:
+   ⟅ x ❙ P ⟆ = ⟅ x ❙ P • x ⟆
+Proof: By “Reflexivity of =”
+
+Theorem “Bag abbreviation”:
+   ⟅ x, y ❙ P ⟆ = ⟅ x, y ❙ P • ⟨ x, y ⟩ ⟆
+Proof: By “Reflexivity of =”
+
+Theorem “Simple bag membership”:
+   e ⋿ ⟅ x ❙ P ⟆  ≡ P[x ≔ e]
+Proof:
+    e ⋿ ⟅ x ❙ P ⟆
+  ≡⟨ “Bag membership” ⟩
+    ∃ x ❙ P • e = x   
+  ≡⟨ “Trading for ∃” ⟩
+    ∃ x ❙ e = x • P  
+  ≡⟨ “One-point rule for ∃” ⟩ 
+    P [x ≔ e]
+
+Theorem “Direct bag comprehension membership”:
+   ∀ x • x ⋿ ⟅ x ❙ P ⟆  ≡ P
+Proof:
+  For any `x`:
+      x ⋿ ⟅ x ❙ P ⟆
+    =⟨ “Simple bag membership” ⟩
+      P [x ≔ x]
+    =⟨ Substitution ⟩
+      P
+
+Axiom (11.81) “Bag occurrences”:
+    a # ⟅ x : t ❙ P • E ⟆ = ∑ x : t ❙ P ∧ a = E • 1
+Axiom (11.81) “Bag occurrences”:
+    a # ⟅ x : t, y : u ❙ P • E ⟆ = ∑ x : t, y : u ❙ P ∧ a = E • 1
+
+Axiom (11.4) “Bag extensionality”:
+   B = C  ≡  (∀ e  •  e # B  =  e # C)
+
+Axiom “Split off term at top”:
+    (∑ i : ℕ ❙ i < suc m • E)
+  = (∑ i : ℕ ❙ i < m • E) + E[i ≔ m]
+
+Lemma “Counting”: (∑ i ❙ i < n • 1) = n
+Proof:
+  By induction on `n : ℕ`:
+    Base case `(∑ i ❙ i < 0 • 1) = 0`:
+        ∑ i ❙ i < 0 • 1
+      =⟨ “Nothing is less than zero” , “Empty range for ∑” ⟩
+        0 
+    Induction step `(∑ i ❙ i < suc n • 1) = suc n`:
+        ∑ i ❙ i < suc n • 1
+      =⟨ “Split off term at top” ⟩
+        (∑ i ❙ i < n • 1) + 1[i ≔ n]
+      =⟨ Induction hypothesis, Substitution ⟩
+        n + 1
+      =⟨ “Successor” ⟩
+        suc n   
+
+Theorem “Bag reconstruction”:
+    B = ⟅ x, i ❙ i < x # B • x ⟆
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # ⟅ x, i ❙ i < x # B • x ⟆
+      =⟨ “Bag occurrences” ⟩
+        ∑ x , i ❙ i < x # B ∧ e = x • 1
+      =⟨ “Nesting for ∑” ⟩      
+        ∑ x ❙ e = x • ∑ i ❙ i < x # B • 1
+      =⟨ “One-point rule for ∑” ⟩
+        (∑ i ❙ i < x # B • 1)[x ≔ e]
+      =⟨ Substitution ⟩
+        ∑ i ❙ i < e # B • 1  
+      =⟨ “Counting” ⟩  
+        e # B
+
+Lemma “Non-zero”: (∃ i • i < a) ≡ a ≠ 0
+Proof:
+  By cases: `a = 0`, `0 < a`
+    Completeness: By “Zero is <-least element”
+    Case `a = 0`:
+        (∃ i • i < a) ≡ a ≠ 0
+      =⟨ Assumption `a = 0` ⟩
+        (∃ i • i < 0) ≡ 0 ≠ 0
+      =⟨ “Irreflexivity of ≠” ⟩
+        (∃ i • i < 0) ≡ false
+      =⟨ “Nothing is less than zero”, “False ∃ body” ⟩
+        false ≡ false
+      =⟨ “Reflexivity of ≡” ⟩
+        true
+    Case `0 < a`:  
+        (∃ i • i < a) ≡ a ≠ 0
+      =⟨ “Definition of ≠” ⟩
+        (∃ i • i < a) ≡ ¬ (a = 0) 
+      =⟨ “Irreflexivity of <” with Assumption `0 < a`, “Identity of ≡” ⟩
+        ∃ i • i < a
+      ⇐⟨ “∃-Introduction” ⟩
+        (i < a)[i ≔ 0]
+      =⟨ Substitution ⟩
+         0 < a
+      =⟨ Assumption `0 < a` ⟩
+         true        
+     
+╍╍╍ “Irreflexivity of <”: a < b ⇒ ¬ (a = b)      
+
+Lemma “Alternative bag extensionality”: a ⋿ B ≡ ∃ i • i < a # B
+Proof:
+    a ⋿ B
+  ≡⟨ “Bag reconstruction” ⟩
+    a ⋿ ⟅ x, i ❙ i < x # B • x ⟆
+  ≡⟨ “Bag membership” ⟩
+    ∃ x, i ❙ i < x # B • a = x
+  ≡⟨ (8.19), (8.20a) ⟩ 
+    ∃ i • ∃ x ❙ i < x # B • a = x
+  ≡⟨ “Trading for ∃” ⟩ 
+    ∃ i • ∃ x ❙ a = x • i < x # B
+  ≡⟨ “One-point rule for ∃”, Substitution ⟩ 
+    ∃ i • i < a # B
+
+Theorem “Bag members have non-zero count”:
+    a ⋿ B  ≡  a # B ≠ 0
+Proof:
+    a ⋿ B
+  ≡⟨ “Alternative bag extensionality” ⟩  
+    ∃ i • i < a # B
+  ≡⟨ “Non-zero” ⟩
+    a # B ≠ 0
+
+Declaration: #_ : Bag t → ℕ
+
+Axiom “Bag comprehension size”: # ⟅ x ❙ R • E ⟆ = (∑ x ❙ R • 1)
+Axiom “Bag comprehension size”: # ⟅ x, y ❙ R • E ⟆ = (∑ x, y ❙ R • 1)
+
+Theorem “Bag size”:
+    # B = (∑ x, i ❙ i < x # B • 1)
+Proof:
+    # B
+  =⟨ “Bag reconstruction” ⟩
+    # ⟅ x, i ❙ i < x # B • x ⟆
+  =⟨ “Bag comprehension size” ⟩
+    ∑ x, i ❙ i < x # B • 1  
+
+Declaration: _⊆_ : Bag t → Bag t → 𝔹
+
+Axiom (11.83) “Subbag” “Definition of ⊆” “Bag inclusion”:
+   B ⊆ C  ≡  (∀ e • e # B ≤ e # C)
+
+Theorem “Monotonicity of #”: B ⊆ C ⇒ e # B ≤ e # C
+Proof:
+    B ⊆ C 
+  =⟨ “Bag inclusion” ⟩
+    ∀ e • e # B ≤ e # C
+  ⇒⟨ “Instantiation” (9.13) ⟩
+    (e # B ≤ e # C)[e ≔ e]
+  =⟨ Substitution ⟩
+     e # B ≤ e # C    
+
+Theorem “Subbag membership”:
+    B ⊆ C ⇒ a ⋿ B ⇒ a ⋿ C
+Proof:
+  Assuming `B ⊆ C`:
+      a ⋿ B
+    =⟨ “Alternative bag extensionality” ⟩
+      ∃ i • i < a # B 
+    =⟨ “Identity of ∧”, “Monotonicity of #” with Assumption `B ⊆ C` ⟩
+      ∃ i • i < a # B ∧ a # B ≤ a # C
+    ⇒⟨ “Body monotonicity of ∃” with “Transitivity of < with ≤” with “Shunting” ⟩
+      ∃ i • i < a # C
+    =⟨ “Alternative bag extensionality” ⟩
+      a ⋿ C
+
+╍╍╍ “Transitivity of < with ≤”: a < b ⇒ b ≤ c ⇒ a < c
+
+Theorem “Reflexivity of bag inclusion”: B ⊆ B
+Proof:
+  Using “Bag inclusion”:
+    For any `e`:
+        e # B 
+      ≤⟨ “Reflexivity of ≤” ⟩
+        e # B  
+
+Theorem “Transitivity of bag inclusion”: X ⊆ Y ⇒ Y ⊆ Z ⇒ X ⊆ Z
+Proof:
+  Assuming `X ⊆ Y` and using with “Bag inclusion”,
+           `Y ⊆ Z` and using with “Bag inclusion”:
+    Using “Bag inclusion”:
+      For any `e`:
+          e # X
+        ≤⟨ Assumption `X ⊆ Y` ⟩
+          e # Y
+        ≤⟨ Assumption `Y ⊆ Z` ⟩
+          e # Z
+         
+Theorem “Flipped transitivity of bag inclusion”: Y ⊆ Z ⇒ X ⊆ Y ⇒ X ⊆ Z
+Proof:
+  By “Shunting”, “Transitivity of bag inclusion”
+
+Theorem “Antisymmetry of bag inclusion”: X ⊆ Y ⇒ Y ⊆ X ⇒ X = Y
+Proof:
+  Assuming `X ⊆ Y` and using with “Bag inclusion”,
+           `Y ⊆ X` and using with “Bag inclusion”:
+    Using “Bag extensionality”:
+      For any `e`:
+          e # X = e # Y
+        ⇐⟨ “Antisymmetry of ≤” with “Shunting” ⟩ 
+          e # X ≤ e # Y ∧ e # Y ≤ e # X
+        =⟨ Assumption `X ⊆ Y`, Assumption `Y ⊆ X`, “Identity of ∧” ⟩ 
+          true
+         
+
+Axiom “Bag union”:          e # S ∪ T  =  (e # S)  +  (e # T)
+Axiom “Bag intersection”:   e # S ∩ T  =  (e # S)  ↓  (e # T)
+
+Theorem “Symmetry of bag union”: S ∪ T = T ∪ S
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # S ∪ T
+      =⟨ “Bag union”⟩ 
+        (e # S)  +  (e # T)
+      =⟨ “Bag union” ⟩ 
+        e # T ∪ S
+       
+Theorem “Associativity of bag union”: S ∪ (T ∪ W) = (S ∪ T) ∪ W
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # S ∪ (T ∪ W)
+      =⟨ “Bag union” ⟩ 
+        (e # S) + (e # T) + (e # W)
+      =⟨ “Bag union” ⟩ 
+        e # (S ∪ T) ∪ W
+
+Theorem “Bag union membership”: x ⋿ B ∪ C  ≡  x ⋿ B ∨ x ⋿ C
+Proof:
+    x ⋿ B ∪ C
+  ≡⟨ “Bag members have non-zero count”, “Bag union” ⟩
+    (x # B) + (x # C) ≠ 0
+  ≡⟨ “Definition of ≠”, “Zero sum” ⟩
+    ¬ (x # B = 0 ∧ x # C = 0)
+  ≡⟨ “De Morgan”, “Definition of ≠” ⟩
+    x # B ≠ 0 ∨ x # C ≠ 0
+  ≡⟨ “Bag members have non-zero count” ⟩
+    x ⋿ B ∨ x ⋿ C
+
+Theorem “Isotonicity of +”: a + b ≤ a + c  ≡  b ≤ c
+Proof:
+  By induction on `a : ℕ`:
+    Base case `0 + b ≤ 0 + c  ≡  b ≤ c`:
+      By “Identity of +”
+    Induction step `suc a + b ≤ suc a + c  ≡  b ≤ c`:
+        suc a + b ≤ suc a + c
+      ≡⟨ “Definition of + for `suc`” ⟩
+        suc (a + b) ≤ suc (a + c)
+      ≡⟨ “Isotonicity of successor” ⟩
+        a + b ≤ a + c
+      ≡⟨ Induction hypothesis ⟩
+        b ≤ c
+
+Theorem “Weakening of bag union”: S ⊆ S ∪ T
+Proof:
+  Using “Bag inclusion”:
+    For any `e`:
+        e # S
+      =⟨ “Identity of +” ⟩
+        (e # S) + 0
+      ≤⟨ “Isotonicity of +” with “Zero is least element” ⟩
+        (e # S) + (e # T) 
+      =⟨ “Bag union” ⟩
+        e # S ∪ T  
+
+Theorem “Symmetry of bag intersection”: S ∩ T = T ∩ S
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # S ∩ T
+      =⟨ “Bag intersection” ⟩
+         (e # S) ↓ (e # T)
+      =⟨ “Symmetry of ↓”, “Bag intersection” ⟩
+        e # T ∩ S
+        
+Theorem “Associativity of bag intersection”: S ∩ (T ∩ W) = (S ∩ T) ∩ W
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # S ∩ (T ∩ W)
+      =⟨ “Bag intersection” ⟩
+         (e # S) ↓ ((e # T) ↓ (e # W))
+      =⟨ “Associativity of ↓”, “Bag intersection” ⟩
+        e # (S ∩ T) ∩ W
+
+Theorem “Idempotency of bag intersection”: S ∩ S = S
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # S ∩ S
+      =⟨ “Bag intersection” ⟩
+        (e # S) ↓ (e # S)
+      =⟨ “Idempotency of ↓” ⟩
+         e # S
+            
+Theorem “Weakening of bag intersection”: S ∩ T ⊆ S
+Proof:
+  Using “Bag inclusion”:
+    For any `e`:
+        e # S ∩ T
+      =⟨ “Bag intersection” ⟩
+        (e # S) ↓ (e # T)
+      ≤⟨ “Weakening for ↓” ⟩
+         e # S  
+
+╍╍╍ (15.57) "Minimum is lower bound": a ↓ b ≤ a ∧ a ↓ b ≤ b
+
+Theorem “Bag inclusion via ∩”:  S ⊆ T  ≡  S ∩ T = S
+Proof:
+    S ⊆ T 
+  =⟨ “Bag inclusion” ⟩
+    ∀ e • e # S ≤ e # T
+  =⟨ “≤ via ↓” ⟩
+    ∀ e • (e # S) ↓ (e # T) = e # S
+  =⟨ “Bag intersection” ⟩ 
+    ∀ e • e # S ∩ T = e # S
+  =⟨ “Bag extensionality” ⟩ 
+    S ∩ T = S  
+
+Theorem “Monotonicity of ∩”: S ⊆ T  ⇒  S ∩ U ⊆ T ∩ U
+Proof:
+  Assuming `S ⊆ T` and using with “Bag inclusion”:
+    Using “Bag inclusion”:
+      For any `e`:
+          e # S ∩ U 
+        =⟨ “Bag intersection” ⟩
+          (e # S) ↓ (e # U)
+        ≤⟨ “Monotonicity of ↓” with Assumption `S ⊆ T` ⟩
+          (e # T) ↓ (e # U)
+        =⟨ “Bag intersection” ⟩
+          e # T ∩ U    
+
+Theorem “Monotonicity of ∩”: S ⊆ T  ⇒  S ∩ U ⊆ T ∩ U
+Proof:
+  Assuming `S ⊆ T` and using with “Bag inclusion”:
+    Using “Bag inclusion”:
+      For any `e`:
+          e # S ∩ U 
+        =⟨ “Bag intersection” ⟩
+          (e # S) ↓ (e # U)
+        ≤⟨ “Monotonicity of ↓” with Assumption `S ⊆ T` ⟩
+          (e # T) ↓ (e # U)
+        =⟨ “Bag intersection” ⟩
+          e # T ∩ U    
+
+Theorem “Monotonicity of ∩”: S ⊆ T  ⇒  U ⊆ V  ⇒  S ∩ U ⊆ T ∩ V
+Proof:
+  Assuming (1) `S ⊆ T`, (2) `U ⊆ V` :
+      S ∩ U
+    ⊆⟨ “Monotonicity of ∩” with Assumption (1) ⟩ 
+      T ∩ U
+    ⊆⟨ “Monotonicity of ∩” with Assumption (2) ⟩ 
+      T ∩ V
+    
+Theorem “Reflexivity of ⊆”: S = T ⇒ S ⊆ T
+Proof:
+  Assuming `S = T`:
+      S ⊆ T
+    =⟨ Assumption `S = T` ⟩
+      T ⊆ T — This is “Reflexivity of bag inclusion” 
+
+Axiom “Proper subbag” “Definition of ⊂”:
+    S ⊂ T  ≡   S ⊆ T ∧ S ≠ T
+
+Lemma “Mutual inclusion”: S = T ≡ S ⊆ T ∧ T ⊆ S
+Proof:
+  Using “Mutual implication”:
+    Subproof for `S = T ⇒ S ⊆ T ∧ T ⊆ S`:
+      Assuming `S = T`:
+          S ⊆ T ∧ T ⊆ S
+        =⟨ Assumption `S = T` ⟩
+          S ⊆ S ∧ S ⊆ S
+        =⟨ “Reflexivity of bag inclusion”, “Idempotency of ∧” ⟩
+          true
+    Subproof for `S ⊆ T ∧ T ⊆ S ⇒ S = T`:
+      By “Antisymmetry of bag inclusion” with “Shunting”      
+
+Theorem “Definition of ⊂ via ⊆”: S ⊂ T  ≡  S ⊆ T ∧ ¬ (T ⊆ S)
+Proof:
+    S ⊂ T
+  ≡⟨ “Definition of ⊂”, “Definition of ≠” ⟩
+    S ⊆ T ∧ ¬ (S = T)
+  ≡⟨ “Mutual inclusion” ⟩
+    S ⊆ T ∧ ¬ (S ⊆ T ∧ T ⊆ S)
+  ≡⟨ “De Morgan”, “Absorption” ⟩
+    S ⊆ T ∧ ¬ (T ⊆ S)
+
+Theorem “Inclusion in terms of ⊂”:
+    S ⊆ T  ≡  S ⊂ T ∨ S = T
+Proof:
+    S ⊂ T ∨ S = T
+  ≡⟨ “Proper subbag”, “Definition of ≠” ⟩
+    (S ⊆ T ∧ ¬ (S = T)) ∨ S = T
+  ≡⟨ “Absorption” ⟩
+    S ⊆ T ∨ S = T
+  ≡⟨ “Reflexivity of ⊆” with (3.57) ⟩
+    S ⊆ T  
+
+Theorem “Transitivity of ⊆ with ⊂”:
+    X ⊆ Y ⇒ Y ⊂ Z ⇒ X ⊂ Z
+Proof:
+  Assuming `X ⊆ Y`:
+      Y ⊂ Z
+    =⟨ “Definition of ⊂ via ⊆” ⟩
+      Y ⊆ Z ∧ ¬ (Z ⊆ Y)
+    ⇒⟨ Antitonicity with Assumption `X ⊆ Y` ⟩
+      X ⊆ Z ∧ ¬ (Z ⊆ Y)
+    ⇒⟨ Antitonicity with Assumption `X ⊆ Y` ⟩
+      X ⊆ Z ∧ ¬ (Z ⊆ X)
+    =⟨ “Definition of ⊂ via ⊆” ⟩
+      X ⊂ Z 
+ 
+Axiom “Bag difference”:  v # S - T  =  (v # S) - (v # T)
+
+Lemma “Subtraction of addition”: a - (b + c) = (a - b) - c
+Proof:
+  By induction on `a : ℕ`:
+    Base case `0 - (b + c) = (0 - b) - c`:
+      By “Subtraction from zero”
+    Induction step `suc a - (b + c) = (suc a - b) - c`:
+      By induction on `b : ℕ`:
+        Base case `suc a - (0 + c) = (suc a - 0) - c`:
+            suc a - (0 + c)
+          =⟨ “Right-identity of +” ⟩
+            suc a - c
+          =⟨ “Right-identity of subtraction” ⟩
+            (suc a - 0) - c
+        Induction step `suc a - (suc b + c) = (suc a - suc b) - c`:
+             suc a - (suc b + c)
+           =⟨ “Definition of + for `suc`” ⟩
+             suc a - suc (b + c)
+           =⟨ “Subtraction of successor from successor” ⟩
+             a - (b + c)
+           =⟨ Induction hypothesis `a - (b + c) = (a - b) - c` ⟩ 
+             (a - b) - c
+           =⟨ “Subtraction of successor from successor” ⟩  
+             (suc a - suc b) - c
+
+Theorem “Bag difference with union”: S - (T ∪ U) = (S - T) - U
+Proof:
+  Using “Bag extensionality”:
+    For any `e`:
+        e # S - (T ∪ U)
+      =⟨ “Bag difference” ⟩
+        (e # S) - (e # T ∪ U)
+      =⟨ “Bag union” ⟩
+        (e # S) - ((e # T) + (e # U))
+      =⟨ “Subtraction of addition” ⟩
+         ((e # S) - (e # T)) - (e # U) 
+      =⟨ “Bag difference” ⟩
+         (e # S - T) - (e # U)
+      =⟨ “Bag difference” ⟩
+         e # (S - T) - U
+      
+      
+Theorem “Re-adding to monus”: m ≤ n  ≡  (n - m) + m = n
+Proof:
+  By induction on `m : ℕ`:
+    Base case:
+          0 ≤ n
+        ≡⟨ “Zero is least element” ⟩
+          true
+        ≡⟨ “Right-identity of +”, “Right-identity of subtraction” ⟩
+          (n - 0) + 0 = n
+    Induction step:
+      By induction on `n : ℕ`:
+        Base case:
+            suc m ≤ 0
+          ≡⟨ “Successor is not at most zero” ⟩
+            false
+          ≡⟨ “Zero is not successor” ⟩
+            suc m = 0
+          ≡⟨ “Left-identity of +”, “Subtraction from zero” ⟩
+            (0 - suc m) + suc m = 0
+        Induction step:
+            suc m ≤ suc n
+          ≡⟨ “Isotonicity of successor” ⟩
+            m ≤ n
+          ≡⟨ Induction hypothesis `m ≤ n  ≡  (n - m) + m = n` ⟩
+            (n - m) + m = n
+          ≡⟨ “Cancellation of `suc`” ⟩
+            suc ((n - m) + m) = suc n
+          ≡⟨ “Adding the successor” ⟩
+            (n - m) + suc m = suc n
+          ≡⟨ “Subtraction of successor from successor” ⟩
+            (suc n - suc m) + suc m = suc n
+
+Theorem “Bag inclusion via ∪”:  S ⊆ T  ≡  S ∪ (T - S) = T
+Proof:
+    S ⊆ T
+  ≡⟨ “Bag inclusion” ⟩
+    ∀ x • x # S ≤ x # T
+  ≡⟨ “Re-adding to monus” ⟩
+    ∀ x • ((x # T) - (x # S)) + (x # S) = x # T
+  ≡⟨ “Bag difference” ⟩
+    ∀ x • (x # (T - S)) + (x # S) = x # T
+  ≡⟨ “Bag union” ⟩
+    ∀ x • x # (S ∪ (T - S)) = x # T
+  ≡⟨ “Bag extensionality” ⟩
+    S ∪ (T - S) = T  

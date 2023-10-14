@@ -1,0 +1,146 @@
+Calculation:
+    (5 + 2 · x) · (6 - 3 · y)
+  =⟨ “Distributivity of · over -” (15.29b) ⟩
+    (5 + 2 · x) · 6 - (5 + 2 · x) · (3 · y)
+  =⟨ “Distributivity of · over +” (15.5b) ⟩
+    (5 · 6  +  (2 · x) · 6)  -  (5 · (3 · y) + (2 · x) · (3 · y))
+  =⟨ Fact `5 · 6 = 30` ⟩
+    (30  +  (2 · x) · 6)  -  (5 · (3 · y) + (2 · x) · (3 · y))
+  =⟨ “Associativity of ·” ⟩
+    (30  +  2 · (x · 6))  -  ((5 · 3) · y + 2 · (x · (3 · y)))
+  =⟨ Fact `5 · 3 = 15` ⟩
+    (30  +  2 · (x · 6))  -  (15 · y + 2 · (x · (3 · y)))
+  =⟨ “Symmetry of ·” ⟩
+    (30  +  2 · (6 · x))  -  (15 · y + 2 · ((3 · y) · x))
+  =⟨ “Associativity of ·” ⟩
+    (30  +  (2 · 6) · x)  -  (15 · y + (2 · 3) · (y · x))
+  =⟨ Fact `2 · 6 = 12` ⟩
+    (30  +  12 · x)  -  (15 · y + (2 · 3) · (y · x))
+  =⟨ Fact `2 · 3 = 6` ⟩
+    (30  +  12 · x)  -  (15 · y + 6 · (y · x))
+  =⟨ “Subtraction of addition” ⟩
+    ((30  +  12 · x)  -  15 · y) - 6 · (y · x)
+  =⟨ “Symmetry of ·” ⟩
+    ((30  +  12 · x)  -  15 · y) - 6 · (x · y)
+  =⟨ “Associativity of ·” ⟩
+    ((30  +  12 · x)  -  15 · y) - (6 · x) · y
+This proves: Fact “Calculation 1”:
+  (5 + 2 · x) · (6 - 3 · y) = ((30  +  12 · x)  -  15 · y) - (6 · x) · y
+
+Calculation:
+    3 · (5 + 2 · x)
+  =⟨ “Distributivity of · over +” ⟩
+    3 · 5 + 3 · (2 · x)
+  =⟨ Fact `3 · 5 = 15` ⟩
+    15 + 3 · (2 · x)
+  =⟨ “Associativity of ·” ⟩
+    15 + (3 · 2) · x
+  =⟨ Fact `3 · 2 = 6` ⟩
+    15 + 6 · x
+
+Calculation:
+    (3 · x + 4) · (5 + y)
+  =⟨ “Distributivity of · over +” ⟩
+     (3 · x) · (5 + y) + 4 · (5 + y)
+  =⟨ “Distributivity of · over +” ⟩
+     ((3 · x) · 5 + (3 · x) · y) + (4 · 5 + 4 · y)
+  =⟨ Fact `4 · 5 = 20` ⟩
+     ((3 · x) · 5 + (3 · x) · y) + (20 + 4 · y)
+  =⟨ “Symmetry of ·” ⟩
+     (5 · (3 · x)  + (3 · x) · y) + (20 + 4 · y)
+  =⟨ “Associativity of ·” ⟩
+     ((5 · 3) · x  + (3 · x) · y) + (20 + 4 · y)
+  =⟨ Fact `5 · 3 = 15` ⟩
+     (15 · x  + (3 · x) · y) + (20 + 4 · y)
+  =⟨ “Associativity of +” ⟩
+     ((15 · x  + (3 · x) · y) + 20) + 4 · y
+
+  
+Calculation:
+    (2 · x + 3) · (5 + x)
+  =⟨ “Distributivity of · over +” ⟩
+     (2 · x) · (5 + x) + 3 · (5 + x)
+  =⟨ “Distributivity of · over +” ⟩
+     ((2 · x) · 5 + (2 · x) · x) + (3 · 5 + 3 · x)
+  =⟨ Fact `3 · 5 = 15` ⟩
+     ((2 · x) · 5 + (2 · x) · x) + (15 + 3 · x)
+  =⟨ “Symmetry of ·” ⟩
+     ( 5 · (2 · x) + (2 · x) · x) + (15 + 3 · x)
+  =⟨ “Associativity of ·” ⟩
+     ( (5 · 2) · x + (2 · x) · x) + (15 + 3 · x)
+  =⟨ Fact `5 · 2 = 10` ⟩
+     ( 10 · x + (2 · x) · x) + (15 + 3 · x)
+  =⟨ “Symmetry of +” ⟩
+     ((2 · x) · x + 10 · x) + (3 · x + 15)
+  =⟨ “Associativity of +” ⟩
+     (((2 · x) · x + 10 · x) + 3 · x) + 15
+  =⟨ “Associativity of +” ⟩
+     ((2 · x) · x + (10 · x + 3 · x)) + 15
+  =⟨ “Distributivity of · over +” ⟩
+     ((2 · x) · x + ((10 + 3) · x)) + 15
+  =⟨ Fact `10 + 3 = 13` ⟩
+     ((2 · x) · x + 13 · x) + 15
+
+Calculation:
+    (3 · x - 2) · (5 · y - z)
+  =⟨ “Distributivity of · over -” ⟩
+    (3 · x) · (5 · y - z) - 2 · (5 · y - z)
+  =⟨ “Distributivity of · over -” ⟩
+    ((3 · x) · (5 · y) - (3 · x) · z)  - (2 · (5 · y) - 2 · z)
+  =⟨ “Associativity of ·” ⟩
+    (((3 · x) · 5) · y  - (3 · x) · z)  - ((2 · 5) · y - 2 · z)
+  =⟨  “Symmetry of ·”  ⟩
+    ((5 · (3 · x)) · y  - (3 · x) · z)  - ((2 · 5) · y - 2 · z)
+  =⟨ “Associativity of ·”  ⟩
+    (((5 · 3) · x) · y  - (3 · x) · z)  - ((2 · 5) · y - 2 · z)
+  =⟨ Fact `5 · 3 = 15`  ⟩
+    ((15 · x) · y  - (3 · x) · z)  - ((2 · 5) · y - 2 · z)
+  =⟨ Fact `2 · 5 = 10`  ⟩
+    ((15 · x) · y  - (3 · x) · z)  - (10 · y - 2 · z)
+
+Calculation:
+    (2 · x + 5) · (3 · x - 4)
+  =⟨ “Distributivity of · over +” ⟩
+    (2 · x) · (3 · x - 4) + 5 · (3 · x - 4)
+  =⟨ “Distributivity of · over -” ⟩
+    ((2 · x) · (3 · x) - (2 · x) · 4) + (5 · (3 · x) - 5 · 4)
+  =⟨ Fact `5 · 4 = 20` ⟩
+    ((2 · x) · (3 · x) - (2 · x) · 4) + (5 · (3 · x) - 20)
+  =⟨ “Symmetry of ·” ⟩
+    ((x · 2) · (3 · x) - (x · 2) · 4) + (5 · (3 · x) - 20) 
+  =⟨ “Associativity of ·” ⟩
+    (((x · 2) · 3) · x - x · (2 · 4)) + ((5 · 3) · x - 20) 
+  =⟨ “Associativity of ·” ⟩
+    ((x · (2 · 3)) · x - x · (2 · 4)) + ((5 · 3) · x - 20) 
+  =⟨ Fact `2 · 3 = 6` ⟩
+    ((x · 6) · x - x · (2 · 4)) + ((5 · 3) · x - 20) 
+  =⟨ Fact `2 · 4 = 8` ⟩
+    ((x · 6) · x - x · 8) + ((5 · 3) · x - 20) 
+  =⟨ Fact `5 · 3 = 15` ⟩
+    ((x · 6) · x - x · 8) + (15 · x - 20) 
+  =⟨ “Mutual associativity of + and -” ⟩
+    (((x · 6) · x - x · 8) + 15 · x) - 20
+  =⟨ “Symmetry of +” ⟩
+    (15 · x + ((x · 6) · x - x · 8)) - 20
+  =⟨ “Mutual associativity of + and -” ⟩
+    ((15 · x + (x · 6) · x) - x · 8) - 20
+  =⟨ “Symmetry of +” ⟩
+    (((x · 6) · x + 15 · x) - x · 8) - 20
+  =⟨ “Mutual associativity of + and -” ⟩
+    ((x · 6) · x + (15 · x - x · 8)) - 20
+  =⟨ “Symmetry of ·” ⟩
+    ((x · 6) · x + (15 · x - 8 · x)) - 20
+  =⟨ “Distributivity of · over -” ⟩
+    ((x · 6) · x + ((15 - 8) · x)) - 20
+  =⟨ Fact `15 - 8 = 7` ⟩
+    ((x · 6) · x + (7 · x)) - 20
+
+  
+    
+  
+
+
+  
+  
+  
+

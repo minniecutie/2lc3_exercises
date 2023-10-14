@@ -1,0 +1,77 @@
+Lemma (1): x + y = 13   ⇒⁅ x := x + 7 ⁆   x + y = 20
+Proof:
+    x + y = 13
+  ≡⟨ “Cancellation of +” ⟩
+    x + y + 7 = 13 + 7
+  ≡⟨ Fact `20 = 13 + 7` ⟩
+    x + 7 + y = 20
+  ≡⟨ Substitution ⟩
+    (x + y = 20)[x ≔ x + 7]
+  ⇒⁅ x := x + 7 ⁆  ⟨ “Assignment” ⟩
+    x + y = 20
+
+Lemma (Ex2.6a):   (p ∧ q) ∨ r  ⇒⁅ q := (p ∧ q) ⁆  (q ∨ r)
+Proof:
+     (p ∧ q) ∨ r
+   ≡⟨ Substitution ⟩
+     (q ∨ r)[q ≔ (p ∧ q)]
+   ⇒⁅ q := (p ∧ q) ⁆ ⟨ “Assignment” ⟩
+     (q ∨ r)
+
+Lemma (Ex2.6b):   (p ∨ q)  ⇒⁅ q := (¬ p ∧ q) ⁆  (p ∨ q)
+Proof:
+      p ∨ q
+   ≡⟨ “Identity of ∧” ⟩
+      true ∧ (p ∨ q)
+   ≡⟨ “LEM” ⟩
+      (p ∨ ¬ p) ∧ (p ∨ q)
+   ≡⟨ “Distributivity of ∨ over ∧” ⟩
+      p ∨ (¬ p ∧ q)
+   ≡⟨ Substitution ⟩
+     (p ∨ q)[q ≔ (¬ p ∧ q)]
+   ⇒⁅ q := (¬ p ∧ q) ⁆ ⟨ “Assignment” ⟩
+     (p ∨ q)
+
+Lemma (Ex2.6c):   true  ⇒⁅ q := (¬ p ∨ q) ⁆  (p ∨ q)
+Proof:
+      true
+   ≡⟨ “Zero of ∨” ⟩
+      true ∨ q
+   ≡⟨ “LEM” ⟩
+      (p ∨ ¬ p) ∨ q
+   ≡⟨ “Associativity of ∨” ⟩
+      p ∨ (¬ p ∨ q)
+   ≡⟨ Substitution ⟩
+     (p ∨ q)[q ≔ (¬ p ∨ q)]
+   ⇒⁅ q := (¬ p ∨ q) ⁆ ⟨ “Assignment” ⟩
+     (p ∨ q)
+
+Lemma (Ex2.6d):       s
+                 ⇒⁅  q := (¬ p ∧ s)
+                   ⍮ r := (p ∧ s)
+                   ⁆
+                      (p ∨ q) ∧ (¬ p ∨ r)
+Proof:
+    s
+  ≡⟨ “Identity of ∨” ⟩
+    false ∨ s
+  ≡⟨ “Contradiction” ⟩
+    (p ∧ ¬ p) ∨ s
+  ≡⟨ “Distributivity of ∨ over ∧” ⟩
+    (p ∨ s) ∧ (¬ p ∨ s)
+  ≡⟨ “Identity of ∧”  ⟩
+    (true ∧ (p ∨ s)) ∧ (true ∧ (¬ p ∨ s))
+  ≡⟨ “LEM” ⟩
+    ((p ∨ ¬ p) ∧ (p ∨ s)) ∧ ((p ∨ ¬ p) ∧ (¬ p ∨ s))
+  ≡⟨ “Symmetry of ∨” ⟩
+    ((p ∨ ¬ p) ∧ (p ∨ s)) ∧ ((¬ p ∨ p) ∧ (¬ p ∨ s))
+  ≡⟨ “Distributivity of ∨ over ∧” ⟩
+    (p ∨ (¬ p ∧ s)) ∧ (¬ p ∨ (p ∧ s))
+  ≡⟨ Substitution ⟩
+    ((p ∨ q) ∧ (¬ p ∨ (p ∧ s)))[q ≔ (¬ p ∧ s)]
+  ⇒⁅ q := (¬ p ∧ s) ⁆ ⟨ “Assignment” ⟩
+    (p ∨ q) ∧ (¬ p ∨ (p ∧ s))
+  ≡⟨ Substitution ⟩
+    ((p ∨ q) ∧ (¬ p ∨ r))[r ≔ (p ∧ s)]
+  ⇒⁅ r := (p ∧ s) ⁆ ⟨ “Assignment” ⟩
+    (p ∨ q) ∧ (¬ p ∨ r)

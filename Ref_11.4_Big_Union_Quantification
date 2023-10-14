@@ -1,0 +1,67 @@
+Axiom (8.11) “Substitution into ⋃”:
+   (⋃ x ❙ R • E)[y ≔ F]  =  ⋃ x ❙ R[y ≔ F] • E[y ≔ F]
+
+Axiom “Leibniz for ⋃ range”:
+    (∀ x • R₁ ≡ R₂) ⇒ (⋃ x ❙ R₁ • E) = (⋃ x ❙ R₂ • E)
+
+Axiom “Leibniz for ⋃ body”:
+    (∀ x • E₁ = E₂) ⇒ (⋃ x ❙ R • E₁) = (⋃ x ❙ R • E₂)
+
+Axiom (8.13) “Empty ⋃ range” “Empty range for ⋃”:
+  (⋃ x ❙ false • E)  =  ⊥
+
+Axiom (8.14) “One-point rule for ⋃”:
+  (⋃ x ❙ x = D • E)  =  E[x ≔ D]
+
+Axiom (8.15) “Distributivity of ⋃ over ∪”:
+  (⋃ x ❙ R • E₁) ∪ (⋃ x ❙ R • E₂) = (⋃ x ❙ R • E₁ ∪ E₂)
+
+Axiom (8.18) “Range split for ⋃”:
+     (⋃ x ❙ Q ∨ R  • E)  =  (⋃ x ❙ Q • E)  ∪  (⋃ x ❙ R • E)
+
+Axiom (8.20) “Nesting for ⋃”:
+    (⋃ x, y ❙ Q ∧ R • E)
+  = (⋃ x ❙ Q • (⋃ y ❙ R • E))
+
+Theorem “Replacement in ⋃”:
+    (⋃ y ❙ R ∧ e = f • P[x ≔ e])
+  = (⋃ y ❙ R ∧ e = f • P[x ≔ f])
+Proof:
+    (⋃ y ❙ R ∧ e = f • P[x ≔ e])
+  =⟨ “One-point rule for ⋃” ⟩
+    (⋃ y ❙ R ∧ e = f • (⋃ x ❙ x = e • P))
+  =⟨ “Nesting for ⋃” ⟩
+    (⋃ y, x ❙ R ∧ e = f ∧ x = e • P)
+  =⟨ Substitution ⟩
+    (⋃ y, x ❙ R ∧ e = f ∧ (x = z)[z ≔ e] • P)
+  =⟨ “Replacement” (3.84a) ⟩
+    (⋃ y, x ❙ R ∧ e = f ∧ (x = z)[z ≔ f] • P)
+  =⟨ Substitution ⟩
+    (⋃ y, x ❙ R ∧ e = f ∧ x = f • P)
+  =⟨ “Nesting for ⋃” ⟩
+    (⋃ y ❙ R ∧ e = f • (⋃ x ❙ x = f • P))
+  =⟨ “One-point rule for ⋃” ⟩
+    (⋃ y ❙ R ∧ e = f • P[x ≔ f])
+
+Axiom (8.20a) “Dummy list permutation for ⋃”:
+   (⋃ x, y ❙ R • E) = (⋃ y, x ❙ R • E)
+
+Theorem (8.19) “Interchange of dummies for ⋃”:
+    (⋃ x ❙ R • (⋃ y ❙ S • P))
+  = (⋃ y ❙ S • (⋃ x ❙ R • P))
+Proof:
+    (⋃ x ❙ R • (⋃ y ❙ S • P))
+  =⟨ “Nesting for ⋃” ⟩
+    (⋃ x, y ❙ R ∧ S • P)
+  =⟨ “Symmetry of ∧” and “Dummy list permutation for ⋃” ⟩
+    (⋃ y, x ❙ S ∧ R • P)
+  =⟨ “Nesting for ⋃” ⟩
+    (⋃ y ❙ S • (⋃ x ❙ R • P))
+
+Axiom (8.21) “Dummy renaming for ⋃”, “α-conversion for ⋃”:
+  (⋃ x ❙ R • E) = (⋃ y ❙ R[x ≔ y] • E[x ≔ y])
+
+Axiom “Characterisation of ⋃”:  (∀ x ❙ P • Q ⊆ R)  ≡  (⋃ x ❙ P • Q) ⊆ R
+
+Axiom “Distributivity of ⨾ over ⋃”:  Q ⨾ (⋃ x ❙ P • R) =  (⋃ x ❙ P • Q ⨾ R)
+Axiom “Distributivity of ⨾ over ⋃”:  (⋃ x ❙ P • Q) ⨾ R =  (⋃ x ❙ P • Q ⨾ R)

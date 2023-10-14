@@ -1,0 +1,55 @@
+Theorem (3.29) “Zero of ∨”: p ∨ true ≡ true
+Proof:
+    p ∨ true 
+  =⟨ “LEM” ⟩
+    p ∨ p ∨ ¬ p
+  =⟨ “Associativity of ∨” ⟩
+    (p ∨ p) ∨ ¬ p
+  =⟨ “Idempotency of ∨” ⟩
+    p ∨ ¬ p
+  =⟨ “LEM” ⟩
+    true
+
+Theorem (3.30) “Identity of ∨”: p ∨ false ≡ p
+Proof:
+    p ∨ false ≡ p
+  =⟨ “Definition of `false`” ⟩
+    p ∨ ¬ true ≡ p
+  =⟨ “Idempotency of ∨” ⟩
+    p ∨ ¬ true ≡ p ∨ p
+  =⟨ “Distributivity of ∨ over ≡” ⟩
+    p ∨ (¬ true ≡ p)
+  =⟨ “¬ connection” ⟩
+    p ∨ (true ≡ ¬ p)
+  =⟨ “Identity of ≡” ⟩
+    p ∨ ¬ p
+  =⟨ “LEM” ⟩
+    true
+
+Theorem (3.31) “Distributivity of ∨ over ∨”: p ∨ (q ∨ r) ≡ (p ∨ q) ∨ (p ∨ r)
+Proof:
+    (p ∨ q) ∨ (p ∨ r)
+  =⟨ “Associativity of ∨” ⟩
+    (p ∨ q ∨ p) ∨ r
+  =⟨ “Associativity of ∨” ⟩
+    ((p ∨ p) ∨ q) ∨ r
+  =⟨ “Idempotency of ∨” ⟩
+    (p ∨ q) ∨ r
+  =⟨ “Associativity of ∨” ⟩
+    p ∨ (q ∨ r)
+ 
+Theorem (3.32): p ∨ q ≡ p ∨ ¬ q ≡ p
+Proof:
+    p ∨ q ≡ p ∨ ¬ q
+  =⟨ “Distributivity of ∨ over ≡” ⟩
+    p ∨ (q ≡ ¬ q)
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+    p ∨ ¬ (q ≡ q)
+  =⟨ “Identity of ≡” ⟩
+    p ∨ ¬ true
+  =⟨ “Definition of `false`” ⟩
+    p ∨ false
+  =⟨ “Identity of ∨” ⟩
+    p 
+
+ 

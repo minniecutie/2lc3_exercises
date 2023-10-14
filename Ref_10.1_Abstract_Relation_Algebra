@@ -1,0 +1,322 @@
+Declaration: _⊆_ : A ↔ B → A ↔ B → 𝔹
+
+Axiom “Reflexivity of ⊆”: R ⊆ R
+Axiom “Transitivity of ⊆”: Q ⊆ R ⇒ R ⊆ S ⇒ Q ⊆ S
+Axiom “Antisymmetry of ⊆”: R ⊆ S ⇒ S ⊆ R ⇒ R = S
+
+Theorem “Transitivity of ⊆”: Q ⊆ R ∧ R ⊆ S ⇒ Q ⊆ S
+Proof:
+  By “Transitivity of ⊆”, “Shunting”
+
+Lemma “Flipped Transitivity of ⊆”: R ⊆ S ⇒ Q ⊆ R ⇒ Q ⊆ S
+Proof:
+  By “Transitivity of ⊆”, “Shunting”
+
+Lemma “Reflexivity of ⊆”: R = S  ⇒  R ⊆ S
+Proof:
+  Assuming `R = S`:
+    By Assumption `R = S`, “Reflexivity of ⊆”
+
+Theorem “Mutual inclusion”: R = S  ≡  R ⊆ S  ∧ S ⊆ R
+Proof:
+  Using “Mutual implication”:
+    Subproof for `R = S ⇒ R ⊆ S  ∧ S ⊆ R`:
+      Assuming `R = S`:
+          R ⊆ S  ∧ S ⊆ R
+        =⟨ Assumption `R = S` ⟩
+          S ⊆ S  ∧ S ⊆ S
+        =⟨ “Reflexivity of ⊆”, “Idempotency of ∧” ⟩
+          true  
+    Subproof for `R ⊆ S  ∧ S ⊆ R ⇒ R = S`:
+        By “Antisymmetry of ⊆”, “Shunting”
+
+Declaration: _⊇_ : A ↔ B → A ↔ B → 𝔹
+Axiom “Opposite inclusion”: R ⊇ S  ≡  S ⊆ R
+
+Theorem “Indirect Relation Equality”
+        “Indirect Relation Equality from above”:
+    Q = R  ≡  (∀ S • Q ⊆ S  ≡  R ⊆ S)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `Q = R  ⇒  (∀ S • Q ⊆ S  ≡  R ⊆ S)`:
+      Assuming `Q = R`:
+          ∀ S • Q ⊆ S  ≡  R ⊆ S
+        =⟨ Assumption `Q = R` ⟩
+          ∀ S • R ⊆ S  ≡  R ⊆ S 
+        =⟨ “Reflexivity of ≡”, “True ∀ body” ⟩
+          true
+    Subproof for `(∀ S • Q ⊆ S  ≡  R ⊆ S) ⇒ Q = R`:
+        ∀ S • Q ⊆ S  ≡  R ⊆ S
+      =⟨ “Idempotency of ∧” ⟩
+        (∀ S • Q ⊆ S  ≡  R ⊆ S) ∧ (∀ S • Q ⊆ S  ≡  R ⊆ S)
+      ⇒⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+         (Q ⊆ S  ≡  R ⊆ S)[S ≔ Q] ∧ 
+         (Q ⊆ S  ≡  R ⊆ S)[S ≔ R]
+      =⟨ Substitution ⟩
+         (Q ⊆ Q  ≡  R ⊆ Q) ∧ (Q ⊆ R  ≡  R ⊆ R)
+      =⟨ “Reflexivity of ⊆”, “Identity of ≡” ⟩
+          R ⊆ Q ∧ Q ⊆ R
+      =⟨ “Mutual inclusion” ⟩ 
+          Q = R
+         
+Theorem “Indirect Relation Equality”
+        “Indirect Relation Equality from below”:
+    Q = R  ≡  (∀ S • S ⊆ Q  ≡  S ⊆ R)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `Q = R  ⇒  (∀ S • S ⊆ Q  ≡  S ⊆ R)`:
+      Assuming `Q = R`:
+          ∀ S • S ⊆ Q  ≡  S ⊆ R
+        =⟨ Assumption `Q = R` ⟩
+          ∀ S • S ⊆ R  ≡  S ⊆ R
+        =⟨ “Reflexivity of ≡”, “True ∀ body” ⟩
+          true
+    Subproof for `(∀ S • S ⊆ Q  ≡  S ⊆ R) ⇒ Q = R`:
+        ∀ S • S ⊆ Q  ≡  S ⊆ R
+      =⟨ “Idempotency of ∧” ⟩
+        (∀ S • S ⊆ Q  ≡  S ⊆ R) ∧ (∀ S • S ⊆ Q  ≡  S ⊆ R)
+      ⇒⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+         (S ⊆ Q  ≡  S ⊆ R)[S ≔ Q] ∧ 
+         (S ⊆ Q  ≡  S ⊆ R)[S ≔ R]
+      =⟨ Substitution ⟩
+         (Q ⊆ Q  ≡  Q ⊆ R) ∧ (R ⊆ Q  ≡  R ⊆ R)
+      =⟨ “Reflexivity of ⊆”, “Identity of ≡” ⟩
+          Q ⊆ R ∧ R ⊆ Q 
+      =⟨ “Mutual inclusion” ⟩ 
+          Q = R
+
+Theorem “Indirect Relation Inclusion”
+        “Indirect Relation Inclusion from above”:
+    Q ⊆ R  ≡  (∀ S • R ⊆ S  ⇒  Q ⊆ S)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `Q ⊆ R  ⇒ (∀ S • R ⊆ S  ⇒  Q ⊆ S)`:
+      Assuming `Q ⊆ R`:
+        For any `S`:
+          Assuming `R ⊆ S`:
+              Q
+            ⊆ ⟨ Assumption `Q ⊆ R` ⟩
+              R
+            ⊆ ⟨ Assumption `R ⊆ S` ⟩
+              S 
+    Subproof for `(∀ S • R ⊆ S  ⇒  Q ⊆ S) ⇒ Q ⊆ R`:
+        ∀ S • R ⊆ S  ⇒  Q ⊆ S
+      ⇒⟨ “Instantiation” ⟩
+        (R ⊆ S  ⇒  Q ⊆ S)[S ≔ R]
+      =⟨ Substitution ⟩
+         R ⊆ R  ⇒  Q ⊆ R
+      =⟨ “Reflexivity of ⊆”, “Left-identity of ⇒” ⟩
+         Q ⊆ R
+
+Theorem “Indirect Relation Inclusion”
+        “Indirect Relation Inclusion from below”:
+    Q ⊆ R  ≡  (∀ S • S ⊆ Q  ⇒  S ⊆ R)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `Q ⊆ R  ⇒ (∀ S • S ⊆ Q  ⇒  S ⊆ R)`:
+      Assuming `Q ⊆ R`:
+        For any `S`:
+          Assuming `S ⊆ Q`:
+              S
+            ⊆ ⟨ Assumption `S ⊆ Q` ⟩
+              Q
+            ⊆ ⟨ Assumption `Q ⊆ R` ⟩
+              R 
+    Subproof for `(∀ S • S ⊆ Q  ⇒  S ⊆ R) ⇒ Q ⊆ R`:
+        ∀ S • S ⊆ Q  ⇒  S ⊆ R
+      ⇒⟨ “Instantiation” ⟩
+        (S ⊆ Q  ⇒  S ⊆ R)[S ≔ Q]
+      =⟨ Substitution ⟩
+         Q ⊆ Q  ⇒  Q ⊆ R
+      =⟨ “Reflexivity of ⊆”, “Left-identity of ⇒” ⟩
+         Q ⊆ R
+
+Declaration: is-top : A ↔ B → 𝔹
+Axiom “Definition of `is-top`”:  is-top R  ≡  (∀ Q • Q ⊆ R)
+
+Theorem “Uniqueness of top relation”:
+    is-top R ∧ is-top S ⇒ R = S
+Proof:
+    is-top R ∧ is-top S
+  =⟨ “Definition of `is-top`” ⟩
+    (∀ Q • Q ⊆ R) ∧ (∀ Q • Q ⊆ S)
+  ⇒⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+    (Q ⊆ R)[Q ≔ S] ∧ (Q ⊆ S)[Q ≔ R]
+  =⟨ Substitution ⟩
+     S ⊆ R ∧ R ⊆ S
+  =⟨ “Mutual inclusion” ⟩
+     S = R
+
+Declaration: is-bottom : A ↔ B → 𝔹
+Axiom “Definition of `is-bottom`”:
+    is-bottom R  ≡  (∀ S • R ⊆ S)
+
+Theorem “Uniqueness of bottom relation”:
+    is-bottom R ∧ is-bottom S ⇒ R = S
+Proof:
+    is-bottom R ∧ is-bottom S
+  =⟨ “Definition of `is-bottom`” ⟩
+    (∀ Q • R ⊆ Q) ∧ (∀ Q • S ⊆ Q)
+  ⇒⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+    (R ⊆ Q)[Q ≔ S] ∧ (S ⊆ Q)[Q ≔ R]
+  =⟨ Substitution ⟩
+     R ⊆ S ∧ S ⊆ R
+  =⟨ “Mutual inclusion” ⟩
+     S = R
+
+Declaration: _⨾_ : A ↔ B → B ↔ C → A ↔ C
+Axiom “Associativity of ⨾”: (Q ⨾ R) ⨾ S = Q ⨾ (R ⨾ S)
+Axiom “Monotonicity of ⨾”:  P ⊆ Q  ⇒  R ⊆ S  ⇒  P ⨾ R ⊆ Q ⨾ S
+
+Theorem “Left-monotonicity of ⨾” “Monotonicity of ⨾”:  Q ⊆ R  ⇒  Q ⨾ S ⊆ R ⨾ S
+Proof:
+    Q ⊆ R
+  ⇒⟨ “Monotonicity of ⨾” ⟩
+    S ⊆ S  ⇒  Q ⨾ S ⊆ R ⨾ S
+  =⟨ “Reflexivity of ⊆”, “Left-identity of ⇒” ⟩
+    Q ⨾ S ⊆ R ⨾ S 
+
+Theorem “Right-monotonicity of ⨾” “Monotonicity of ⨾”:  R ⊆ S  ⇒  Q ⨾ R ⊆ Q ⨾ S
+Proof:
+    R ⊆ S ⇒ Q ⨾ R ⊆ Q ⨾ S
+  =⟨ “Left-identity of ⇒”, “Reflexivity of ⊆” ⟩
+    Q ⊆ Q ⇒ R ⊆ S ⇒ Q ⨾ R ⊆ Q ⨾ S — This is “Monotonicity of ⨾”
+
+Declaration: 𝕀 : A ↔ A
+Axiom “Identity of ⨾”: 𝕀 ⨾ R = R
+Axiom “Identity of ⨾”: R ⨾ 𝕀 = R
+
+Declaration: reflexive : A ↔ A  →  𝔹
+Declaration: coreflexive : A ↔ A  →  𝔹
+Declaration: transitive, idempotent : A ↔ A  →  𝔹
+Declaration: equivalence, is-PER, preorder : A ↔ A  →  𝔹
+
+Axiom “Definition of reflexivity”:    reflexive R      ≡  𝕀 ⊆ R
+Axiom “Definition of coreflexivity”:  coreflexive R    ≡  R ⊆ 𝕀
+Axiom “Definition of transitivity”:   transitive R     ≡  R ⨾ R ⊆ R
+Axiom “Definition of idempotency”:    idempotent R     ≡  R ⨾ R = R
+Axiom “Definition of preorder”:       preorder R       ≡  reflexive R ∧ transitive R
+
+Theorem “Reflexivity of 𝕀”:  reflexive 𝕀
+Proof:
+  By “Definition of reflexivity”, “Reflexivity of ⊆”
+
+Theorem “Coreflexivity of 𝕀”:  coreflexive 𝕀
+Proof:
+  By “Definition of coreflexivity”, “Reflexivity of ⊆”
+
+Theorem “Transitivity of 𝕀”:  transitive 𝕀
+Proof:
+    transitive 𝕀
+  =⟨ “Definition of transitivity” ⟩
+    𝕀 ⨾ 𝕀 ⊆ 𝕀
+  =⟨ “Identity of ⨾” ⟩
+    𝕀 ⊆ 𝕀
+  =⟨ “Reflexivity of ⊆” ⟩
+    true
+
+Theorem “Idempotency of 𝕀”:  idempotent 𝕀
+Proof:
+  By “Definition of idempotency”, “Identity of ⨾”
+
+Theorem “Identity preorder”:  preorder 𝕀
+Proof:
+  By “Definition of preorder”, “Reflexivity of 𝕀”
+     , “Transitivity of 𝕀”, “Idempotency of ∧”
+
+Theorem “Reflexivity of ⨾”:
+    reflexive R ⇒ reflexive S ⇒ reflexive (R ⨾ S)
+Proof:
+  Assuming `reflexive R` and using with “Definition of reflexivity”,
+           `reflexive S` and using with “Definition of reflexivity”:
+      reflexive (R ⨾ S)
+    =⟨ “Definition of reflexivity” ⟩
+      𝕀 ⊆ R ⨾ S
+    =⟨ “Identity of ⨾” ⟩
+      𝕀 ⨾ 𝕀 ⊆ R ⨾ S
+    =⟨ “Left-identity of ⇒”  ⟩
+      true ⇒ true ⇒ 𝕀 ⨾ 𝕀 ⊆ R ⨾ S
+    =⟨ Assumption `reflexive R` , Assumption `reflexive S`⟩
+      𝕀 ⊆ R ⇒ 𝕀 ⊆ S ⇒ 𝕀 ⨾ 𝕀 ⊆ R ⨾ S 
+    =⟨ “Monotonicity of ⨾” ⟩
+      true
+
+Theorem “Coreflexivity of ⨾”:
+    coreflexive R ⇒ coreflexive S ⇒ coreflexive (R ⨾ S)
+Proof:
+  Assuming `coreflexive R` and using with “Definition of coreflexivity”,
+           `coreflexive S` and using with “Definition of coreflexivity”:
+      coreflexive (R ⨾ S)
+    =⟨ “Definition of coreflexivity” ⟩
+      R ⨾ S ⊆ 𝕀
+    =⟨ “Identity of ⨾” ⟩
+      R ⨾ S ⊆ 𝕀 ⨾ 𝕀 
+    =⟨ “Left-identity of ⇒”  ⟩
+      true ⇒ true ⇒ R ⨾ S ⊆ 𝕀 ⨾ 𝕀
+    =⟨ Assumption `coreflexive R`, Assumption `coreflexive S`⟩
+      R ⊆ 𝕀 ⇒ S ⊆ 𝕀 ⇒ R ⨾ S ⊆ 𝕀 ⨾ 𝕀
+    =⟨ “Monotonicity of ⨾” ⟩
+      true
+
+Theorem “Idempotency from reflexive and transitive”:
+    reflexive R ⇒ transitive R ⇒ idempotent R
+Proof:
+  Assuming `reflexive R` and using with “Definition of reflexivity”,
+           `transitive R` and using with “Definition of transitivity”:
+      idempotent R
+    =⟨ “Definition of idempotency” ⟩
+      R ⨾ R = R
+    =⟨ “Mutual inclusion” ⟩
+      R ⨾ R ⊆ R ∧ R ⊆ R ⨾ R
+    =⟨ Assumption `transitive R`, “Identity of ∧” ⟩
+      R ⊆ R ⨾ R
+    =⟨ “Identity of ⨾” ⟩
+      R ⨾ 𝕀 ⊆ R ⨾ R    
+    ⇐⟨ “Monotonicity of ⨾” ⟩
+      𝕀 ⊆ R — This is Assumption `reflexive R`
+
+Corollary “Idempotency of preorders”:
+    preorder R ⇒ idempotent R
+Proof:
+    By “Definition of preorder”, “Idempotency from reflexive and transitive”,
+       “Shunting”
+
+Axiom “Definition of inverse”:
+    S is-inverse-of R  ≡  S ⨾ R = 𝕀  ∧  R ⨾ S = 𝕀
+
+Theorem “Inverse of 𝕀”:  𝕀 is-inverse-of 𝕀
+Proof:
+    𝕀 is-inverse-of 𝕀
+  =⟨ “Definition of inverse” ⟩
+    𝕀 ⨾ 𝕀 = 𝕀  ∧  𝕀 ⨾ 𝕀 = 𝕀 
+  =⟨ “Identity of ⨾”, “Reflexivity of =”, “Idempotency of ∧” ⟩
+    true
+
+Theorem “Inverse of ⨾”:
+    S₁ is-inverse-of R₁ ∧ S₂ is-inverse-of R₂
+  ⇒ (S₂ ⨾ S₁) is-inverse-of (R₁ ⨾ R₂)
+Proof:
+  Assuming (1) `S₁ is-inverse-of R₁` and using with “Definition of inverse”,
+           (2) `S₂ is-inverse-of R₂` and using with “Definition of inverse”:
+    Using “Definition of inverse”:
+      Subproof for `(S₂ ⨾ S₁) ⨾ (R₁ ⨾ R₂) = 𝕀`:
+          (S₂ ⨾ S₁) ⨾ (R₁ ⨾ R₂)
+        =⟨ “Associativity of ⨾” ⟩
+          (S₂ ⨾ S₁ ⨾ R₁) ⨾ R₂
+        =⟨ Assumption `S₁ is-inverse-of R₁` ⟩
+          (S₂ ⨾ 𝕀) ⨾ R₂ 
+        =⟨ “Identity of ⨾” ⟩
+          S₂ ⨾ R₂
+        =⟨ Assumption `S₂ is-inverse-of R₂` ⟩
+          𝕀  
+      Subproof for `(R₁ ⨾ R₂) ⨾ (S₂ ⨾ S₁) = 𝕀`:
+          (R₁ ⨾ R₂) ⨾ (S₂ ⨾ S₁)
+        =⟨ “Associativity of ⨾” ⟩ 
+          (R₁ ⨾ R₂ ⨾ S₂) ⨾ S₁
+        =⟨ Assumption `S₂ is-inverse-of R₂` ⟩ 
+          (R₁ ⨾ 𝕀) ⨾ S₁
+        =⟨ “Identity of ⨾” ⟩
+           R₁ ⨾ S₁
+        =⟨ Assumption `S₁ is-inverse-of R₁` ⟩
+           𝕀  
+

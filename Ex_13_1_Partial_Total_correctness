@@ -1,0 +1,182 @@
+Declaration:  ExprV, Expr𝔹  : Type
+Declaration:  Cmd           : Type
+
+Declaration: _⍮_             : Cmd → Cmd → Cmd
+Declaration: _:=_            : Var → ExprV → Cmd
+Declaration: if_then_else_fi : Expr𝔹 → Cmd → Cmd → Cmd
+Declaration: while_do_od     : Expr𝔹 → Cmd → Cmd
+
+Declaration: State : Type
+Declaration: Var : Type
+Declaration: Value : Type
+
+Axiom “Definition of `State`”: State = Var → Value
+
+Declaration: eval : State → ExprV → Value
+Declaration: sat  : Expr𝔹 → set State
+
+Activate type-abbreviation property “Definition of `State`”
+
+Declaration: _⊕′_ : (A → B) → ❰ A , B ❱ → (A → B)
+Axiom “Definition of function override”:
+   (x = z ⇒ (f ⊕′ ⟨ x, y ⟩) z = y)
+  ∧ (x ≠ z ⇒ (f ⊕′ ⟨ x, y ⟩) z = f z)
+
+Declaration: ⟦_⟧ : Cmd → (State ↔ State)
+
+Axiom “Semantics of :=”:
+   ⟦ x := e ⟧ = { s : State • ⟨ s , s ⊕′ ⟨ x , eval s e ⟩ ⟩ }
+Axiom “Semantics of ⍮”:   ⟦ C₁ ⍮ C₂ ⟧ = ⟦ C₁ ⟧ ⨾ ⟦ C₂ ⟧
+Axiom “Semantics of `if`”:
+   ⟦ if B then C₁ else C₂ fi ⟧  =  (sat B ◁ ⟦ C₁ ⟧)
+                                ∪  (sat B ⩤ ⟦ C₂ ⟧)
+
+Axiom “Semantics of `while`”:
+   ⟦ while B do C od ⟧ = (sat B ◁ ⟦ C ⟧) * ⩥ sat B
+
+Declaration: _⇒⁅_⁆_ : Expr𝔹 → Cmd → Expr𝔹 → 𝔹
+Declaration: _⇒⁅⧼_⧽⁆_ : Expr𝔹 → Cmd → Expr𝔹 → 𝔹
+
+Axiom “Partial correctness”:  (P ⇒⁅ C ⁆ Q)  ≡   ⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+
+Theorem “Partial correctness via ∀”:
+  (P ⇒⁅ C ⁆ Q)
+  ≡ ∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q
+Proof:
+    P ⇒⁅ C ⁆ Q
+  =⟨ “Partial correctness” ⟩
+    ⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+  =⟨ “Set inclusion” ⟩
+    ∀ y • y ∈ ⟦ C ⟧ ⦇ sat P ⦈ ⇒ y ∈ sat Q
+  =⟨ “Relational image” ⟩
+    ∀ y • (∃ x ❙ x ∈ sat P • x ⦗ ⟦ C ⟧ ⦘ y) ⇒ y ∈ sat Q
+  =⟨ “Witness” ⟩
+    ∀ y • ∀ x • x ∈ sat P ∧ x ⦗ ⟦ C ⟧ ⦘ y ⇒ y ∈ sat Q
+  =⟨ (8.20a), (8.19) ⟩
+    ∀ x , y • x ∈ sat P ∧ x ⦗ ⟦ C ⟧ ⦘ y ⇒ y ∈ sat Q 
+      
+Axiom “Total correctness”:
+   (P ⇒⁅⧼ C ⧽⁆ Q)
+   ≡   sat P ⊆ Dom ⟦ C ⟧  ∧  ⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+
+Lemma “Expanding total correctness”: 
+    sat P ⊆ Dom ⟦ C ⟧ 
+  ≡ ∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂
+Proof:
+    sat P ⊆ Dom ⟦ C ⟧
+  =⟨ “Set inclusion” ⟩
+    ∀ y • y ∈ sat P ⇒ y ∈ Dom ⟦ C ⟧
+  =⟨ “Membership in `Dom`” ⟩
+    ∀ y • y ∈ sat P ⇒ (∃ x • y ⦗ ⟦ C ⟧ ⦘ x)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    ∀ y ❙ y ∈ sat P • ∃ x • y ⦗ ⟦ C ⟧ ⦘ x  
+
+Theorem “Total correctness via ∀”:
+  (P ⇒⁅⧼ C ⧽⁆ Q)
+  ≡ (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ ❙ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ • s₂ ∈ sat Q)
+  ∧ (∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q)
+Proof:
+    (P ⇒⁅⧼ C ⧽⁆ Q)
+  =⟨ “Total correctness” ⟩
+     sat P ⊆ Dom ⟦ C ⟧  ∧  ⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+  =⟨ “Expanding total correctness” ⟩
+       (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂)  
+     ∧ ⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q 
+  =⟨ “Partial correctness via ∀” with “Partial correctness” ⟩
+       (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂)
+     ∧ (∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q)
+  ≡⟨ (3.62) with subproof for `(∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q) ⇒
+          ((∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ∧ s₂ ∈ sat Q) 
+         ≡ (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂))`:
+           ∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q
+         =⟨ “Nesting for ∀” ⟩
+           ∀ s₁ • ∀ s₂ • (s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q)
+         =⟨ “Trading for ∀” (9.2) ⟩
+           ∀ s₁ • ∀ s₂ ❙ s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ • s₂ ∈ sat Q
+         =⟨ “Nesting for ∀” ⟩
+           ∀ s₁ ❙ s₁ ∈ sat P • ∀ s₂ ❙ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ • s₂ ∈ sat Q 
+         =⟨ “Trading for ∀” (9.2) ⟩
+           ∀ s₁ ❙ s₁ ∈ sat P • ∀ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q
+         =⟨ (3.60) ⟩
+           ∀ s₁ ❙ s₁ ∈ sat P • ∀ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ∧ s₂ ∈ sat Q ≡ s₁ ⦗ ⟦ C ⟧ ⦘ s₂
+         ⇒⟨ “Monotonicity of ∀” with “Leibniz for ∃ body” ⟩
+           ∀ s₁ ❙ s₁ ∈ sat P • (∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ∧ s₂ ∈ sat Q) ≡ (∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂)
+         ⇒⟨ “Leibniz for ∀ body” ⟩
+             (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ∧ s₂ ∈ sat Q) 
+           ≡ (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂)     
+     ⟩ 
+       (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ • s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ∧ s₂ ∈ sat Q)
+     ∧ (∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q)
+  =⟨ “Trading for ∃” ⟩
+       (∀ s₁ ❙ s₁ ∈ sat P • ∃ s₂ ❙ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ • s₂ ∈ sat Q)
+     ∧ (∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q) 
+
+Precedence 130 for: ¬′_
+Declaration: ¬′_ : Expr𝔹 → Expr𝔹
+Axiom “Negation on `Expr𝔹`”: sat (¬′ B) = ~ (sat B)
+
+Precedence 40 for: _∧′_
+Declaration: _∧′_ : Expr𝔹 → Expr𝔹 → Expr𝔹
+Axiom “Conjunction on `Expr𝔹`”: sat (B₁ ∧′ B₂) = sat B₁ ∩ sat B₂
+
+Derived inference rule “Sequence”:
+    `P  ⇒⁅ C₁ ⁆  Q`,  `Q  ⇒⁅ C₂ ⁆  R`
+   ⊦————————————————————————————————
+      `P  ⇒⁅ C₁ ⍮ C₂ ⁆  R`
+Proof:
+  Assuming (C1) `P  ⇒⁅ C₁ ⁆  Q` and using with “Partial correctness”,
+           (C2) `Q  ⇒⁅ C₂ ⁆  R` and using with “Partial correctness”:
+      P  ⇒⁅ C₁ ⍮ C₂ ⁆  R
+    =⟨ “Partial correctness” ⟩
+      ⟦ C₁ ⍮ C₂ ⟧ ⦇ sat P ⦈ ⊆ sat R
+    =⟨ “Semantics of ⍮” ⟩
+      (⟦ C₁ ⟧ ⨾ ⟦ C₂ ⟧) ⦇ sat P ⦈ ⊆ sat R
+    =⟨ “Relational image of ⨾” ⟩
+      ⟦ C₂ ⟧ ⦇ ⟦ C₁ ⟧ ⦇ sat P ⦈ ⦈ ⊆ sat R
+    =⟨ Subproof:
+           ⟦ C₂ ⟧ ⦇ ⟦ C₁ ⟧ ⦇ sat P ⦈ ⦈
+         ⊆⟨ ? ⟩
+           ⟦ C₂ ⟧ ⦇ sat Q ⦈
+         ⊆⟨ Assumption (C2) ⟩
+           sat R         
+      ⟩
+      true
+ 
+
+╍╍╍ (C1): ⟦ C₁ ⟧ ⦇ sat P ⦈ ⊆ sat Q
+╍╍╍ (C2): ⟦ C₂ ⟧ ⦇ sat Q ⦈ ⊆ sat R   
+    
+Derived inference rule “Conditional”:
+
+      `B ∧′ P ⇒⁅ C₁ ⁆ Q`,   `¬′ B ∧′ P ⇒⁅ C₂ ⁆ Q`
+    ⊦————————————————————————————————————————————
+        `P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q`
+
+Proof:
+  Assuming (C1) `B ∧′ P  ⇒⁅ C₁ ⁆  Q` and using with “Partial correctness”,
+           (C2) `¬′ B ∧′ P  ⇒⁅ C₂ ⁆  Q` and using with “Partial correctness”:
+      P  ⇒⁅ if B then C₁ else C₂ fi ⁆  Q
+    =⟨ “Partial correctness” ⟩
+      ⟦ if B then C₁ else C₂ fi ⟧ ⦇ sat P ⦈ ⊆ sat Q
+    =⟨ “Semantics of `if`” ⟩
+      ((sat B ◁ ⟦ C₁ ⟧) ∪ (sat B ⩤ ⟦ C₂ ⟧)) ⦇ sat P ⦈ ⊆ sat Q 
+    
+╍╍╍ (C1) ⟦ C₁ ⟧ ⦇ sat (B ∧′ P) ⦈ ⊆ sat Q 
+╍╍╍    ≡ ⟦ C₁ ⟧ ⦇ sat B ∩ sat P ⦈ ⊆ sat Q
+╍╍╍ (C2) ⟦ C₂ ⟧ ⦇ sat (¬′ B ∧′ P) ⦈ ⊆ sat Q 
+╍╍╍    ≡ ⟦ C₂ ⟧ ⦇ sat (¬′ B) ∩ sat P) ⦈ ⊆ sat Q
+╍╍╍    ≡ ⟦ C₂ ⟧ ⦇ ~ sat B ∩ sat P) ⦈ ⊆ sat Q
+
+Derived inference rule “While”:
+                 `B ∧′ Q  ⇒⁅ C ⁆  Q`
+        ⊦—————————————————————————————————————
+          `Q  ⇒⁅ while B do C od ⁆  ¬′ B ∧′ Q`
+Proof:
+  Assuming “C-Inv” `B ∧′ Q  ⇒⁅ C ⁆  Q`:
+      Q  ⇒⁅ while B do C od ⁆  ¬′ B ∧′ Q
+    ⇐⟨ ? ⟩
+      true
+
+Declaration: substE𝔹 : Expr𝔹 → Var → ExprV → Expr𝔹
+
+Theorem “Assignment”: substE𝔹 P x E  ⇒⁅ x := E ⁆  P

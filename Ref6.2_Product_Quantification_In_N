@@ -1,0 +1,287 @@
+Axiom “Leibniz for ∏ range”:
+    (∀ x • R₁ ≡ R₂) ⇒ (∏ x ❙ R₁ • E) = (∏ x ❙ R₂ • E)
+
+Axiom “Leibniz for ∏ body”:
+    (∀ x • R ⇒ E₁ = E₂) ⇒ (∏ x ❙ R • E₁) = (∏ x ❙ R • E₂)
+    
+Axiom (8.13) “Empty range for ∏”:
+  (∏ x ❙ false • E)  =  1
+
+Axiom (8.14) “One-point rule for ∏”:
+  (∏ x ❙ x = D • E)  =  E[x ≔ D]
+
+Axiom (8.15) “Distributivity of ∏ over ·”:
+  (∏ x ❙ R • E₁ · E₂) = (∏ x ❙ R • E₁) · (∏ x ❙ R • E₂)
+
+Axiom (8.17) “Range split for ∏”:
+     (∏ x ❙ Q ∨ R  • E)  ·  (∏ x ❙ Q ∧ R  • E)
+   = (∏ x ❙ Q      • E)  ·  (∏ x ❙ R      • E)
+
+Theorem (8.16) “Disjoint range split for ∏”:
+   (∀ x • Q ∧ R ≡ false) ⇒
+   ((∏ x ❙ Q ∨ R • E) = (∏ x ❙ Q • E) · (∏ x ❙ R • E))
+Proof:
+  Assuming `(∀ x • Q ∧ R ≡ false)`:
+      (∏ x ❙ Q • E) · (∏ x ❙ R • E)
+    =⟨ “Range split for ∏” ⟩
+      (∏ x ❙ Q ∨ R • E) · (∏ x ❙ Q ∧ R • E)
+    =⟨ Subproof for `(∏ x ❙ Q ∧ R • E) = (∏ x ❙ false • E)`:
+              (∏ x ❙ Q ∧ R • E) = (∏ x ❙ false • E)
+           ⇐⟨ “Leibniz for ∏ range” ⟩
+              (∀ x • Q ∧ R ≡ false)  — This is Assumption `(∀ x • Q ∧ R ≡ false)`
+      ⟩
+      (∏ x ❙ Q ∨ R • E) · (∏ x ❙ false • E)
+    =⟨ “Empty range for ∏” ⟩
+      (∏ x ❙ Q ∨ R • E) · 1
+    =⟨ “Identity of ·” ⟩
+      (∏ x ❙ Q ∨ R • E)
+      
+Axiom (8.20) “Nesting for ∏”:
+    (∏ x ❙ Q • (∏ y ❙ R • E))
+  = (∏ x, y ❙ Q ∧ R • E)
+
+Theorem “Replacement in ∏”:
+    (∏ x ❙ R ∧ e = f • E[y ≔ e])
+  = (∏ x ❙ R ∧ e = f • E[y ≔ f])
+Proof:
+    (∏ x ❙ R ∧ e = f • E[y ≔ e])
+  =⟨ “One-point rule for ∏” ⟩
+    (∏ x ❙ R ∧ e = f • (∏ y ❙ y = e • E))
+  =⟨ “Nesting for ∏” ⟩
+    (∏ x, y ❙ R ∧ e = f ∧ y = e • E)
+  =⟨ Substitution ⟩
+    (∏ x, y ❙ R ∧ e = f ∧ (y = z)[z ≔ e] • E)
+  =⟨ “Replacement” (3.84a) ⟩
+    (∏ x, y ❙ R ∧ e = f ∧ (y = z)[z ≔ f] • E)
+  =⟨ Substitution ⟩
+    (∏ x, y ❙ R ∧ e = f ∧ y = f • E)
+  =⟨ “Nesting for ∏” ⟩
+    (∏ x ❙ R ∧ e = f • (∏ y ❙ y = f • E))
+  =⟨ “One-point rule for ∏” ⟩
+    (∏ x ❙ R ∧ e = f • E[y ≔ f])
+  
+Axiom (8.20a) “Dummy list permutation for ∏”:
+   (∏ x, y ❙ R • E) = (∏ y, x ❙ R • E)
+
+Theorem (8.19) “Interchange of dummies”:
+    (∏ x ❙ Q • (∏ y ❙ R • P))
+  = (∏ y ❙ R • (∏ x ❙ Q • P))
+Proof:
+    (∏ x ❙ Q • (∏ y ❙ R • P))
+  =⟨ “Nesting for ∏” ⟩
+    (∏ x, y ❙ Q ∧ R • P)
+  =⟨ “Symmetry of ∧” and “Dummy list permutation for ∏” ⟩
+    (∏ y, x ❙ R ∧ Q • P)
+  =⟨ “Nesting for ∏” ⟩
+    (∏ y ❙ R • (∏ x ❙ Q • P))
+
+Axiom (8.21) “Dummy renaming for ∏”, “α-conversion”:
+  (∏ x ❙ R • E) = (∏ y ❙ R[x ≔ y] • E[x ≔ y])
+
+Axiom “Distributivity of · over ∏”:
+    a · (∏ x ❙ R • E) = (∏ x ❙ R • a · E)
+
+Theorem “Zero ∏ body”: (∏ x ❙ R • 0) = 0
+Proof:
+    (∏ x ❙ R • 0)
+  =⟨ “Zero of ·” ⟩
+    (∏ x ❙ R • 0 · 0)
+  =⟨ “Distributivity of · over ∏” ⟩
+    0 · (∏ x ❙ R • 0)
+  =⟨ “Zero of ·” ⟩
+    0
+
+Theorem “Definition of ≤ in terms of <”: a ≤ b  ≡  a < b ∨ a = b
+Proof:
+  By induction on `b : ℕ`:
+    Base case `a ≤ 0  ≡  a < 0 ∨ a = 0`:
+        a ≤ 0  ≡  a < 0 ∨ a = 0
+      =⟨ “Zero is unique least element” 
+        , “Nothing is less than zero”
+        , “Identity of ∨”
+        , “Identity of ≡” ⟩
+        true
+    Induction step `a ≤ suc b  ≡  a < suc b ∨ a = suc b`:
+      By induction on `a : ℕ`:
+        Base case `0 ≤ suc b  ≡  0 < suc b ∨ 0 = suc b`:
+            0 ≤ suc b  ≡  0 < suc b ∨ 0 = suc b
+          =⟨   “Zero is least element”
+             , “Zero is less than successor”
+             , “Zero is not successor”
+            ⟩ 
+            true ≡ true ∨ false
+          =⟨ “Identity of ∨” , “Identity of ≡” ⟩
+            true 
+        Induction step `suc a ≤ suc b  ≡  suc a < suc b ∨ suc a = suc b`:
+            suc a ≤ suc b  ≡  suc a < suc b ∨ suc a = suc b
+          =⟨ “Cancellation of `suc`”, “Isotonicity of successor”
+            , “<-Isotonicity of successor” ⟩
+            a ≤ b  ≡  a < b ∨ a = b
+          =⟨ Induction hypothesis `a ≤ b  ≡  a < b ∨ a = b` ⟩  
+            true
+            
+Theorem “Definition of ≤ in terms of `suc` and <”: a ≤ b  ≡  a < suc b
+Proof:
+    a ≤ b
+  =⟨ “Definition of ≤ in terms of <”⟩ 
+    a < b ∨ a = b
+  =⟨ “Less than successor”⟩ 
+    a < suc b
+
+Theorem “Split range at top”:
+   m ≤ n ⇒ (m ≤ i < suc n  ≡  m ≤ i < n  ∨  i = n)
+Proof:
+  Assuming `m ≤ n`:
+      m ≤ i < suc n
+    =⟨ “Reflexivity of =” ⟩
+      m ≤ i ∧ i < suc n
+    =⟨ “Less than successor” ⟩
+      m ≤ i ∧ (i = n ∨ i < n)
+    =⟨ “Distributivity of ∧ over ∨” ⟩
+      (m ≤ i ∧ i = n) ∨ (m ≤ i ∧ i < n)
+    =⟨ “Reflexivity of =” ⟩
+      (m ≤ i ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ Substitution ⟩
+      ((m ≤ z)[z ≔ i] ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ “Replacement” (3.84a) , Substitution ⟩
+      (m ≤ n ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ Assumption `m ≤ n` ⟩
+      (true ∧ i = n) ∨ (m ≤ i < n)
+    =⟨ “Identity of ∧” ⟩
+      i = n ∨ (m ≤ i < n)
+
+Theorem “Split off term” “Split off term at top”:
+    (∏ i : ℕ ❙ i < suc n • E) = (∏ i : ℕ ❙ i < n • E) · E[i ≔ n]
+Proof:
+        (∏ i ❙ i < suc n • E)
+    =⟨ “Zero is least element”, “Identity of ∧” ⟩
+        (∏ i ❙ 0 ≤ i < suc n • E)
+    =⟨ Subproof for `0 ≤ i < suc n ≡ 0 ≤ i < n  ∨  i = n`:
+            By “Split range at top” with “Zero is least element”
+      ⟩
+        (∏ i ❙ 0 ≤ i < n  ∨  i = n • E)
+    =⟨ “Zero is least element” , “Identity of ∧” ⟩
+        (∏ i ❙ i < n  ∨  i = n • E)
+    =⟨ “Disjoint range split for ∏”
+        with subproof for `∀ i • i < n  ∧  i = n  ≡ false`:
+            For any `i`:
+                 i < n  ∧  i = n
+              ≡⟨ Substitution ⟩
+                 (z < n)[z ≔ i]  ∧  i = n
+              ≡⟨ “Replacement” (3.84a) , Substitution ⟩
+                 n < n  ∧  i = n
+              ≡⟨ “Irreflexivity of <”, “Zero of ∧” ⟩
+                 false
+      ⟩
+        (∏ i ❙ i < n • E) · (∏ i ❙ i = n • E)
+    =⟨ “One-point rule for ∏” ⟩
+        (∏ i ❙ i < n • E) · E[i ≔ n]
+
+Theorem “Split off term” “Split off term at top”:
+    m ≤ n ⇒
+    (∏ i ❙ m ≤ i < suc n • E) = (∏ i ❙ m ≤ i < n • E) · E[i ≔ n]
+Proof:
+  Assuming `m ≤ n`:
+        (∏ i ❙ m ≤ i < suc n • E)
+    =⟨ “Split range at top” with Assumption `m ≤ n` ⟩
+        (∏ i ❙ m ≤ i < n  ∨  i = n • E)
+    =⟨ “Disjoint range split for ∏”
+       with subproof for `∀ i • m ≤ i < n  ∧  i = n  ≡ false`:
+           For any `i`:
+                m ≤ i < n  ∧  i = n
+             ≡⟨ Substitution ⟩
+                (m ≤ z < n)[z ≔ i]  ∧  i = n
+             ≡⟨ “Replacement” (3.84a) , Substitution ⟩
+                m ≤ n < n  ∧  i = n
+             ≡⟨ “Irreflexivity of <”, “Zero of ∧” ⟩
+                false
+      ⟩
+        (∏ i ❙ m ≤ i < n • E) · (∏ i ❙ i = n • E)
+    =⟨ “One-point rule for ∏” ⟩
+        (∏ i ❙ m ≤ i < n • E) · E[i ≔ n]
+
+Theorem “Split off term at top using ≤”:
+    (∏ i ❙ i ≤ suc n • E) = (∏ i ❙ i ≤ n • E) · E[i ≔ suc n]
+Proof:
+    (∏ i ❙ i ≤ suc n • E)
+  =⟨ “Definition of ≤ in terms of <” ⟩ 
+    (∏ i ❙ i < suc n ∨ i = suc n • E)
+  =⟨ “Disjoint range split for ∏”  
+      with subproof for `∀ i • i < suc n ∧ i = suc n ≡ false`:
+        For any `i : ℕ`:
+            i < suc n ∧ i = suc n
+          =⟨ Substitution ⟩
+            (z < suc n)[z ≔ i] ∧ i = suc n
+          =⟨ “Replacement” (3.84a), Substitution ⟩
+            suc n < suc n ∧ i = suc n
+          =⟨ “Irreflexivity of <” , “Zero of ∧” ⟩
+            false   
+    ⟩ 
+    (∏ i ❙ i < suc n • E) · (∏ i ❙ i = suc n • E)
+  =⟨ “Definition of ≤ in terms of `suc` and <” 
+    , “One-point rule for ∏” ⟩
+     (∏ i ❙ i ≤ n • E) · E[i ≔ suc n]
+     
+Theorem “Definition of < in terms of ≤ and `suc`”:
+    m < n  ≡  suc m ≤ n
+Proof:
+  By induction on `n : ℕ`:
+    Base case `m < 0  ≡  suc m ≤ 0`:
+      By “Nothing is less than zero”, “Successor is not at most zero”
+    Induction step `m < suc n  ≡  suc m ≤ suc n`:
+        m < suc n  ≡  suc m ≤ suc n
+      =⟨ “Less than successor” , “Isotonicity of successor” ⟩
+        m < n ∨ m = n ≡ m ≤ n
+      =⟨ “Definition of ≤ in terms of <” ⟩
+        true  
+     
+Lemma “Split <-≤-suc range at top”:
+   m ≤ n ⇒ (m < i ≤ suc n  ≡  m < i ≤ n  ∨  i = suc n)
+Proof:
+  Assuming `m ≤ n` and using with “Definition of ≤ in terms of `suc` and <”:
+      m < i ≤ suc n
+    =⟨ “Reflexivity of =” ⟩
+      m < i ∧ (i ≤ suc n) 
+    =⟨ “Definition of ≤ in terms of <”⟩ 
+      m < i ∧ (i < suc n ∨ i = suc n)
+    =⟨ “Distributivity of ∧ over ∨” ⟩
+      (m < i ∧ i < suc n) ∨ (m < i ∧ i = suc n)
+    =⟨ Substitution ⟩  
+      (m < i ∧ i < suc n) ∨ ((m < z)[z ≔ i] ∧ i = suc n)
+    =⟨ Substitution ⟩  
+      (m < i ∧ i < suc n) ∨ ((m < z)[z ≔ i] ∧ i = suc n)
+    =⟨ “Replacement” (3.84a) , Substitution ⟩
+      (m < i ∧ i < suc n) ∨ (m < suc n ∧ i = suc n) 
+    =⟨ Assumption `m ≤ n` , “Identity of ∧”⟩
+      (m < i ∧ i < suc n) ∨ i = suc n
+    =⟨ “Definition of ≤ in terms of `suc` and <” ⟩
+      (m < i ∧ i ≤ n) ∨ i = suc n
+    =⟨ “Reflexivity of =” ⟩
+      m < i ≤ n ∨ i = suc n
+
+
+Theorem “Split off term at top using ≤”:
+    m ≤ n  ⇒
+    (∏ i ❙ m < i ≤ suc n • E) = (∏ i ❙ m < i ≤ n • E) · E[i ≔ suc n]
+Proof:
+  Assuming `m ≤ n`:
+      (∏ i ❙ m < i ≤ suc n • E)
+    =⟨ “Split <-≤-suc range at top” with Assumption `m ≤ n` ⟩  
+      (∏ i ❙ m < i ≤ n ∨ i = suc n • E)
+    =⟨ “Disjoint range split for ∏” 
+        with subproof for `∀ i • m < i ≤ n ∧ i = suc n ≡ false`:
+           For any `i : ℕ`:
+               m < i ≤ n ∧ i = suc n
+             =⟨ Substitution ⟩
+               (m < z ≤ n)[z ≔ i] ∧ i = suc n
+             =⟨ “Replacement” (3.84a) , Substitution ⟩  
+               m < suc n ≤ n ∧ i = suc n
+             =⟨ “Definition of < in terms of ≤ and `suc`” ⟩
+               m < suc n ∧ n < n ∧ i = suc n
+             =⟨ “Irreflexivity of <” , “Zero of ∧” ⟩ 
+               false
+      ⟩ 
+       (∏ i ❙ m < i ≤ n • E) · (∏ i ❙ i = suc n • E)
+    =⟨ “One-point rule for ∏” ⟩ 
+       (∏ i ❙ m < i ≤ n • E) · E[i ≔ suc n]
+      

@@ -1,0 +1,119 @@
+Axiom “Dedekind rule”:
+    (Q ⨾ R) ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+
+Theorem “Modal rule”:
+    (Q ⨾ R) ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ R
+Proof:
+    (Q ⨾ R) ∩ S
+  ⊆⟨ “Dedekind rule” ⟩
+    (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+  ⊆⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+    (Q ∩ S ⨾ R ˘) ⨾ R  
+    
+Theorem “Modal rule”:
+    (Q ⨾ R) ∩ S ⊆ Q ⨾ (R ∩ Q ˘ ⨾ S)
+Proof:
+    (Q ⨾ R) ∩ S
+  ⊆⟨ “Dedekind rule” ⟩
+    (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+  ⊆⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+    Q ⨾ (R ∩ Q ˘ ⨾ S)      
+
+Theorem “Hesitation”: R ⊆ R ⨾ R ˘ ⨾ R
+Proof:
+    R
+  =⟨ “Idempotency of ∩”, “Identity of ⨾” ⟩
+    (R ⨾ 𝕀) ∩ R
+  ⊆⟨ “Modal rule” ⟩
+    R ⨾ (𝕀 ∩ (R ˘ ⨾ R))
+  ⊆⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+    R ⨾ (R ˘ ⨾ R)
+
+Theorem “PER factoring”:
+    symmetric Q ⇒ transitive Q ⇒  Q ⨾ R ∩ Q = Q ⨾ (R ∩ Q)
+Proof:
+  Assuming `symmetric Q` and using with “Definition of symmetry”,
+           `transitive Q` and using with “Definition of transitivity”:
+      Q ⨾ (R ∩ Q)
+    ⊆⟨ “Sub-distributivity of ⨾ over ∩” ⟩
+      (Q ⨾ R) ∩ (Q ⨾ Q)
+    ⊆⟨ “Monotonicity of ∩” with Assumption `transitive Q`⟩   
+      (Q ⨾ R) ∩ Q
+    ⊆⟨ “Modal rule” ⟩
+      Q ⨾ (R ∩ Q ˘ ⨾ Q) 
+    =⟨ Assumption `symmetric Q` ⟩
+      Q ⨾ (R ∩ Q ⨾ Q) 
+    ⊆⟨ Monotonicity with Assumption `transitive Q`⟩   
+      Q ⨾ (R ∩ Q)
+
+Theorem “Reflexive implies total”:
+    reflexive R  ⇒  total R
+Proof:
+  Assuming `reflexive R` and using with “Definition of reflexivity”:
+    Using “Definition of totality”:
+        𝕀 
+      ⊆⟨ Assumption `reflexive R` ⟩ 
+        R 
+      =⟨ “Identity of ⨾”, “Converse of 𝕀” ⟩
+        R ⨾ 𝕀 ˘
+      ⊆⟨ “Monotonicity of ⨾” with 
+         “Monotonicity of ˘” with Assumption `reflexive R` ⟩  
+        R ⨾ R ˘
+
+Theorem “Idempotency from symmetric and transitive”:
+    symmetric R ⇒ transitive R ⇒ idempotent R
+Proof:
+  Assuming `symmetric R` and using with “Definition of symmetry”,
+           `transitive R` and using with “Definition of transitivity”:
+    Using “Definition of idempotency”:
+      Subproof for `R ⨾ R = R `:
+          R ⨾ R
+        ⊆⟨ Assumption `transitive R` ⟩
+          R
+        ⊆⟨ “Hesitation” ⟩
+          R ⨾ R ˘ ⨾ R
+        =⟨ Assumption `symmetric R` ⟩
+          R ⨾ R ⨾ R
+        ⊆⟨ “Monotonicity of ⨾” with Assumption `transitive R` ⟩
+          R ⨾ R    
+           
+Theorem “Right-distributivity of ⨾ with univalent over ∩”:
+    univalent F  ⇒  F ⨾ (R ∩ S) = F ⨾ R ∩ F ⨾ S
+Proof:
+  Assuming `univalent F` and using with “Definition of univalence”:
+      F ⨾ (R ∩ S)
+    ⊆⟨ “Sub-distributivity of ⨾ over ∩” ⟩
+      (F ⨾ R) ∩ (F ⨾ S)
+    ⊆⟨ “Modal rule” ⟩
+      F ⨾ (R ∩ F ˘ ⨾ (F ⨾ S))
+    ⊆⟨ Monotonicity with Assumption `univalent F` ⟩
+      F ⨾ (R ∩ 𝕀 ⨾ S)
+    =⟨ “Identity of ⨾” ⟩
+      F ⨾ (R ∩ S) 
+
+Theorem “Swapping mapping across ⊆”:
+    mapping F  ⇒  (R ⨾ F ⊆ S  ≡  R ⊆ S ⨾ F ˘)
+Proof:
+  Assuming `mapping F` and using with “Definition of mappings”:
+    Using “Mutual implication”:
+      Subproof for `R ⨾ F ⊆ S  ⇒  R ⊆ S ⨾ F ˘`:
+        Assuming `R ⨾ F ⊆ S`:
+            R
+          =⟨ “Identity of ⨾” ⟩
+            R ⨾ 𝕀
+          ⊆⟨ Monotonicity with Assumption `mapping F` ⟩
+            R ⨾ F ⨾ F ˘
+          ⊆⟨ Monotonicity with Assumption `R ⨾ F ⊆ S` ⟩
+            S ⨾ F ˘
+      Subproof for `R ⊆ S ⨾ F ˘ ⇒ R ⨾ F ⊆ S`:
+        Assuming `R ⊆ S ⨾ F ˘`:
+            R ⨾ F 
+          ⊆⟨ “Monotonicity of ⨾” with Assumption `R ⊆ S ⨾ F ˘` ⟩
+            S ⨾ F ˘ ⨾ F
+          ⊆⟨ Monotonicity with Assumption `mapping F` ⟩
+            S ⨾ 𝕀
+          =⟨ “Identity of ⨾” ⟩
+            S              
+
+╍╍╍ “Definition of univalence” : univalent F   ≡  F ˘ ⨾ F ⊆ 𝕀
+╍╍╍ “Definition of totality”   : total F       ≡  𝕀 ⊆ F ⨾ F ˘

@@ -1,0 +1,166 @@
+Theorem (15.47) “Indirect Equality” “Indirect Equality from below”:
+  a = b  ≡  (∀ z • z ≤ a  ≡  z ≤ b)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `a = b  ⇒  (∀ z • z ≤ a  ≡  z ≤ b)`:
+        a = b  ⇒  (∀ z • z ≤ a  ≡  z ≤ b)
+      =⟨ Substitution ⟩
+        a = b  ⇒  (∀ z • z ≤ d  ≡  z ≤ b)[d ≔ a]
+      =⟨ “Replacement” (3.84b), Substitution ⟩
+        a = b  ⇒  (∀ z • z ≤ b  ≡  z ≤ b)   
+      =⟨ “Reflexivity of ≡”, “True ∀ body”, “Right-zero of ⇒” ⟩
+        true
+    Subproof for `(∀ z • z ≤ a  ≡  z ≤ b)  ⇒  a = b`:
+        (∀ z • z ≤ a  ≡  z ≤ b)
+      =⟨ “Idempotency of ∧” ⟩
+        (∀ z • z ≤ a  ≡  z ≤ b) ∧ (∀ z • z ≤ a  ≡  z ≤ b)
+      ⇒⟨ “Monotonicity of ∧” with “Instantiation” (9.13) ⟩
+        (z ≤ a  ≡  z ≤ b)[z ≔ a] ∧ (z ≤ a  ≡  z ≤ b)[z ≔ b] 
+      =⟨ Substitution, “Reflexivity of ≤”, “Identity of ≡” ⟩
+        a ≤ b ∧ b ≤ a
+      =⟨ “Antisymmetry of ≤” ⟩
+        a = b 
+
+Theorem “Indirect Equality” “Indirect Equality from above”:
+  a = b  ≡  (∀ z • a ≤ z  ≡  b ≤ z)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `a = b  ⇒  (∀ z • a ≤ z  ≡  b ≤ z)`:
+        a = b  ⇒  (∀ z • a ≤ z  ≡  b ≤ z)
+      =⟨ Substitution ⟩
+        a = b  ⇒  (∀ z • d ≤ z  ≡  b ≤ z)[d ≔ a]
+      =⟨ “Replacement” (3.84b), Substitution ⟩
+        a = b  ⇒  (∀ z • b ≤ z  ≡  b ≤ z)   
+      =⟨ “Reflexivity of ≡”, “True ∀ body”, “Right-zero of ⇒” ⟩
+        true
+    Subproof for `(∀ z • a ≤ z  ≡  b ≤ z)  ⇒  a = b`:
+        (∀ z • a ≤ z  ≡  b ≤ z)
+      =⟨ “Idempotency of ∧” ⟩
+        (∀ z • a ≤ z  ≡  b ≤ z) ∧ (∀ z • a ≤ z  ≡  b ≤ z)
+      ⇒⟨ “Monotonicity of ∧” with “Instantiation” (9.13) ⟩
+        (a ≤ z  ≡  b ≤ z)[z ≔ a] ∧ (a ≤ z  ≡  b ≤ z)[z ≔ b] 
+      =⟨ Substitution, “Reflexivity of ≤”, “Identity of ≡” ⟩
+        b ≤ a ∧ a ≤ b  
+      =⟨ “Antisymmetry of ≤” ⟩
+        a = b
+
+Axiom (15.53) (15.53a) “Definition of ↓”:
+   z ≤ x ↓ y  ≡  z ≤ x ∧ z ≤ y
+
+Axiom (15.53) (15.53b) “Definition of ↑”:
+   x ↑ y ≤ z ≡  x ≤ z ∧ y ≤ z
+
+Theorem (15.54) “Symmetry of ↓”:  x ↓ y = y ↓ x
+Proof:
+  Using “Indirect Equality”:
+    Subproof for `∀ z • z ≤ x ↓ y  ≡  z ≤ y ↓ x`:
+      For any `z`:
+          z ≤ x ↓ y
+        =⟨ “Definition of ↓” ⟩
+          z ≤ x ∧ z ≤ y
+        =⟨ “Definition of ↓” ⟩
+          z ≤ y ↓ x  
+          
+Theorem (15.54) “Symmetry of ↑”:  x ↑ y = y ↑ x
+Proof:
+  Using “Indirect Equality”:
+    Subproof for `∀ z • x ↑ y ≤ z  ≡  y ↑ x ≤ z`:
+      For any `z`:
+          x ↑ y ≤ z
+        =⟨ “Definition of ↑” ⟩
+          x ≤ z ∧ y ≤ z
+        =⟨ “Definition of ↑” ⟩
+          y ↑ x ≤ z
+          
+Theorem (15.55) “Associativity of ↓”: (x ↓ y) ↓ z = x ↓ (y ↓ z)
+Proof:
+  Using “Indirect Equality”:
+    Subproof for `∀ a • a ≤ (x ↓ y) ↓ z  ≡ a ≤ x ↓ (y ↓ z)`:
+      For any `a`:
+          a ≤ (x ↓ y) ↓ z
+        =⟨ “Definition of ↓” ⟩
+          a ≤ (x ↓ y) ∧ a ≤ z
+        =⟨ “Definition of ↓” ⟩
+          a ≤ x ∧ a ≤ y ∧ a ≤ z
+        =⟨ “Definition of ↓”⟩   
+          a ≤ x ∧ a ≤ y ↓ z
+        =⟨ “Definition of ↓” ⟩
+          a ≤ x ↓ (y ↓ z)
+          
+Theorem (15.55) “Associativity of ↑”: (x ↑ y) ↑ z = x ↑ (y ↑ z)
+Proof:
+  Using “Indirect Equality”:
+    Subproof for `∀ a • (x ↑ y) ↑ z ≤ a  ≡ x ↑ (y ↑ z) ≤ a `:
+      For any `a`:
+          (x ↑ y) ↑ z ≤ a
+        =⟨ “Definition of ↑” ⟩
+          x ≤ a ∧ y ≤ a ∧ z ≤ a
+        =⟨ “Definition of ↑” ⟩
+          x ↑ (y ↑ z) ≤ a
+ 
+Theorem (15.56) “Idempotency of ↓”: x ↓ x = x
+Proof:
+  Using “Indirect Equality”:
+    Subproof for `∀ a • a ≤ x ↓ x  ≡ a ≤ x`:
+      For any `a`:
+          a ≤ x ↓ x
+        =⟨ “Definition of ↓” ⟩
+          a ≤ x ∧ a ≤ x
+        =⟨ “Idempotency of ∧” ⟩
+          a ≤ x
+          
+Theorem (15.56) “Idempotency of ↑”:  x ↑ x = x
+Proof:
+  Using “Indirect Equality”:
+    Subproof for `∀ a • x ↑ x ≤ a  ≡ x ≤ a`:
+      For any `a`:
+          x ↑ x ≤ a
+        =⟨ “Definition of ↑” ⟩
+          x ≤ a ∧ x ≤ a
+        =⟨ “Idempotency of ∧” ⟩
+          x ≤ a
+          
+Theorem (15.57) “Minimum is lower bound”: x ↓ y ≤ x  ∧  x ↓ y ≤ y 
+Proof:
+    x ↓ y ≤ x  ∧  x ↓ y ≤ y
+  =⟨ “Definition of ↓” ⟩ 
+    x ↓ y ≤ x ↓ y — This is “Reflexivity of ≤”
+    
+Theorem (15.57) “Maximum is upper bound”: x ≤ x ↑ y  ∧  y ≤ x ↑ y
+Proof:
+     x ≤ x ↑ y  ∧  y ≤ x ↑ y
+   =⟨ “Definition of ↑” ⟩
+     x ↑ y ≤ x ↑ y — This is “Reflexivity of ≤”
+     
+Theorem (15.58) “At most via minimum”: x ≤ y  ≡  x ↓ y = x
+Proof:
+    x ↓ y = x
+  =⟨ “Antisymmetry of ≤” ⟩
+    x ↓ y ≤ x ∧ x ≤ x ↓ y
+  =⟨ “Minimum is lower bound” ⟩
+    true ∧ x ≤ x ↓ y
+  =⟨ “Identity of ∧” ⟩ 
+    x ≤ x ↓ y
+  =⟨ “Definition of ↓”,  “Reflexivity of ≤”, “Identity of ∧” ⟩ 
+    x ≤ y
+
+╍╍╍ If we have a theorem in the form p ∧ q ≡ true
+╍╍╍ We can use p ≡ true, q ≡ true. 
+╍╍╍ In this case, we have 
+╍╍╍ (15.57) “Minimum is lower bound”: x ↓ y ≤ x  ∧  x ↓ y ≤ y
+╍╍╍ Therefore, we obtain:
+╍╍╍      x ↓ y ≤ x ≡ true
+╍╍╍      x ↓ y ≤ y ≡ true
+    
+Theorem (15.58) “At most via maximum”: x ≤ y  ≡  x ↑ y = y
+Proof:
+    x ↑ y = y
+  =⟨ “Antisymmetry of ≤” ⟩
+    x ↑ y ≤ y ∧ y ≤ x ↑ y
+  =⟨ “Maximum is upper bound” ⟩
+    x ↑ y ≤ y ∧ true
+  =⟨ “Identity of ∧” ⟩
+    x ↑ y ≤ y
+  =⟨ “Definition of ↑” , “Reflexivity of ≤” , “Identity of ∧” ⟩
+    x ≤ y
+    

@@ -1,0 +1,79 @@
+Declaration: fst : ❰ t , u ❱ → t
+Declaration: snd : ❰ t , u ❱ → u
+Axiom “Definition of `fst`”: fst ⟨ x, y ⟩ = x
+Axiom “Definition of `snd`”: snd ⟨ x, y ⟩ = y
+
+Axiom “Pair equality”: p = q  ≡  fst p = fst q  ∧  snd p = snd q
+
+Declaration: _×_ : set t → set u → set ❰ t , u ❱
+
+Axiom “Membership in ×”:
+  p ∈ S × T  ≡  fst p ∈ S ∧ snd p ∈ T
+
+Theorem (14.4) “Membership in ×”:
+    ⟨ x , y ⟩ ∈ S × T  ≡  x ∈ S ∧ y ∈ T
+Proof:
+    ⟨ x , y ⟩ ∈ S × T
+  =⟨ “Membership in ×” ⟩
+    fst ⟨ x , y ⟩ ∈ S ∧ snd ⟨ x , y ⟩ ∈ T
+  =⟨ “Definition of `fst`” , “Definition of `snd`” ⟩
+    x ∈ S ∧ y ∈ T  
+    
+Theorem “Pair extensionality”: p = ⟨ fst p , snd p ⟩
+Proof:
+    p = ⟨ fst p , snd p ⟩
+  =⟨ “Pair equality” ⟩ 
+    fst p = fst ⟨ fst p , snd p ⟩ ∧ snd p = snd ⟨ fst p , snd p ⟩
+  =⟨ “Definition of `fst`”, “Definition of `snd`” ⟩ 
+    fst p = fst p  ∧ snd p = snd p
+  =⟨ “Reflexivity of =”, “Idempotency of ∧” ⟩ 
+    true
+
+Theorem (14.5) “Membership in swapped ×”:
+    ⟨ x , y ⟩ ∈ S × T  ≡  ⟨ y , x ⟩ ∈ T × S
+Proof:
+    ⟨ x , y ⟩ ∈ S × T  
+  =⟨ “Membership in ×” ⟩
+    x ∈ S ∧ y ∈ T
+  =⟨ “Membership in ×” ⟩  
+    ⟨ y , x ⟩ ∈ T × S 
+    
+Theorem (14.6) “Empty factor in ×”:
+    S = {}  ⇒  S × T = {}
+Proof:
+  Assuming `S = {}`:
+    Using “Set extensionality”:
+      Subproof for `∀ x • x ∈ S × T ≡ x ∈ {}`:
+        For any `x`:
+            x ∈ S × T ≡ x ∈ {}
+          =⟨ “Empty set” , (3.15) ⟩
+            ¬ (x ∈ S × T)
+          =⟨ “Membership in ×” ⟩ 
+            ¬ (fst x ∈ S ∧ snd x ∈ T)
+          =⟨ “Empty set” with Assumption `S = {}` ⟩
+            ¬ (false ∧ snd x ∈ T)
+          =⟨ “Zero of ∧”, “Negation of `false`” ⟩
+            true
+ 
+Declaration: swap-× : ❰ t, u ❱ → ❰ u, t ❱
+Axiom “Definition of `swap-×`”: swap-× ⟨ x, y ⟩ = ⟨ y, x ⟩
+
+Theorem “fst after swap-×”: fst (swap-× p) = snd p
+Proof:
+    fst (swap-× p)
+  =⟨ “Pair extensionality” ⟩
+    fst (swap-× ⟨ fst p , snd p ⟩) 
+  =⟨ “Definition of `swap-×`” ⟩ 
+    fst ⟨ snd p, fst p ⟩
+  =⟨ “Definition of `fst`” ⟩
+    snd p  
+    
+Theorem “snd after swap-×”: snd (swap-× p) = fst p
+Proof:
+    snd (swap-× p)
+  =⟨ “Pair extensionality” ⟩
+    snd (swap-× ⟨ fst p , snd p ⟩) 
+  =⟨ “Definition of `swap-×`” ⟩ 
+    snd ⟨ snd p, fst p ⟩
+  =⟨ “Definition of `snd`” ⟩
+    fst p

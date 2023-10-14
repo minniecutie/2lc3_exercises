@@ -1,0 +1,324 @@
+Theorem “Cancellation of unary minus”: - a = - b  ≡  a = b
+Proof:
+  Using “Mutual implication”:
+    Subproof for `a = b  ⇒  - a = - b`:
+        a = b ⇒  - a = - b
+      =⟨ Substitution ⟩   
+        a = b ⇒  (- z = - b)[z ≔ a]
+      =⟨ “Replacement” (3.84b) ⟩   
+        a = b ⇒  (- z = - b)[z ≔ b]
+      =⟨ Substitution ⟩   
+        a = b ⇒  (- b = - b)
+      =⟨ “Reflexivity of =” , “Right-zero of ⇒”⟩ 
+        true
+    Subproof for `- a = - b  ⇒  a = b`:
+        - a = - b  ⇒  a = b
+      =⟨ “Self-inverse of unary minus”, Substitution ⟩
+        - a = - b  ⇒  (- z = - (- b))[z ≔ - a]
+      =⟨ “Replacement” (3.84b) ⟩
+        - a = - b  ⇒  (- z = - (- b))[z ≔ - b]
+      =⟨ Substitution ⟩
+        - a = - b  ⇒  - (- b) = - (- b)
+      =⟨ “Reflexivity of =” , “Right-zero of ⇒”⟩ 
+        true
+
+Theorem “Irreflexivity of <”: ¬ (a < a)
+Proof:
+    ¬ (a < a)
+  =⟨ “Less” ⟩
+    ¬ pos (a - a)
+  =⟨ “Subtraction”, “Unary minus” ⟩
+    ¬ pos 0
+  =⟨ “Non-positivity of 0” ⟩
+    true
+
+  
+Theorem “Irreflexivity of <”: a = b ⇒ ¬ (a < b)
+Proof:
+    a = b ⇒ ¬ (a < b)
+  =⟨ Substitution ⟩
+    a = b ⇒ (¬ (z < b))[z ≔ a]
+  =⟨ “Replacement” (3.84b) ⟩
+    a = b ⇒ (¬ (z < b))[z ≔ b]
+  =⟨ Substitution ⟩
+    a = b ⇒ ¬ (b < b)
+  =⟨ “Irreflexivity of <” ⟩
+    a = b ⇒ true
+  =⟨ “Right-zero of ⇒” ⟩ 
+    true
+    
+Theorem “Irreflexivity of <”: a < b ⇒ ¬ (a = b)
+Proof:
+    a < b ⇒ ¬ (a = b)
+  =⟨ “Double negation”, “Contrapositive” ⟩
+    a = b ⇒ ¬ (a < b) — This is “Irreflexivity of <” 
+    
+Theorem “Irreflexivity of <”: ¬ (a < b ∧ a = b)
+Proof:
+    ¬ (a < b ∧ a = b)
+  =⟨ “De Morgan” ⟩
+    ¬ (a = b) ∨ ¬ (a < b)
+  =⟨ “Material implication” ⟩
+    (a = b) ⇒ ¬ (a < b) — This is “Irreflexivity of <”
+    
+Theorem “Converse of <”: a > b ≡ b < a
+Proof:
+    a > b 
+  =⟨ “Greater” ⟩
+    pos (a - b)
+  =⟨ “Less” ⟩
+    b < a
+    
+Theorem “Converse of ≤”: a ≥ b ≡ b ≤ a
+Proof:
+    a ≥ b
+  = ⟨ “At least” ⟩
+    a > b ∨ a = b
+  = ⟨ “Converse of <” `a > b ≡ b < a`⟩ 
+    b < a ∨ a = b
+  = ⟨ “At most” ⟩
+    b ≤ a  
+ 
+Theorem “Irreflexivity of >”: ¬ (a > a)
+Proof:
+    ¬ (a > a)
+  =⟨ “Converse of <” ⟩
+    ¬ (a < a)
+  =⟨ “Irreflexivity of <”⟩
+    true  
+    
+Theorem (15.40) “Positive elements”: pos b ≡ 0 < b
+Proof:
+    pos b
+  =⟨ “Right-identity of -” ⟩
+    pos (b - 0)
+  =⟨ “Less”⟩
+    0 < b  
+
+Theorem (15.41) (15.41a) “Transitivity” “Transitivity of <”:
+   a < b  ∧  b < c  ⇒  a < c
+Proof:
+    a < b  ∧  b < c
+  =⟨ “Less” ⟩
+    pos (b - a) ∧ pos (c - b)
+  ⇒⟨ “Positivity under +” ⟩
+    pos ((b - a) + (c - b))
+  =⟨ “Subtraction” ⟩
+    pos (b + (- a) + (- b) + c)
+  =⟨ “Unary minus”, “Identity of +” ⟩ 
+    pos ((- a) + c)
+  =⟨ “Subtraction” ⟩ 
+    pos (c - a)
+  =⟨ “Less”⟩ 
+    a < c
+
+Theorem (15.41) (15.41b) “Transitivity” “Transitivity of ≤ with <”:
+   a ≤ b  ∧  b < c  ⇒  a < c
+Proof:
+    a ≤ b  ∧  b < c 
+  =⟨ “At most” ⟩
+    (a < b ∨ a = b) ∧ b < c
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    (a < b ∧ b < c) ∨ (a = b ∧ b < c)
+  ⇒⟨ “Monotonicity of ∨” (4.2) with “Transitivity” ⟩
+    a < c ∨ (a = b ∧ b < c)
+  =⟨ Substitution ⟩
+    a < c ∨ (a = b ∧ (z < c)[z ≔ b])
+  =⟨ “Replacement” (3.84a) , Substitution ⟩
+    a < c ∨ (a = b ∧ a < c)
+  =⟨ “Absorption” (3.43b)⟩
+    a < c   
+    
+Theorem (15.41) (15.41c) “Transitivity” “Transitivity of < with ≤”:
+   a < b  ∧  b ≤ c  ⇒  a < c
+Proof:
+    a < b ∧  b ≤ c 
+  =⟨ “At most” ⟩
+    a < b ∧ (b < c ∨ b = c)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    (a < b ∧ b < c) ∨ (a < b ∧ b = c)
+  ⇒⟨ “Monotonicity of ∨” with “Transitivity of <” ⟩
+    a < c ∨ (a < b ∧ b = c)
+  =⟨ Substitution ⟩
+    a < c ∨ ((a < z)[z ≔ b] ∧ b = c)
+  =⟨ “Replacement” (3.84a) , Substitution ⟩
+    a < c ∨ (a < c ∧ b = c)
+  =⟨ “Absorption” (3.43b) ⟩
+    a < c       
+    
+Lemma “Left-hand side”: (a = b ∨ a < b) ∧ b = c ⇒ a ≤ c
+Proof:
+    (a = b ∨ a < b) ∧ b = c
+  =⟨ Substitution ⟩
+    (a = z ∨ a < z)[z ≔ b] ∧ b = c
+  =⟨ “Replacement” (3.84a), Substitution ⟩
+    (a = c ∨ a < c) ∧ b = c
+  =⟨ “At most” ⟩
+     a ≤ c ∧ b = c
+  ⇒⟨ “Strengthening” (3.76b) ⟩ 
+     a ≤ c
+
+Lemma “Right-hand side”: (a = b ∨ a < b) ∧ b < c ⇒ a < c
+Proof:
+    (a = b ∨ a < b) ∧ b < c
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    (a = b ∧ b < c) ∨ (a < b ∧ b < c)
+  ⇒⟨ “Monotonicity of ∨” (4.2) with “Transitivity of <” ⟩
+    (a = b ∧ b < c) ∨ a < c
+  =⟨ Substitution ⟩ 
+    (a = b ∧ (z < c)[z ≔ b]) ∨ a < c
+  =⟨ “Replacement” (3.84a) , Substitution ⟩
+    (a = b ∧ a < c) ∨ a < c
+  =⟨ “Absorption” (3.43b) ⟩
+    a < c       
+
+Theorem (15.41) (15.41d) “Transitivity” “Transitivity of ≤”:
+   a ≤ b  ∧  b ≤ c  ⇒  a ≤ c
+Proof:
+    a ≤ b  ∧  b ≤ c
+  =⟨ “At most” ⟩
+    (a = b ∨ a < b) ∧ (b = c ∨ b < c)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    ((a = b ∨ a < b) ∧ b = c) ∨ ((a = b ∨ a < b) ∧ b < c)
+  ⇒⟨ “Monotonicity of ∨” (4.2) with “Left-hand side” ⟩ 
+    a ≤ c ∨ ((a = b ∨ a < b) ∧ b < c)
+  ⇒⟨ “Monotonicity of ∨” (4.2) with “Right-hand side”⟩ 
+    a ≤ c ∨ a < c
+  =⟨ “At most” ⟩ 
+    (a < c ∨ a = c) ∨ (a < c)
+  =⟨ “Idempotency of ∨” , “At most” ⟩ 
+     a ≤ c    
+  
+Theorem “Transitivity of ≤”:
+   a ≤ b  ⇒  b ≤ c  ⇒  a ≤ c
+Proof:
+   By “Shunting” , “Transitivity of ≤”
+   
+Theorem “Transitivity of >”:
+   a > b  ∧  b > c  ⇒  a > c
+Proof:
+    a > b ∧  b > c 
+  =⟨ “Greater” ⟩
+    pos (a - b) ∧ pos (b - c)
+  ⇒⟨ “Positivity under +” ⟩
+    pos ((a - b) + (b - c))
+  =⟨ “Subtraction”⟩
+    pos ((a + (- b)) + (b + (- c)))
+  =⟨ “Unary minus”, “Identity of +” ⟩ 
+    pos (a + (- c))
+  =⟨ “Subtraction” , “Greater” ⟩ 
+    a > c
+    
+Theorem (15.42) “<-Isotonicity of +”:
+   a < b  ≡  a + d < b + d
+Proof:
+    a < b 
+  =⟨ “Less” ⟩
+    pos (b - a) 
+  =⟨ “Identity of +”, “Unary minus”, “Subtraction”⟩
+    pos (b + (- a) + d + (- d))
+  =⟨ “Associativity of +” ⟩
+    pos (b + d + ((- a) + (- d)))
+  =⟨ “Distributivity of unary minus over +” ⟩
+    pos ((b + d) + (- (a + d)))
+  =⟨ “Subtraction”⟩  
+    pos ((b + d) - (a + d))
+  =⟨ “Less” ⟩
+    a + d < b + d 
+    
+    
+Theorem “<-Monotonicity of +”:
+   a < b  ⇒  a + d < b + d
+Proof:
+    a < b  ≡  a + d < b + d  — This is “<-Isotonicity of +”
+  ⇒⟨ “Mutual implication” , “Strengthening” (3.76b) ⟩
+    a < b  ⇒  a + d < b + d
+    
+Theorem “<-Monotonicity of +”:
+   a < b ⇒ c < d ⇒ a + c < b + d
+Proof:
+   Assuming `a < b`, `c < d`:
+       a + c
+     <⟨ “<-Monotonicity of +” with Assumption `a < b`⟩
+       b + c
+     <⟨ “<-Monotonicity of +” with Assumption `c < d`⟩ 
+       b + d
+       
+Theorem “≤-Isotonicity of +”:
+   a ≤ b  ≡  a + d ≤ b + d
+Proof:
+    a ≤ b
+  =⟨ “At most” ⟩
+    a = b ∨ a < b
+  =⟨ “Cancellation of +” ⟩
+    a + d = b + d ∨ a < b
+  =⟨ “<-Isotonicity of +” ⟩
+    a + d = b + d ∨ a + d < b + d
+  =⟨ “At most”⟩
+    a + d ≤ b + d     
+    
+Theorem “≤-Monotonicity of +”:
+   a ≤ b  ⇒  a + d ≤ b + d
+Proof:
+    a ≤ b  ≡  a + d ≤ b + d — This is “≤-Isotonicity of +” 
+  ⇒⟨ “Mutual implication”, “Strengthening” (3.76b) ⟩
+    a ≤ b  ⇒  a + d ≤ b + d  
+
+Theorem “Asymmetry of <”: ¬ (a < b  ∧  b < a)
+Proof:
+    ¬ (a < b  ∧  b < a)
+  =⟨ “Definition of ¬ from ⇒” (3.74) ⟩ 
+    a < b  ∧  b < a ⇒ false
+  =⟨ Subproof for `a < b  ∧  b < a ⇒ false`:
+        a < b ∧ b < a
+      =⟨ “Less”, “Greater” ⟩ 
+        pos (a - b) ∧ pos (b - a)
+      ⇒⟨ “Positivity under +”⟩
+        pos ((a - b) + (b - a)) 
+      =⟨ (15.17), (15.19), “Subtraction” ⟩ 
+        pos ((a - b) + - (a - b))
+      =⟨ “Unary minus”⟩ 
+        pos 0
+      =⟨ “Non-positivity of 0” ⟩ 
+        false
+    ⟩ 
+    true
+
+Theorem (15.44A) “Trichotomy — A”:
+    a < b  ≡  a = b  ≡  a > b
+Proof:
+  Using “Mutual implication”:
+    Subproof for `a = b ⇒ (a < b ≡ a > b)`:
+      Assuming `a = b`:
+          a < b
+        ≡⟨ “Converse of <”, Assumption `a = b` ⟩
+          a > b
+    Subproof for `(a < b ≡ a > b) ⇒ a = b`:
+        a < b ≡ a > b
+      ≡⟨ “Definition of <”, “Definition of >” ⟩
+        pos (b - a) ≡ pos (a - b)
+      ≡⟨ (15.17), (15.19), “Subtraction” ⟩
+        pos (b - a) ≡ pos (- (b - a))
+      ⇒⟨ (15.33c) ⟩
+        b - a = 0
+      ≡⟨ “Cancellation of +” ⟩
+        b - a + a = 0 + a
+      ≡⟨ “Identity of +”, “Subtraction”, “Unary minus” ⟩
+        a = b
+  
+Theorem (15.44B) “Trichotomy — B”:
+    ¬ (a < b  ∧  a = b  ∧  a > b)
+Proof:
+    ¬ (a < b  ∧  a = b  ∧  a > b)
+  =⟨ “De Morgan” ⟩
+    ¬ (a < b ∧ a > b) ∨ ¬ (a = b)
+  =⟨ “Converse of <”, “Asymmetry of <” ⟩
+    true ∨ ¬ (a = b)
+  =⟨ “Zero of ∨” ⟩
+    true 
+     
+Theorem (15.44) “Trichotomy”:
+    (a < b  ≡  a = b  ≡  a > b) ∧
+    ¬ (a < b  ∧  a = b  ∧  a > b)
+Proof:
+    By “Idempotency of ∧”, “Trichotomy — A”, “Trichotomy — B”

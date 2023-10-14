@@ -1,0 +1,101 @@
+Theorem  “Left-antitonicity of <”: (p ≤ q) ⇒ ((q < r) ⇒ (p < r))
+Proof:
+  By “Shunting”, “Transitivity of ≤ with <”
+
+Theorem “Right-monotonicity of <”: (p ≤ q) ⇒ ((r < p) ⇒ (r < q))
+Proof:
+  By “Shunting”, “Transitivity of < with ≤” 
+
+------ Alternative way
+Theorem “Right-monotonicity of <”: (p ≤ q) ⇒ ((r < p) ⇒ (r < q))
+Proof:
+    (p ≤ q) ⇒ ((r < p) ⇒ (r < q))
+  ≡⟨ “Contrapositive” ⟩
+    (p ≤ q) ⇒ (¬ (r < q) ⇒ ¬ (r < p)) 
+  ≡⟨ “Complement of <” with (3.14), “Converse of ≤” ⟩
+    (p ≤ q) ⇒ (q ≤ r ⇒ p ≤ r)
+  ≡⟨ “Transitivity of ≤” ⟩
+    true
+------
+
+Theorem  “Left-antitonicity of ≤”: (p ≤ q) ⇒ ((q ≤ r) ⇒ (p ≤ r))
+Proof:
+  By “Shunting”, “Transitivity of ≤”
+  
+Theorem “Right-monotonicity of ≤”: (p ≤ q) ⇒ ((r ≤ p) ⇒ (r ≤ q))
+Proof:
+   By “Shunting”, “Transitivity of ≤” 
+
+------ Alternative way
+Theorem “Right-monotonicity of ≤”: (p ≤ q) ⇒ ((r ≤ p) ⇒ (r ≤ q))
+Proof:
+    (p ≤ q) ⇒ ((r ≤ p) ⇒ (r ≤ q))
+  ≡⟨ “Contrapositive” ⟩
+    (p ≤ q) ⇒ (¬ (r ≤ q) ⇒ ¬ (r ≤ p)) 
+  ≡⟨ “Complement of >” with (3.14), “Converse of <” ⟩
+    (p ≤ q) ⇒ (q < r ⇒ p < r)
+  ≡⟨ “Shunting”, “Transitivity of ≤ with <” ⟩
+    true
+------
+
+Theorem  “Weak left-antitonicity of <”: (p < q) ⇒ ((q < r) ⇒ (p < r))
+Proof:
+  By “Shunting”, “Transitivity of <”
+  
+Theorem “Weak right-monotonicity of <”: (p < q) ⇒ ((r < p) ⇒ (r < q))
+Proof:
+  By “Shunting”, “Transitivity of <”
+
+Theorem (Ex7.2.1): x < 2  ∧  5 < y  ⇒  x < 3 < y
+Proof:
+    x < 2  ∧  5 < y
+  ⇒⟨ “Monotonicity of ∧” with 
+     “Right-monotonicity of <” with Fact `2 ≤ 3`  ⟩
+    x < 3  ∧  5 < y
+  ⇒⟨ “Monotonicity of ∧” with 
+     “Left-antitonicity of <” with Fact `3 ≤ 5` ⟩
+    x < 3 < y
+    
+Theorem (Ex7.2.2): (x < 2  ⇒  5 ≤ y)  ⇒  (x < 1 ⇒ 4 ≤ y)
+Proof:
+    x < 2  ⇒  5 ≤ y
+  ⇒⟨ “Antitonicity of ⇒” with
+     “Right-monotonicity of <” with Fact `1 ≤ 2` ⟩
+    x < 1  ⇒  5 ≤ y
+  ⇒⟨ “Monotonicity of ⇒” with
+     “Left-antitonicity of ≤” with Fact `4 ≤ 5` ⟩
+    x < 1  ⇒  4 ≤ y
+
+Theorem (Ex7.2.3): x ≤ y ⇒  2 · x ≤ 2 · y
+Proof:
+  Assuming `x ≤ y`:
+      2 · x
+    ≤⟨ “Monotonicity of ·” with Fact `0 < 2` and Assumption `x ≤ y` ⟩
+      2 · y
+      
+Theorem (Ex7.2.4): x ≤ y ≤ z ⇒ ¬ (y ≤ 2 · y)  ⇒  ¬ (z ≤ 2 · x)
+Proof:
+  Assuming `x ≤ y ≤ z`:
+      ¬ (y ≤ 2 · y)
+    ⇒⟨ “Contrapositive”, 
+       “Left-antitonicity of ≤” with Assumption `x ≤ y ≤ z` ⟩
+      ¬ (z ≤ 2 · y)
+    ⇒⟨ “Contrapositive”,
+        “Right-monotonicity of ≤” with
+        “Monotonicity of ·” with 
+         Fact `0 < 2` and Assumption `x ≤ y ≤ z` ⟩
+      ¬ (z ≤ 2 · x)
+      
+Theorem (Ex7.2.5):
+    (x ≤ 5 ∧ ∀ y ❙ 3 ≤ y • x < y)
+  ⇒ (x ≤ 7 ∧ ∀ y ❙ 9 ≤ y • x < y)
+Proof:
+    x ≤ 5 ∧ ∀ y ❙ 3 ≤ y • x < y
+  ⇒⟨ “Monotonicity of ∧” with 
+     “Right-monotonicity of ≤” with Fact `5 ≤ 7` ⟩
+    x ≤ 7 ∧ ∀ y ❙ 3 ≤ y • x < y
+  ⇒⟨ “Monotonicity of ∧” with 
+     “Range antitonicity of ∀” with
+     “Left-antitonicity of ≤” with
+      Fact `3 ≤ 9` ⟩ 
+    x ≤ 7 ∧ ∀ y ❙ 9 ≤ y • x < y

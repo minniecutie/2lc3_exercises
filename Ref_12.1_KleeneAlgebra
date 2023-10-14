@@ -1,0 +1,624 @@
+Axiom (KA.1) “Definition of *”:       R * = 𝕀 ∪ R ∪ R * ⨾ R *
+Axiom (KA.2) “Left-induction for *”:  R ⨾ S ⊆ S  ⇒  R * ⨾ S ⊆ S
+Axiom (KA.3) “Right-induction for *”: Q ⨾ R ⊆ Q  ⇒  Q ⨾ R * ⊆ Q
+
+Axiom (KA.4) “Definition of ⁺”:   R ⁺ = R ⨾ R *
+
+Theorem (KA.5) “Reflexivity of *”:  𝕀 ⊆ R *
+Proof:
+  By “Definition of *”, “Weakening for ∪”
+
+Theorem (KA.6) “Transitivity of *”:  R * ⨾ R * ⊆ R *
+Proof:
+  By “Definition of *”, “Weakening for ∪”
+
+Theorem (KA.7) “⨾-idempotency of *”:  R * ⨾ R * = R *
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `R * ⨾ R * ⊆ R *`:
+      By “Transitivity of *”
+    Subproof for `R * ⊆ R * ⨾ R *`:
+        R * ⊆ R * ⨾ R *
+      =⟨ “Identity of ⨾” ⟩ 
+        𝕀 ⨾ R * ⊆ R * ⨾ R *
+      ⇐⟨ “Monotonicity of ⨾” ⟩
+        𝕀 ⊆ R * — This is “Reflexivity of *”  
+
+Theorem (KA.8) “* increases”:  R ⊆ R *
+Proof:
+  By “Definition of *”, “Weakening for ∪”
+
+Theorem (KA.9) “⁺ increases”: R ⊆ R ⁺
+Proof:
+    R
+  =⟨ “Identity of ⨾” ⟩
+    R ⨾ 𝕀
+  ⊆⟨ “Monotonicity of ⨾” with “Reflexivity of *” ⟩
+    R ⨾ R *
+  =⟨ “Definition of ⁺” ⟩  
+    R ⁺ 
+
+Theorem (KA.10) “⁺ ⊆ *”:  R ⁺ ⊆ R *
+Proof:
+    R ⁺
+  =⟨ “Definition of ⁺” ⟩
+    R ⨾ R *
+  ⊆⟨ Monotonicity with “* increases” ⟩
+    R * ⨾ R *
+  ⊆⟨ “Transitivity of *” ⟩
+    R *    
+
+Lemma “Alternative definition of *”: R * = 𝕀 ∪ R ∪ R *
+Proof:
+  By “Definition of *”, “⨾-idempotency of *”
+
+Lemma “Right-iteration ⊆ in *”:  R * ⨾ R ⊆ R *
+Proof:
+    R * ⨾ R
+  ⊆⟨ Monotonicity with “* increases” ⟩
+    R * ⨾ R *
+  =⟨ “⨾-idempotency of *” ⟩
+    R * 
+
+Lemma “11-lemma”: (𝕀 ∪ R ⨾ R *) ⨾ R * ⊆ 𝕀 ∪ R ⨾ R *
+Proof:
+  Using “Right-induction for *”:
+    Subproof for `(𝕀 ∪ R ⨾ R *) ⨾ R ⊆ 𝕀 ∪ R ⨾ R *`:
+        (𝕀 ∪ R ⨾ R *) ⨾ R
+      =⟨ “Distributivity of ⨾ over ∪”, “Identity of ⨾” ⟩
+         R ∪ R ⨾ R * ⨾ R
+      ⊆⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩  
+        R ∪ R ⨾ R *
+      =⟨ “Identity of ⨾” ⟩
+        R ⨾ 𝕀 ∪ R ⨾ R * 
+      ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+        R ⨾ R * ∪ R ⨾ R *
+      =⟨ “Idempotency of ∪” ⟩
+        R ⨾ R *
+      ⊆⟨ “Weakening for ∪” ⟩
+        𝕀 ∪ R ⨾ R *   
+
+Lemma (KA.11) “* via ⁺”: R * = 𝕀 ∪ R ⁺
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `R * ⊆ 𝕀 ∪ R ⁺`:
+          R * ⊆ 𝕀 ∪ R ⁺
+        =⟨ “Definition of ⁺” ⟩
+          R * ⊆ 𝕀 ∪ R ⨾ R *
+      Proof for this:
+          R *
+        =⟨ “Identity of ⨾” ⟩ 
+          𝕀 ⨾ R *
+        ⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+          (𝕀 ∪ R ⨾ R *) ⨾ R *
+        ⊆⟨ “11-lemma” ⟩  
+          𝕀 ∪ R ⨾ R *    
+    Subproof for `𝕀 ∪ R ⁺ ⊆ R *`:
+        𝕀 ∪ R ⁺
+      ⊆⟨ Monotonicity with “⁺ ⊆ *” ⟩
+        𝕀 ∪ R * 
+      ⊆⟨ “Weakening for ∪” ⟩
+        𝕀 ∪ R ∪ R *
+      =⟨ “Alternative definition of *” ⟩
+        R *  
+
+Theorem (KA.12) “Left-iteration for *”:  R * = 𝕀 ∪ R ⨾ R *
+Proof:
+  By “* via ⁺”, “Definition of ⁺”
+      
+Theorem (KA.13) “Left-iteration ⊆ in *”:  R ⨾ R * ⊆ R *
+Proof:
+    R ⨾ R *
+  ⊆⟨ Monotonicity with “* increases” ⟩
+    R * ⨾ R *
+  =⟨ “⨾-idempotency of *” ⟩
+    R *   
+
+Theorem (KA.14) “Shuffle *”:  R ⨾ R * = R * ⨾ R
+Proof:
+    R ⨾ R *
+  =⟨ “Identity of ⨾” ⟩
+    𝕀 ⨾ R ⨾ R * 
+  ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+    R * ⨾ R ⨾ R *
+  ⊆⟨ “Right-induction for *” with 
+        Subproof for `R * ⨾ R ⨾ R ⊆ R * ⨾ R`:
+            R * ⨾ R ⨾ R
+          ⊆⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+            R * ⨾ R 
+    ⟩ 
+    R * ⨾ R
+  =⟨ “Identity of ⨾” ⟩
+    R * ⨾ R ⨾ 𝕀
+  ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+    R * ⨾ R ⨾ R *
+  ⊆⟨ “Left-induction for *” with 
+        Subproof for `R ⨾ R ⨾ R * ⊆ R ⨾ R *`:
+            R ⨾ R ⨾ R *
+          ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+            R ⨾ R * 
+    ⟩ 
+    R ⨾ R *
+
+Theorem (KA.15) “Alternate definition of ⁺”: R ⁺ = R * ⨾ R
+Proof:
+  By “Shuffle *”, “Definition of ⁺”
+
+Theorem (KA.16) “Right-iteration for *”:  R * = 𝕀 ∪ R * ⨾ R
+Proof:
+  By “Left-iteration for *”, “Shuffle *”
+
+Theorem (KA.17) “Right-iteration ⊆ in *”:  R * ⨾ R ⊆ R *
+Proof:
+    R * ⨾ R
+  ⊆⟨ Monotonicity with “* increases” ⟩
+    R * ⨾ R *
+  =⟨ “⨾-idempotency of *” ⟩
+    R *  
+
+Theorem (KA.18) “Monotonicity of *”:  R ⊆ S  ⇒  R * ⊆ S *
+Proof:
+  Assuming `R ⊆ S`:
+      R *
+    =⟨ “Identity of ⨾” ⟩
+      R * ⨾ 𝕀
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+      R * ⨾ S *
+    ⊆⟨ Subproof for `R * ⨾ S * ⊆ S *`:
+         Using “Left-induction for *”:
+           Subproof for `R ⨾ S * ⊆ S *`:
+               R ⨾ S *
+             ⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+               S ⨾ S *
+             ⊆⟨ “Left-iteration ⊆ in *” ⟩
+               S *  
+      ⟩ 
+      S *   
+    
+Theorem (KA.19) “Monotonicity of ⁺”:  R ⊆ S  ⇒  R ⁺ ⊆ S ⁺
+Proof:
+  Assuming `R ⊆ S`:
+      R ⁺
+    =⟨ “Definition of ⁺” ⟩
+      R ⨾ R *
+    ⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+      S ⨾ R *
+    ⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+      S ⨾ S *
+    =⟨ “Definition of ⁺” ⟩ 
+      S ⁺
+      
+Proposition (KA.20) “Union *”:
+    (R ∪ S) * = (R * ⨾ S) * ⨾ R *
+Proof:
+  Side proof for (1) `(R * ⨾ S) * ⨾ (R ∪ S) * ⊆ (R ∪ S) *`:
+    Using “Left-induction for *”:
+        R * ⨾ S ⨾ (R ∪ S) *
+      ⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+        R * ⨾ (R ∪ S) ⨾ (R ∪ S) *
+      ⊆⟨ Monotonicity with “* increases” ⟩
+        R * ⨾ (R ∪ S) * ⨾ (R ∪ S) *
+      ⊆⟨ Monotonicity with “Monotonicity of *” with “Weakening for ∪” ⟩
+        (R ∪ S) * ⨾ (R ∪ S) * ⨾ (R ∪ S) *
+      =⟨ “⨾-idempotency of *” ⟩
+        (R ∪ S) *
+  Side proof for (2) `(R ∪ S) * ⨾ (R * ⨾ S) * ⨾ R * ⊆ (R * ⨾ S) * ⨾ R *`:
+    Using “Left-induction for *”:
+        (R ∪ S) ⨾ (R * ⨾ S) * ⨾ R *
+      =⟨ “Distributivity of ⨾ over ∪” ⟩
+        R ⨾ (R * ⨾ S) * ⨾ R * ∪ S ⨾ (R * ⨾ S) * ⨾ R *
+      ⊆⟨ Subproof:
+          Using “Characterisation of ∪”:
+            Subproof:
+                R ⨾ (R * ⨾ S) * ⨾ R *
+              =⟨ “Left-iteration for *” ⟩
+                R ⨾ (𝕀 ∪ R * ⨾ S ⨾ (R * ⨾ S) *) ⨾ R *
+              =⟨ “Distributivity of ⨾ over ∪”; “Identity of ⨾” ⟩
+                R ⨾ R * ∪ R ⨾ R * ⨾ S ⨾ (R * ⨾ S) * ⨾ R *
+              ⊆⟨ Subproof:
+                  Using “Characterisation of ∪”:
+                    Subproof:
+                        R ⨾ R *
+                      ⊆⟨ “Left-iteration ⊆ in *” ⟩
+                        R *
+                      ⊆⟨ “Identity of ⨾”, Monotonicity with “Reflexivity of *” ⟩
+                        (R * ⨾ S) * ⨾ R *
+                    Subproof:
+                        R ⨾ R * ⨾ S ⨾ (R * ⨾ S) * ⨾ R *
+                      ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+                        R * ⨾ S ⨾ (R * ⨾ S) * ⨾ R *
+                      ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+                        (R * ⨾ S) * ⨾ R *
+                ⟩
+                (R * ⨾ S) * ⨾ R *
+            Subproof:
+                S ⨾ (R * ⨾ S) * ⨾ R *
+              ⊆⟨ “Identity of ⨾”, Monotonicity with “Reflexivity of *” ⟩
+                (R * ⨾ S) ⨾ (R * ⨾ S) * ⨾ R *
+              ⊆⟨ “Definition of ⁺”, Monotonicity with “⁺ ⊆ *” ⟩
+                (R * ⨾ S) * ⨾ R *
+        ⟩
+        (R * ⨾ S) * ⨾ R *
+  Continuing:
+      (R ∪ S) *
+    =⟨ “Identity of ⨾” ⟩
+      (R ∪ S) * ⨾ 𝕀 ⨾ 𝕀
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+      (R ∪ S) * ⨾ 𝕀 ⨾ R *
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+      (R ∪ S) * ⨾ (R * ⨾ S) * ⨾ R *
+    ⊆⟨ Local property (2) ⟩
+      (R * ⨾ S) * ⨾ R *
+    ⊆⟨ “Monotonicity of ⨾” with “Monotonicity of *” with “Weakening for ∪” ⟩
+      (R * ⨾ S) * ⨾ (R ∪ S) *
+    ⊆⟨ Local property (1) ⟩
+      (R ∪ S) *
+
+Proposition (KA.21) “Union ⁺”:
+    (R ∪ S) ⁺ = R ⁺ ∪ (R * ⨾ S) ⁺ ⨾ R *
+Proof:
+    (R ∪ S) ⁺
+  =⟨ “Definition of ⁺” ⟩
+    (R ∪ S) ⨾ (R ∪ S) *
+  =⟨ “Union *” ⟩
+    (R ∪ S) ⨾ (R * ⨾ S) * ⨾ R *
+  =⟨ “Distributivity of ⨾ over ∪” ⟩
+     (R ⨾ (R * ⨾ S) * ⨾ R *) ∪ (S ⨾ (R * ⨾ S) * ⨾ R *) 
+  =⟨ “* via ⁺” ⟩
+     (R ⨾ (𝕀 ∪ (R * ⨾ S) ⁺) ⨾ R *) ∪ (S ⨾ (R * ⨾ S) * ⨾ R *)
+  =⟨ “Distributivity of ⨾ over ∪”, “Identity of ⨾” ⟩
+     (R ⨾ (R * ∪ (R * ⨾ S) ⁺ ⨾ R *)) ∪ (S ⨾ (R * ⨾ S) * ⨾ R *)
+  =⟨ “Distributivity of ⨾ over ∪” ⟩
+    R ⨾ R * ∪ R ⨾ (R * ⨾ S) ⁺ ⨾ R * ∪ (S ⨾ (R * ⨾ S) * ⨾ R *)
+  =⟨ “Definition of ⁺”, “Distributivity of ⨾ over ∪” ⟩
+    R ⁺ ∪ (R ⁺ ⨾ S ∪ S) ⨾ (R * ⨾ S) * ⨾ R *
+  =⟨ Subproof for `R * ⨾ S = (R ⁺ ⨾ S) ∪ S`:
+         (R ⁺ ⨾ S) ∪ S
+       =⟨ “Identity of ⨾” ⟩
+         (R ⁺ ⨾ S) ∪ 𝕀 ⨾ S
+       =⟨ “Distributivity of ⨾ over ∪” ⟩
+         (R ⁺ ∪ 𝕀) ⨾ S
+       =⟨ “* via ⁺” ⟩
+          R * ⨾ S    
+    ⟩ 
+    R ⁺ ∪ (R * ⨾ S) ⨾ (R * ⨾ S) * ⨾ R *
+  =⟨ “Definition of ⁺” ⟩   
+    R ⁺ ∪ (R * ⨾ S) ⁺ ⨾ R * 
+
+Theorem (KA.22) “Subidentity decomposition entering * from left”:
+    G ⨾ F ⊆ 𝕀
+  ⇒ (F ⨾ R ⨾ G) * ⨾ F ⊆ F ⨾ R *
+Proof:
+  Assuming `G ⨾ F ⊆ 𝕀`:
+      (F ⨾ R ⨾ G) * ⨾ F
+    =⟨ “Identity of ⨾” ⟩
+      (F ⨾ R ⨾ G) * ⨾ F ⨾ 𝕀
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩ 
+      (F ⨾ R ⨾ G) * ⨾ F ⨾ R *
+    ⊆⟨ Subproof for `(F ⨾ R ⨾ G) * ⨾ F ⨾ R * ⊆ F ⨾ R *`:
+         Using “Left-induction for *”:
+           Subproof for `F ⨾ R ⨾ G ⨾ F ⨾ R * ⊆ F ⨾ R *`:
+               F ⨾ R ⨾ G ⨾ F ⨾ R *
+             ⊆⟨ Monotonicity with Assumption `G ⨾ F ⊆ 𝕀` ⟩
+               F ⨾ R ⨾ 𝕀 ⨾ R *
+             =⟨ “Identity of ⨾” ⟩
+               F ⨾ R ⨾ R *
+             ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+               F ⨾ R *   
+      ⟩ 
+      F ⨾ R *
+
+Theorem (KA.22) “Subidentity decomposition entering * from left”:
+    G ⨾ F ⊆ 𝕀
+  ⇒ (F ⨾ R ⨾ G) * ⨾ F ⊆ F ⨾ R *
+Proof:
+  Assuming `G ⨾ F ⊆ 𝕀`:
+      (F ⨾ R ⨾ G) * ⨾ F
+    =⟨ “Identity of ⨾” ⟩
+      (F ⨾ R ⨾ G) * ⨾ F ⨾ 𝕀
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩ 
+      (F ⨾ R ⨾ G) * ⨾ F ⨾ R *
+    ⊆⟨ Subproof for `(F ⨾ R ⨾ G) * ⨾ F ⨾ R * ⊆ F ⨾ R *`:
+         Using “Left-induction for *”:
+           Subproof for `F ⨾ R ⨾ G ⨾ F ⨾ R * ⊆ F ⨾ R *`:
+               F ⨾ R ⨾ G ⨾ F ⨾ R *
+             ⊆⟨ Monotonicity with Assumption `G ⨾ F ⊆ 𝕀` ⟩
+               F ⨾ R ⨾ 𝕀 ⨾ R *
+             =⟨ “Identity of ⨾” ⟩
+               F ⨾ R ⨾ R *
+             ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+               F ⨾ R *   
+      ⟩ 
+      F ⨾ R *
+
+Theorem (KA.23) “Subidentity decomposition entering * from right”:
+    G ⨾ F ⊆ 𝕀
+  ⇒ G ⨾ (F ⨾ R ⨾ G) * ⊆ R * ⨾ G
+Proof:
+  Assuming `G ⨾ F ⊆ 𝕀`:
+      G ⨾ (F ⨾ R ⨾ G) *
+    =⟨ “Identity of ⨾” ⟩
+      𝕀 ⨾ G ⨾ (F ⨾ R ⨾ G) *
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+      R * ⨾ G ⨾ (F ⨾ R ⨾ G) *
+    ⊆⟨ Subproof for `R * ⨾ G ⨾ (F ⨾ R ⨾ G) * ⊆ R * ⨾ G`:
+         Using “Right-induction for *”:
+           Subproof for `R * ⨾ G ⨾ (F ⨾ R ⨾ G) ⊆ R * ⨾ G`:
+               R * ⨾ G ⨾ F ⨾ R ⨾ G
+             ⊆⟨ Monotonicity with Assumption `G ⨾ F ⊆ 𝕀` , “Identity of ⨾” ⟩
+               R * ⨾ R ⨾ G
+             ⊆⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+               R * ⨾ G  
+      ⟩
+      R * ⨾ G   
+
+Theorem (KA.24) “Superidentity decomposition entering * from left”:
+    𝕀 ⊆ G ⨾ F
+  ⇒ F ⨾ R * ⊆ (F ⨾ R ⨾ G) * ⨾ F
+Proof:
+  Assuming `𝕀 ⊆ G ⨾ F`:
+      F ⨾ R * 
+    =⟨ “Identity of ⨾” ⟩
+      𝕀 ⨾ F ⨾ R *
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+      (F ⨾ R ⨾ G) * ⨾ F ⨾ R *
+    ⊆⟨ “Right-induction for *” with subproof:
+            (F ⨾ R ⨾ G) * ⨾ F ⨾ R
+          =⟨ “Identity of ⨾” ⟩
+            (F ⨾ R ⨾ G) * ⨾ F ⨾ R ⨾ 𝕀
+          ⊆⟨ Monotonicity with Assumption `𝕀 ⊆ G ⨾ F` ⟩
+            (F ⨾ R ⨾ G) * ⨾ F ⨾ R ⨾ G ⨾ F
+          ⊆⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+            (F ⨾ R ⨾ G) * ⨾ F 
+      ⟩
+      (F ⨾ R ⨾ G) * ⨾ F     
+
+Theorem (KA.25) “Superidentity decomposition entering * from right”:
+    𝕀 ⊆ G ⨾ F
+  ⇒ R * ⨾ G ⊆ G ⨾ (F ⨾ R ⨾ G) *
+Proof:
+  Assuming (1) `𝕀 ⊆ G ⨾ F`:
+      R * ⨾ G
+    =⟨ “Identity of ⨾” ⟩
+      R * ⨾ G ⨾ 𝕀
+    ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+      R * ⨾ G ⨾ (F ⨾ R ⨾ G) *
+    ⊆⟨ “Left-induction for *” with subproof:
+            R ⨾ G ⨾ (F ⨾ R ⨾ G) *
+          =⟨ “Identity of ⨾” ⟩
+            𝕀 ⨾ R ⨾ G ⨾ (F ⨾ R ⨾ G) *
+          ⊆⟨ Monotonicity with Assumption `𝕀 ⊆ G ⨾ F` ⟩
+            G ⨾ F ⨾ R ⨾ G ⨾ (F ⨾ R ⨾ G) *
+          ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩ 
+            G ⨾ (F ⨾ R ⨾ G) *
+      ⟩  
+      G ⨾ (F ⨾ R ⨾ G) *     
+
+Theorem (KA.26) “Composition * shifting”:
+    (R ⨾ S) * ⨾ R = R ⨾ (S ⨾ R) *
+Proof:
+    (R ⨾ S) * ⨾ R
+  =⟨ “Identity of ⨾” ⟩
+    (R ⨾ S) * ⨾ R ⨾ 𝕀
+  ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+    (R ⨾ S) * ⨾ R ⨾ (S ⨾ R) *
+  ⊆⟨ Subproof for `(R ⨾ S) * ⨾ R ⨾ (S ⨾ R) * ⊆ R ⨾ (S ⨾ R) *`:
+       Using “Left-induction for *”:
+         Subproof for `(R ⨾ S) ⨾ R ⨾ (S ⨾ R) * ⊆ R ⨾ (S ⨾ R) *`:
+                 R ⨾ S ⨾ R ⨾ (S ⨾ R) *
+              ⊆⟨ Monotonicity with “Left-iteration ⊆ in *”⟩
+                 R ⨾ (S ⨾ R) *
+    ⟩
+    R ⨾ (S ⨾ R) * 
+  =⟨ “Identity of ⨾” ⟩
+    𝕀 ⨾ R ⨾ (S ⨾ R) * 
+  ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+    (R ⨾ S) * ⨾ R ⨾ (S ⨾ R) *
+  ⊆⟨ Subproof for `(R ⨾ S) * ⨾ R ⨾ (S ⨾ R) * ⊆ (R ⨾ S) * ⨾ R`:
+       Using “Right-induction for *”:
+         Subproof for `(R ⨾ S) * ⨾ R ⨾ (S ⨾ R) ⊆ (R ⨾ S) * ⨾ R`:
+                 (R ⨾ S) * ⨾ R ⨾ S ⨾ R
+              ⊆⟨ Monotonicity with “Right-iteration ⊆ in *”⟩
+                 (R ⨾ S) * ⨾ R
+    ⟩
+    (R ⨾ S) * ⨾ R
+
+Theorem (KA.27) “Composition *”:  (R ⨾ S) * = 𝕀 ∪ R ⨾ (S ⨾ R) * ⨾ S
+Proof:
+    (R ⨾ S) *
+  =⟨ “Left-iteration for *” ⟩
+    𝕀 ∪ R ⨾ S ⨾ (R ⨾ S) *
+  =⟨ “Composition * shifting” ⟩
+    𝕀 ∪ R ⨾ (S ⨾ R) * ⨾ S  
+
+Lemma “Subproof1”: R * * ⊆ R *
+Proof:
+    R * *
+  =⟨ “Identity of ⨾” ⟩
+    R * * ⨾ 𝕀
+  ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+    R * * ⨾ R *
+  ⊆⟨ Subproof for `R * * ⨾ R * ⊆ R *`: 
+       Using “Left-induction for *”:
+         Subproof for `R * ⨾ R * ⊆ R *`:
+           By “Transitivity of *” 
+    ⟩
+    R *   
+
+Theorem (KA.28) “Reflexive closure *”: (𝕀 ∪ R) * = R *
+Proof:
+    R *
+  ⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+    (R ∪ 𝕀) *
+  =⟨ “Union *” ⟩
+    (R * ⨾ 𝕀) * ⨾ R *
+  =⟨ “Identity of ⨾” ⟩
+     R * * ⨾ R *  
+  ⊆⟨ Monotonicity with “Subproof1” ⟩
+     R * ⨾ R *
+  =⟨ “⨾-idempotency of *” ⟩
+     R * 
+
+Theorem (KA.29) “Reflexive closures *”:
+    ((𝕀 ∪ R) ⨾ (𝕀 ∪ S)) * = (R ∪ S) *
+Proof:
+    ((𝕀 ∪ R) ⨾ (𝕀 ∪ S)) *
+  =⟨ “Distributivity of ⨾ over ∪”, “Identity of ⨾” ⟩
+    (𝕀 ∪ R ∪ S ∪ R ⨾ S) *
+  =⟨ “Reflexive closure *” ⟩
+    (R ∪ S ∪ R ⨾ S) *
+  =⟨ Subproof:
+        (R ∪ S ∪ R ⨾ S) *
+      =⟨ “Identity of ⨾” ⟩
+        (R ∪ S ∪ R ⨾ S) * ⨾ 𝕀
+      ⊆⟨ “Monotonicity of ⨾” with “Reflexivity of *” ⟩
+        (R ∪ S ∪ R ⨾ S) * ⨾ (R ∪ S) *
+      ⊆⟨ “Left-induction for *” with subproof:
+            (R ∪ S ∪ R ⨾ S) ⨾ (R ∪ S) *
+          =⟨ “Distributivity of ⨾ over ∪” ⟩
+            (R ∪ S) ⨾ (R ∪ S) * ∪ (R ⨾ S) ⨾ (R ∪ S) *
+          ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+            (R ∪ S) * ∪ (R ⨾ S) ⨾ (R ∪ S) *
+          ⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+            (R ∪ S) * ∪ R ⨾ (R ∪ S) ⨾ (R ∪ S) *
+          ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+            (R ∪ S) * ∪ R ⨾ (R ∪ S) *
+          ⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+            (R ∪ S) * ∪ (R ∪ S) ⨾ (R ∪ S) *
+          ⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+            (R ∪ S) * ∪ (R ∪ S) *
+          =⟨ “Idempotency of ∪” ⟩
+            (R ∪ S) *
+        ⟩
+        (R ∪ S) *
+      ⊆⟨ “Monotonicity of *” with “Weakening for ∪” ⟩
+        (R ∪ S ∪ R ⨾ S) *
+    ⟩
+    (R ∪ S) *
+    
+Theorem (KA.30) “Subidentity *”: R ⊆ 𝕀  ⇒  R * = 𝕀
+Proof:
+  Assuming `R ⊆ 𝕀`:
+    Using “Mutual inclusion”:
+      Subproof for `𝕀 ⊆ R *`:
+        By “Reflexivity of *”
+      Subproof for `R * ⊆ 𝕀`:
+          R * ⊆ 𝕀
+        =⟨ “Identity of ⨾” ⟩
+          R * ⨾ 𝕀 ⊆ 𝕀
+        ⇐⟨ “Left-induction for *” ⟩
+          R ⨾ 𝕀 ⊆ 𝕀
+        =⟨ “Identity of ⨾” ⟩
+          R ⊆ 𝕀 — This is Assumption `R ⊆ 𝕀`     
+
+Theorem (KA.31) “Refl-trans *”:
+  reflexive R  ∧  transitive R  ⇒  R * = R
+Proof:
+  Assuming (R) `reflexive R` and using with “Definition of reflexivity”, 
+           (T) `transitive R` and using with “Definition of transitivity”:
+      R
+    ⊆⟨ “* increases” ⟩
+      R *
+    =⟨ “Identity of ⨾” ⟩
+      R * ⨾ 𝕀
+    ⊆⟨ Monotonicity with Assumption (R) ⟩
+      R * ⨾ R 
+    ⊆⟨ Subproof for `R * ⨾ R ⊆ R`: 
+         Using “Left-induction for *”:
+           Subproof for `R ⨾ R ⊆ R`:
+             By Assumption (T)
+      ⟩
+      R     
+
+Theorem (KA.32) “Refl-trans closure minimality”:
+    R ⊆ S  ∧  reflexive S  ∧  transitive S  ⇒  R * ⊆ S
+Proof:
+  Assuming `R ⊆ S`, 
+           (R) `reflexive S` and using with “Definition of reflexivity”, 
+           (T) `transitive S` and using with “Definition of transitivity”:
+      R *
+    ⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+      S *
+    =⟨ “Refl-trans *” with Assumption (R) and Assumption (T) ⟩
+      S   
+   
+Theorem (KA.33):
+     B ⊆ D ⨾ A  ∧  C ⊆ D
+  ⇒  (A ⨾ B * ⨾ C) * ⊆ (A ⨾ D) *
+Proof:
+  Assuming `B ⊆ D ⨾ A`, `C ⊆ D`:
+      (A ⨾ B * ⨾ C) *
+    ⊆⟨ Monotonicity with Assumption `B ⊆ D ⨾ A` ⟩ 
+      (A ⨾ (D ⨾ A) * ⨾ C) *
+    ⊆⟨ Monotonicity with Assumption `C ⊆ D` ⟩ 
+      (A ⨾ (D ⨾ A) * ⨾ D) *
+    ⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+      (𝕀 ∪ A ⨾ (D ⨾ A) * ⨾ D) *
+    =⟨ “Composition *” ⟩
+      (A ⨾ D) * *
+    ⊆⟨ “Subproof1” ⟩
+      (A ⨾ D) *   
+    
+
+Theorem (KA.34) “Left-induction with ∪ for *”:
+    R ⨾ S ∪ T ⊆ S  ⇒  R * ⨾ T ⊆ S
+Proof:
+  Assuming (1) `R ⨾ S ∪ T ⊆ S` 
+    and using with “Characterisation of ∪”:
+      R * ⨾ T 
+    ⊆⟨ Monotonicity with Assumption (1) ⟩
+      R * ⨾ S 
+    ⊆⟨ Subproof for `R * ⨾ S ⊆ S`:
+         Using “Left-induction for *”:
+           Subproof for `R ⨾ S ⊆ S`:
+             By Assumption (1)
+      ⟩   
+      S
+
+Theorem (KA.35) “Right-induction with ∪ for *”:
+    R ⨾ S ∪ T ⊆ R  ⇒  T ⨾ S * ⊆ R
+Proof:
+  Assuming (1) `R ⨾ S ∪ T ⊆ R` 
+    and using with “Characterisation of ∪”:
+      T ⨾ S * 
+    ⊆⟨ Monotonicity with Assumption (1) ⟩
+      R ⨾ S * 
+    ⊆⟨ Subproof for `R ⨾ S * ⊆ R`:
+         Using “Right-induction for *”:
+           Subproof for `R ⨾ S ⊆ R`:
+             By Assumption (1)
+      ⟩   
+      R
+
+Theorem (KA.36) “Idempotency of *”:  R * * = R *
+Proof:
+    R *
+  ⊆⟨ “* increases” ⟩ 
+    R * *
+  =⟨ “Identity of ⨾” ⟩
+    R * * ⨾ 𝕀
+  ⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+    R * * ⨾ R *
+  ⊆⟨ Subproof for `R * * ⨾ R * ⊆ R *`: 
+       Using “Left-induction for *”:
+         Subproof for `R * ⨾ R * ⊆ R *`:
+           By “Transitivity of *” 
+    ⟩
+    R *
+
+Theorem (KA.37) “Expansion within *”: S ⊆ R * ⇒ (R ∪ S) * = R *
+Proof:
+  Assuming `S ⊆ R *`: 
+      (R ∪ S) *
+    =⟨ “Union *” ⟩
+      (R * ⨾ S) * ⨾ R *
+    ⊆⟨ Monotonicity with Assumption `S ⊆ R *` ⟩
+      (R * ⨾ R *) * ⨾ R *
+    =⟨ “⨾-idempotency of *” ⟩
+      (R *) * ⨾ R *
+    =⟨ “Idempotency of *” ⟩
+      R * ⨾ R *
+    =⟨ “⨾-idempotency of *” ⟩
+      R *  
+    ⊆⟨ Monotonicity with “Weakening for ∪” ⟩   
+      (R ∪ S) *

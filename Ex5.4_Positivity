@@ -1,0 +1,194 @@
+Note: For optimized solutions please see Ex5.5. This is the orignal version of my proof. 
+
+Theorem “Non-zero multiplication”: a ≠ 0 ⇒ b ≠ 0 ⇒ a · b ≠ 0
+Proof:
+  Assuming `a ≠ 0` and using with “Definition of ≠”:
+    Assuming `b ≠ 0`:
+         a · b ≠ 0
+       =⟨ “Zero of ·”⟩ 
+         a · b ≠ 0 · b
+       =⟨ “Definition of ≠”⟩
+         ¬ (a · b = 0 · b)
+       =⟨ “Cancellation of ·” with Assumption `b ≠ 0`⟩
+         ¬ (a = 0)
+       =⟨ Assumption `a ≠ 0`⟩
+         true
+
+Lemma “Relation to zero”: (- a) ≠ 0 ≡ a ≠ 0
+Proof:
+    (- a) ≠ 0
+  = ⟨ “Definition of ≠” ⟩
+     ¬ ((- a) = 0)
+  = ⟨ “Unary minus”, “Identity of +” ⟩
+     ¬ ((- a) + 0 = (- a) + a)
+  = ⟨ “Cancellation of +” ⟩
+     ¬ (0 = a)
+  = ⟨ “Definition of ≠” ⟩
+     0 ≠ a
+  
+Theorem (15.33b) “Positivity under unary minus”: b ≠ 0 ⇒ (pos (- b) ≡ ¬ pos b)
+Proof:
+    b ≠ 0 ⇒ (pos (- b) ≡ ¬ pos b)
+  =⟨ “Relation to zero” , “Self-inverse of unary minus” ⟩
+    (- b) ≠ 0 ⇒ (pos (- b) ≡ ¬ pos (- (- b)))
+  =⟨ “Positivity under unary minus” ⟩ 
+    true
+    
+Theorem (15.33c) “Positivity under unary minus”: (pos (- b) ≡ pos b) ⇒ b = 0
+Proof:
+    (pos (- b) ≡ pos b) ⇒ b = 0
+  =⟨ “Contrapositive” ⟩
+    ¬ (b = 0) ⇒ ¬ (pos (- b) ≡ pos b)
+  =⟨ “Definition of ≠”, “Commutativity of ¬ with ≡” ⟩
+    b ≠ 0 ⇒ (¬ pos (- b) ≡ pos b)
+  =⟨ “Positivity under unary minus” (15.33) ⟩
+    true 
+    
+Theorem “Positive implies non-zero”: pos a ⇒ a ≠ 0
+Proof:
+    pos a ⇒ a ≠ 0
+  =⟨ “Contrapositive” ⟩
+    ¬ (a ≠ 0) ⇒ ¬ pos a
+  =⟨ “Definition of ≠”, “Double negation”⟩
+    a = 0 ⇒ ¬ pos a
+  =⟨ Substitution ⟩
+    a = 0 ⇒ (¬ pos z)[z ≔ a]
+  =⟨ “Replacement” (3.84b) ⟩
+    a = 0 ⇒ (¬ pos z)[z ≔ 0]
+  =⟨ Substitution ⟩
+    a = 0 ⇒ ¬ pos 0
+  =⟨ “Non-positivity of 0” , “Negation of `false`” ⟩
+    a = 0 ⇒ true
+  =⟨ “Right-zero of ⇒” ⟩
+    true
+
+Theorem (15.34) “Positivity of squares”: b ≠ 0 ⇒ pos (b · b)
+Proof:
+  By cases: `pos b`, `¬ pos b`
+    Completeness:
+        pos b ∨ (¬ pos b)
+      = ⟨ “LEM” ⟩
+        true
+    Case `pos b`:
+        b ≠ 0 ⇒ pos (b · b)
+      =⟨ “Left-identity of ⇒” , Assumption `pos b` ⟩
+        (pos b ⇒ b ≠ 0) ⇒ pos (b · b)
+      =⟨ “Positive implies non-zero”⟩
+        true ⇒ pos (b · b)
+      =⟨ “Idempotency of ∧”, Assumption `pos b`⟩
+        pos b ∧ pos b ⇒ pos (b · b) 
+      =⟨ “Positivity under ·”⟩
+        true 
+    Case `¬ pos b`: 
+        Assuming `b ≠ 0`:
+            true
+          =⟨ Assumption `¬ pos b` ⟩
+            ¬ pos b 
+          =⟨ “Positivity under unary minus” (15.33) with Assumption `b ≠ 0`⟩
+            ¬ ¬ pos (- b)
+          =⟨ “Double negation”⟩
+            pos (- b)
+          =⟨ “Idempotency of ∧” ⟩
+            pos (- b) ∧ pos (- b)
+          ⇒⟨ “Positivity under ·” ⟩
+            pos ((- b) · (- b))
+          =⟨ (15.23) ⟩   
+            pos (b · b)
+            
+Corollary “Positivity of 1”: pos 1
+Proof:
+    pos 1 
+  =⟨ Fact `1 = 1 · 1`⟩
+    pos (1 · 1)
+  =⟨ “Positivity of squares” with Fact `1 ≠ 0`⟩
+    true  
+    
+Theorem “Positivity”: pos a ≡ a ≠ 0 ∧ ¬ pos (- a)
+Proof:
+  By cases: `a = 0`, `a ≠ 0`
+    Completeness:
+        (a = 0) ∨ (a ≠ 0)
+      =⟨ “Definition of ≠” ⟩
+        (a = 0) ∨ ¬ (a = 0)
+      =⟨ “LEM”⟩
+         true
+    Case `a = 0`:
+        pos a ≡ a ≠ 0 ∧ ¬ pos (- a)
+      =⟨ Assumption `a = 0` ⟩
+        pos 0 ≡ 0 ≠ 0 ∧ ¬ pos (- 0)
+      =⟨ “Non-positivity of 0” ⟩
+        false ≡ 0 ≠ 0 ∧ ¬ pos (- 0)
+      =⟨ “Irreflexivity of ≠”, “Zero of ∧” ⟩
+        false ≡ false
+      =⟨ “Identity of ≡” ⟩
+        true
+    Case `a ≠ 0`: 
+        pos a ≡ a ≠ 0 ∧ ¬ pos (- a)  
+      =⟨ Assumption `a ≠ 0`, “Identity of ∧” ⟩
+        pos a ≡ ¬ pos (- a)
+      =⟨ “Positivity under unary minus” (15.33) with Assumption `a ≠ 0`⟩
+        true 
+        
+Lemma “Subproof”: pos a ⇒ (pos (a · b) ⇒ pos b)
+Proof:
+  Assuming `pos a`:
+    By cases: `pos b`, `¬ pos b`
+      Completeness: By “Excluded middle”
+      Case `pos b`:
+          pos (a · b) ⇒ pos b
+        =⟨ Assumption `pos b` ⟩ 
+          pos (a · b) ⇒ true
+        =⟨ “Right-zero of ⇒” ⟩ 
+          true
+      Case `¬ pos b`:
+        By cases: `b = 0`, `b ≠ 0`
+          Completeness:
+              (b = 0) ∨ (b ≠ 0)
+            =⟨ “Definition of ≠” ⟩
+              (b = 0) ∨ ¬ (b = 0)
+            =⟨ “LEM”⟩
+              true
+          Case `b = 0`:
+              pos (a · b) ⇒ pos b
+            =⟨ Assumption `b = 0`, “Zero of ·”, “Non-positivity of 0” ⟩
+              false ⇒ pos b
+            =⟨ “ex falso quodlibet”⟩
+              true 
+          Case `b ≠ 0`:
+            Side proof for `a · b ≠ 0`:
+                a · b ≠ 0
+              ⇐⟨ “Shunting”, “Non-zero multiplication” ⟩
+                a ≠ 0 ∧ b ≠ 0
+              ≡⟨ “Identity of ∧” , Assumption `b ≠ 0` ⟩
+                a ≠ 0
+              ⇐⟨ “Positive implies non-zero” ⟩
+                pos a   — This is Assumption `pos a`
+            Continuing with goal `pos (a · b) ⇒ pos b`:
+                pos (a · b) ⇒ pos b
+              =⟨ “Contrapositive” ⟩
+                ¬ pos b ⇒ ¬ pos (a · b)
+              =⟨ “Positivity under unary minus” (15.33b) with Assumption `b ≠ 0` ⟩  
+                pos (- b) ⇒ ¬ pos (a · b)
+              =⟨ “Positivity under unary minus” (15.33b) with local property `a · b ≠ 0`⟩ 
+                pos (- b) ⇒ pos (- (a · b))
+              =⟨ (15.20) ⟩ 
+                pos (- b) ⇒ pos (a · (- b))
+              =⟨ “Identity of ∧” , Assumption `pos a` ⟩ 
+                pos a ∧ pos (- b) ⇒ pos (a · (- b))
+              =⟨ “Positivity under ·” ⟩ 
+                true
+
+
+
+Theorem (15.35) “Positivity under positive ·”: pos a ⇒ (pos b ≡ pos (a · b))
+Proof:
+  Assuming `pos a`:
+      pos b ≡ pos (a · b)
+    =⟨ “Mutual implication” ⟩
+      (pos b ⇒ pos (a · b)) ∧ (pos (a · b) ⇒ pos b)
+    =⟨ “Identity of ∧” , Assumption `pos a` ⟩
+      (pos b ∧ pos a ⇒ pos (a · b)) ∧ (pos (a · b) ⇒ pos b)
+    =⟨ “Positivity under ·” , “Identity of ∧”⟩
+      pos (a · b) ⇒ pos b
+    =⟨ “Subproof” with Assumption `pos a` ⟩ 
+      true

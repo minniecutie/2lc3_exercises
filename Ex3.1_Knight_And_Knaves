@@ -1,0 +1,273 @@
+Axiom “Scenario D”:
+  Scenario-D  ≡  A says⟪ A is-knight ≡ B is-knight ⟫
+
+Calculation:
+    Scenario-D
+  ≡⟨ “Scenario D” ⟩
+    A says⟪ A is-knight ≡ B is-knight ⟫
+  ≡⟨ “Knighthood” ⟩
+    A is-knight ≡ A is-knight ≡ B is-knight
+  ≡⟨ “Symmetry of ≡” ⟩
+    B is-knight
+This proves: Theorem “Scenario D”:
+   Scenario-D ≡ B is-knight
+
+Calculation:
+    Scenario-D
+  ≡⟨ “Scenario D” ⟩
+    A says⟪ A is-knight ≡ B is-knight ⟫
+  ≡⟨ “Knavehood” ⟩
+    A is-knave ≡ ¬ (A is-knight ≡ B is-knight)
+  ≡⟨ “Commutativity of ¬ with ≡” ⟩
+    A is-knave ≡ ¬ A is-knight ≡ B is-knight
+  ≡⟨ (3.14) ⟩
+    (A is-knave ≢ A is-knight) ≡ B is-knight
+  ≡⟨ “Knights and knaves” ⟩
+    true ≡ B is-knight
+  ≡⟨ “Identity of ≡” ⟩
+    B is-knight
+
+Calculation:
+    A says⟪ A is-knave ≡ B is-knave ⟫
+  ≡⟨ “Knavehood” ⟩
+    A is-knave ≡ ¬ (A is-knave ≡ B is-knave)
+  ≡⟨ “Commutativity of ¬ with ≡” ⟩
+    A is-knave ≡ (¬ A is-knave ≡ B is-knave)
+  ≡⟨ “Associativity of ≡” ⟩
+    (A is-knave ≡ ¬ A is-knave) ≡ B is-knave
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    false ≡ B is-knave
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    ¬ B is-knave
+  ≡⟨ “Knights and knaves” ⟩
+    B is-knight
+
+Declaration: Scenario-B : 𝔹
+Axiom “Scenario B”:
+    Scenario-B  ≡  A says⟪ true ≡ A is-knave ∨ B is-knave ⟫
+    
+Calculation:
+    Scenario-B
+  =⟨ “Scenario B” ⟩
+    A says⟪ true ≡ A is-knave ∨ B is-knave ⟫
+  =⟨ “Knighthood” ⟩
+    A is-knight ≡ (true ≡ A is-knave ∨ B is-knave)
+  =⟨ “Identity of ≡” ⟩
+    A is-knight ≡ A is-knave ∨ B is-knave
+  =⟨ “Golden rule” ⟩
+    A is-knight ∨ (A is-knave ∨ B is-knave) ≡ A is-knight ∧ (A is-knave ∨ B is-knave)
+  =⟨ “Associativity of ∨” ⟩
+    (A is-knight ∨ A is-knave) ∨ B is-knave ≡ A is-knight ∧ (A is-knave ∨ B is-knave)
+  =⟨ “Knights and knaves” ⟩
+    (A is-knight ∨ ¬ A is-knight) ∨ B is-knave ≡ A is-knight ∧ (A is-knave ∨ B is-knave)
+  =⟨ “LEM” ⟩
+    true ∨ B is-knave ≡ A is-knight ∧ (A is-knave ∨ B is-knave)
+  =⟨ “Zero of ∨” ⟩
+    true ≡ A is-knight ∧ (A is-knave ∨ B is-knave)
+  =⟨ “Identity of ≡” ⟩
+    A is-knight ∧ (A is-knave ∨ B is-knave)
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    (A is-knight ∧ A is-knave) ∨ (A is-knight ∧ B is-knave)
+  =⟨ “Knights and knaves” ⟩
+    (A is-knight ∧ ¬ A is-knight) ∨ (A is-knight ∧ B is-knave)
+  =⟨ “Contradiction” ⟩
+    false ∨ (A is-knight ∧ B is-knave)
+  =⟨ “Identity of ∨” ⟩
+    A is-knight ∧ B is-knave
+
+Declaration: Scenario-A : 𝔹
+Axiom “Scenario A”:
+    Scenario-A  ≡  A says⟪ true ≡ A is-knave ∧ B is-knave ⟫
+
+Calculation:
+    Scenario-A
+  =⟨ “Scenario A” ⟩
+    A says⟪ true ≡ A is-knave ∧ B is-knave ⟫
+  =⟨ “Knighthood” ⟩
+    A is-knight ≡ (true ≡ A is-knave ∧ B is-knave)
+  =⟨ “Identity of ≡”  ⟩
+    A is-knight ≡ A is-knave ∧ B is-knave
+  =⟨ “Golden rule”  ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ A is-knight ∧ (A is-knave ∧ B is-knave)
+  =⟨ “Associativity of ∧”  ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ (A is-knight ∧ A is-knave) ∧ B is-knave
+  =⟨ “Knights and knaves”  ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ (A is-knight ∧ ¬ A is-knight) ∧ B is-knave
+  =⟨ “Contradiction” ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ false ∧ B is-knave
+  =⟨ “Contradiction” ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ false ∧ B is-knave
+  =⟨ “Zero of ∧” ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ false 
+  =⟨ “Zero of ∧” ⟩
+    A is-knight ∨ (A is-knave ∧ B is-knave) ≡ false 
+  =⟨ “Distributivity of ∨ over ∧” ⟩
+    (A is-knight ∨ A is-knave) ∧ (A is-knight ∨ B is-knave) ≡ false
+  =⟨ “Knights and knaves” ⟩
+    (A is-knight ∨ ¬ A is-knight) ∧ (A is-knight ∨ B is-knave) ≡ false
+  =⟨ “LEM” ⟩
+    true ∧ (A is-knight ∨ B is-knave) ≡ false
+  =⟨ “Identity of ∧” ⟩
+    A is-knight ∨ B is-knave ≡ false
+  =⟨ “Definition of `false`” ⟩
+    A is-knight ∨ B is-knave ≡ ¬ true
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+    ¬ (A is-knight ∨ B is-knave ≡ true)
+  =⟨ “Identity of ≡” ⟩
+    ¬ (A is-knight ∨ B is-knave)
+  =⟨ “De Morgan” ⟩
+    ¬ A is-knight ∧ ¬ B is-knave
+  =⟨ “Knights and knaves” ⟩
+    A is-knave ∧ B is-knight
+
+
+Declaration: Scenario-C : 𝔹
+Axiom “Scenario C”:
+    Scenario-C  ≡  A says⟪ A is-knight ⇒ B is-knight ⟫
+    
+Calculation:
+    Scenario-C
+  =⟨ “Scenario C” ⟩
+    A says⟪ A is-knight ⇒ B is-knight ⟫
+  =⟨ “Knighthood” ⟩
+    A is-knight ≡ A is-knight ⇒ B is-knight
+  =⟨ “Definition of ⇒” ⟩
+    A is-knight ≡ A is-knight ∨ B is-knight ≡ B is-knight
+  =⟨ “Golden rule” ⟩
+    A is-knight ∧ B is-knight
+
+Declaration: Scenario-E : 𝔹
+Axiom “Scenario E”:
+  Scenario-E  ≡  A says⟪ B is-knight ⟫ ∧ B says⟪ A is-knight ≢ B is-knight ⟫
+
+Calculation:
+    Scenario-E
+  =⟨ “Scenario E” ⟩ 
+    A says⟪ B is-knight ⟫ ∧ B says⟪ A is-knight ≢ B is-knight ⟫
+  =⟨ “Knighthood” ⟩ 
+    (A is-knight ≡ B is-knight) ∧ (B is-knight ≡ A is-knight ≢ B is-knight)
+  =⟨ “Definition of ≢” ⟩ 
+    (A is-knight ≡ B is-knight) ∧ (B is-knight ≡ ¬ (A is-knight ≡ B is-knight))
+  =⟨ “Commutativity of ¬ with ≡”⟩ 
+    (A is-knight ≡ B is-knight) ∧ ¬ (B is-knight ≡ A is-knight ≡ B is-knight)
+  =⟨ “Associativity of ≡”⟩ 
+    (A is-knight ≡ B is-knight) ∧ ¬ ((B is-knight ≡ B is-knight) ≡ A is-knight)
+  =⟨ “Identity of ≡”⟩ 
+    (A is-knight ≡ B is-knight) ∧ ¬ (true ≡ A is-knight)
+  =⟨ “Identity of ≡”⟩ 
+    (A is-knight ≡ B is-knight) ∧ ¬  A is-knight
+  =⟨ “Cancellation of ¬”⟩ 
+    (¬ A is-knight ≡ ¬ B is-knight) ∧ ¬  A is-knight
+  =⟨ (3.50) ⟩ 
+    ¬ A is-knight ∧ ¬ B is-knight
+  =⟨ “Knights and knaves”⟩ 
+    A is-knave ∧ B is-knave
+
+Declaration: Scenario-F : 𝔹
+Axiom “Scenario F”:
+    Scenario-F  ≡  A says⟪ A is-knight ≡ B is-knight ⟫ ╍╍╍ This is achieved by truth table
+
+Calculation:
+    Scenario-F
+  ≡⟨ “Scenario F” ⟩
+    A says⟪ A is-knight ≡ B is-knight ⟫
+  ≡⟨ “Knighthood” ⟩
+    A is-knight ≡ A is-knight ≡ B is-knight
+  ≡⟨ “Symmetry of ≡” ⟩
+    B is-knight
+
+Declaration: C : Inhabitant
+Declaration: Scenario-G : 𝔹
+Axiom “Scenario G”:
+  Scenario-G  ≡   A says⟪ A is-knave ∧ B is-knave ∧ C is-knave ⟫ 
+              ∧ B says⟪ 
+              (  A is-knight ∧ ¬ B is-knight ∧ ¬ C is-knight) ∨
+              (¬ A is-knight ∧   B is-knight ∧ ¬ C is-knight) ∨
+              (¬ A is-knight ∧ ¬ B is-knight ∧   C is-knight)
+                ⟫ ╍╍╍ This is too hard to prove btw, if you can please pull request
+                
+      
+Declaration: Scenario-H : 𝔹
+Axiom “Scenario H”:
+    Scenario-H  ≡  A says⟪ ¬ A is-knight ∧ B is-knight ⟫ 
+    
+Calculation:
+    Scenario-H
+  =⟨ “Scenario H” ⟩
+    A says⟪ ¬ A is-knight ∧ B is-knight ⟫
+  =⟨ “Knighthood” ⟩
+    A is-knight ≡ ¬ A is-knight ∧ B is-knight 
+  =⟨ “Double negation” ⟩
+    ¬ ¬ A is-knight ≡ ¬ A is-knight ∧ ¬ ¬ B is-knight
+  =⟨ (3.48) ⟩
+    ¬ A is-knight ∧ ¬ B is-knight
+  =⟨ “Knights and knaves” ⟩
+    A is-knave ∧ B is-knave
+
+ 
+Declaration: Scenario-I : 𝔹
+Axiom “Scenario I”:
+    Scenario-I  ≡  A says⟪ ¬ B is-knight ⟫ ∧ B says⟪ A is-knight ≡ C is-knight ⟫ 
+
+Lemma “I”: ¬ p ∧ (p ≡ q) ≡ ¬ p ∧ ¬ q
+Proof:
+    ¬ p ∧ (p ≡ q)
+  =⟨ “Semi-distributivity of ∧ over ≡”⟩
+    ¬ p ∧ p ≡ ¬ p ∧ q ≡ ¬ p
+  =⟨ “Contradiction”⟩
+    false ≡ ¬ p ∧ q ≡ ¬ p
+  =⟨ “Associativity of ≡”⟩
+    (false ≡ ¬ p) ≡ ¬ p ∧ q
+  =⟨ “Definition of ¬ from ≡”⟩
+    p ≡ ¬ p ∧ q
+  =⟨ “Double negation”⟩
+    ¬ ¬ p ≡ ¬ p ∧ ¬ ¬ q
+  =⟨ (3.48) ⟩
+    ¬ p ∧ ¬ q 
+
+Calculation:
+    Scenario-I
+  =⟨ “Scenario I” ⟩
+    A says⟪ ¬ B is-knight ⟫ ∧ B says⟪ A is-knight ≡ C is-knight ⟫
+  =⟨ “Knighthood” ⟩
+    (A is-knight ≡ ¬ B is-knight) ∧ (B is-knight ≡ A is-knight ≡ C is-knight)
+  =⟨ “Commutativity of ¬ with ≡”⟩ 
+     ¬ (A is-knight ≡ B is-knight) ∧ ((A is-knight ≡ B is-knight) ≡ C is-knight)
+  =⟨ “I” ⟩
+     ¬ (A is-knight ≡ B is-knight) ∧ ¬ C is-knight
+  =⟨ “Commutativity of ¬ with ≡” ⟩
+     (¬ A is-knight ≡ B is-knight) ∧ ¬ C is-knight
+  =⟨ “Knights and knaves” ⟩
+     (A is-knave ≡ B is-knight) ∧ C is-knave
+
+Declaration: Scenario-J : 𝔹
+Axiom “Scenario J”:
+    Scenario-J  ≡  A says⟪ B is-knight ≡ C is-knight ⟫ 
+    
+Calculation:
+    Scenario-J
+  =⟨ “Scenario J” ⟩
+    A says⟪ B is-knight ≡ C is-knight ⟫ 
+  =⟨ “Knighthood” ⟩
+    A is-knight ≡ B is-knight ≡ C is-knight 
+  =⟨ “Knighthood” ⟩
+    C says⟪ A is-knight ≡ B is-knight ⟫ 
+
+Declaration: Scenario-K : 𝔹
+Axiom “Scenario K”:
+    Scenario-K  ≡  B says⟪ A says⟪ ¬ A is-knight ⟫ ⟫
+
+Calculation:
+    Scenario-K
+  =⟨ “Scenario K” ⟩
+    B says⟪ A says⟪ ¬ A is-knight ⟫ ⟫
+  =⟨ “Knighthood” ⟩
+    B says⟪ A is-knight ≡ ¬ A is-knight ⟫
+  =⟨ “Definition of ¬ from ≡” ⟩
+    B says⟪ false ⟫
+  =⟨ “Knavehood” ⟩
+    B is-knave ≡ ¬ false
+  =⟨ “Negation of `false`” ⟩
+    B is-knave ≡ true
+  =⟨ “Identity of ≡” ⟩
+    B is-knave

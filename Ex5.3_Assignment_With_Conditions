@@ -1,0 +1,88 @@
+Correctness rule “Conditional” for conditional commands:
+
+      `B ∧ P ⇒⁅ C₁ ⁆ Q`,   `¬ B ∧ P ⇒⁅ C₂ ⁆ Q`
+    ⊦————————————————————————————————————————————
+        `P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q`
+
+"Skip" terminates immediately without changing the state.
+Under the name “skip”, you have the theorem
+    P ⇒⁅ skip ⁆ P
+and the following inference rule:
+
+            `P ⇒ Q`
+    ⊦———————————————————————
+        `P ⇒⁅ skip ⁆ Q`
+
+
+Fact (CondCorr1):
+       m ≤ n
+   ⇒⁅ if  m = n  then  n := suc n
+                 else  skip
+      fi
+     ⁆
+       m < n
+Proof:
+    m < n
+  ⁅ if m = n then n := suc n else skip fi ⁆⇐ ⟨ Subproof:
+      Using “Conditional”:
+        Subproof:
+            m < n
+          ⁅ n := suc n ⁆⇐  ⟨ “Assignment” with substitution ⟩
+            m < suc n
+          = ⟨ “Definition of ≤ in terms of `suc` and <”⟩ 
+            m ≤ n
+          ⇐  ⟨ “Strengthening” (3.76b) ⟩
+            m ≤ n ∧ m = n
+        Subproof:
+            m < n
+          ⁅ skip ⁆⇐  ⟨ “skip” ⟩
+            m < n
+          ⇐  ⟨ “Weakening” (3.76b) ⟩
+            m < n ∧ ¬ (m = n)
+          = ⟨ “Identity of ∨” ⟩
+            (m < n ∧ ¬ (m = n)) ∨ false
+          = ⟨ “Contradiction” ⟩ 
+            (m < n ∧ ¬ (m = n)) ∨ (m = n ∧ ¬ (m = n))
+          = ⟨ “Distributivity of ∧ over ∨” ⟩ 
+            (m < n ∨ m = n) ∧ ¬ (m = n)
+          = ⟨ “Definition of ≤ in terms of <”⟩ 
+            m ≤ n ∧ ¬ (m = n)
+    ⟩
+    m ≤ n
+    
+Fact (CondCorr2):
+        true
+    ⇒⁅ if  even n  then  n := n + 2
+                   else  n := n + n
+       fi
+      ⁆
+        even n
+Proof:
+    even n 
+  ⁅ if  even n  then  n := n + 2 else  n := n + n fi ⁆⇐ ⟨ Subproof:
+      Using “Conditional”:
+        Subproof:
+            even n
+          ⁅ n := n + 2 ⁆⇐ ⟨ “Assignment” with substitution ⟩ 
+            even (n + 2)
+          =⟨ “Even addition” ⟩   
+            even 2 ≡ even n
+          =⟨ Fact `1 + 1 = 2` ⟩
+            even (1 + 1) ≡ even n
+          =⟨ “Even double” ⟩  
+            true ≡ even n
+          =⟨ “Identity of ≡” ⟩ 
+            even n
+          =⟨ “Identity of ∧” ⟩ 
+            true ∧ even n 
+        Subproof:
+            even n
+          ⁅ n := n + n ⁆⇐ ⟨ “Assignment” with substitution ⟩   
+            even (n + n)
+          =⟨ “Even double”⟩ 
+            true
+          ⇐ ⟨ “Strengthening” (3.76b) ⟩ 
+            true ∧ ¬ (even n)
+    ⟩
+    true
+        

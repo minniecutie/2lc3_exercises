@@ -1,0 +1,238 @@
+Fact: 2 - 5 = 0
+Proof:
+    2 - 5
+  =⟨ Fact `5 = suc suc 3` ⟩
+    2 - suc suc 3
+  =⟨ Fact `2 = suc suc 0` ⟩
+    suc suc 0 - suc suc 3
+  =⟨ “Subtraction of successor from successor” ⟩
+    0 - 3
+  =⟨ “Subtraction from zero” ⟩
+    0
+
+Theorem “Right-identity of subtraction”: m - 0 = m
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 - 0 = 0`:
+        0 - 0
+      =⟨ “Subtraction from zero” ⟩
+        0
+    Induction step `(suc m) - 0 = (suc m)`:
+        suc m - 0
+      =⟨ “Subtraction of zero from successor” ⟩
+        suc m  
+
+Theorem “Self-cancellation of subtraction”: m - m = 0
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 - 0 = 0`:
+        0 - 0 
+      =⟨ “Subtraction from zero” ⟩
+        0
+    Induction step `suc m - suc m = 0`:
+        suc m - suc m
+      =⟨ “Subtraction of successor from successor” ⟩
+        m - m 
+      =⟨ Induction hypothesis ⟩
+        0
+  
+  Theorem “Subtraction after addition”: (m + n) - n = m
+Proof:
+  By induction on `m : ℕ`:
+    Base case `(0 + n) - n = 0`:
+        (0 + n) - n
+      = ⟨ “Left-identity of +” ⟩
+        n - n
+      = ⟨ “Self-cancellation of subtraction” ⟩
+        0
+    Induction step `(suc m + n) - n = suc m`:
+      By induction on `n : ℕ`:
+        Base case  `(suc m + 0) - 0 = suc m`:
+            (suc m + 0) - 0
+          =⟨ “Right-identity of +” ⟩
+            suc m - 0
+          =⟨ “Right-identity of subtraction” ⟩
+            suc m 
+        Induction step `(suc m + suc n) - suc n = suc m`:
+            (suc m + suc n) - suc n
+          =⟨ “Symmetry of +” ⟩ 
+             (suc n + suc m) - suc n
+          =⟨ “Definition of + for `suc`” ⟩ 
+             suc (n + suc m) - suc n
+          =⟨ “Subtraction of successor from successor” ⟩ 
+             (n + suc m) - n
+          =⟨ “Symmetry of +” ⟩ 
+             (suc m + n) - n
+          =⟨ Induction hypothesis `(suc m + n) - n = suc m` ⟩ 
+             suc m
+          
+Theorem “Subtraction from multiplication with successor”: m · (suc n) - m = m · n
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 · (suc n) - 0 = 0 · n`:
+        0 · (suc n) - 0
+      =⟨ “Definition of · for 0” ⟩
+        0 - 0
+      =⟨ “Subtraction from zero” ⟩
+        0 
+      =⟨ “Definition of · for 0” ⟩
+        0 · n
+    Induction step `(suc m) · (suc n) - (suc m) = (suc m) · n`:
+        (suc m) · (suc n) - (suc m)
+      =⟨ “Symmetry of ·” ⟩
+        (suc n) · (suc m) - (suc m)
+      =⟨ “Definition of · for `suc`” ⟩
+        suc m + n · suc m - (suc m)
+      =⟨ “Symmetry of +” ⟩
+        (n · suc m + suc m) - (suc m)
+      =⟨ “Subtraction after addition” ⟩
+        n · suc m
+      =⟨ “Symmetry of ·” ⟩
+        suc m · n
+
+Theorem “Subtraction of sum”: k - (m + n) = (k - m) - n
+Proof:
+  By induction on `k : ℕ`:
+    Base case `0 - (m + n) = (0 - m) - n`:
+        0 - (m + n) = (0 - m) - n
+      =⟨ “Subtraction from zero” ⟩
+        0 = 0 - n
+      =⟨ “Subtraction from zero” ⟩
+        0 = 0 — This is “Reflexivity of =”
+    Induction step `suc k - (m + n) = (suc k - m) - n`:
+      By induction on `m : ℕ`:
+        Base case `suc k - (0 + n) = (suc k - 0) - n`:
+            suc k - (0 + n) = (suc k - 0) - n
+          =⟨ “Left-identity of +” ⟩
+            suc k - n = (suc k - 0) - n 
+          =⟨ “Right-identity of subtraction” ⟩
+            suc k - n = suc k - n — This is “Reflexivity of =”
+        Induction step `suc k - (suc m + n) = (suc k - suc m) - n`:
+            suc k - (suc m + n)
+          =⟨ “Definition of + for `suc`” ⟩
+            suc k - suc (m + n)
+          =⟨ “Subtraction of successor from successor”⟩
+            k - (m + n)
+          =⟨ Induction hypothesis `k - (m + n) = (k - m) - n`⟩
+            (k - m) - n
+          =⟨ “Subtraction of successor from successor”⟩
+            (suc k - suc m) - n
+
+╍╍╍ This is how I did this question, which is very long 
+Theorem “Distributivity of · over subtraction”: k · (m - n) = k · m - k · n
+Proof:
+  By induction on `k : ℕ`:
+    Base case `0 · (m - n) = 0 · m - 0 · n`:
+        0 · (m - n) = 0 · m - 0 · n
+      =⟨ “Definition of · for 0” ⟩
+        0 = 0 - 0
+      =⟨ “Subtraction from zero” ⟩
+        0 = 0 — This is “Reflexivity of =”
+    Induction step `suc k · (m - n) = suc k · m - suc k · n`:
+      By induction on `m : ℕ`:
+        Base case `suc k · (0 - n) = suc k · 0 - suc k · n`:
+            suc k · (0 - n) = suc k · 0 - suc k · n
+          =⟨ “Right-zero of ·”⟩
+            suc k · (0 - n) = 0 - suc k · n
+          =⟨ “Subtraction from zero”⟩
+            suc k · 0 = 0 
+          =⟨ “Right-zero of ·”⟩
+            0 = 0 — This is “Reflexivity of =”
+        Induction step `suc k · (suc m - n) = suc k · suc m - suc k · n`:
+          By induction on `n : ℕ`:
+            Base case `suc k · (suc m - 0) = suc k · suc m - suc k · 0`:
+                suc k · (suc m - 0) = suc k · suc m - suc k · 0
+              =⟨ “Right-zero of ·” ⟩
+                suc k · (suc m - 0) = suc k · suc m - 0
+              =⟨ “Right-identity of subtraction”⟩
+                suc k · suc m = suc k · suc m — This is “Reflexivity of =”
+
+            Induction step `suc k · (suc m - suc n) = suc k · suc m - suc k · suc n`:
+                 suc k · suc m - suc k · suc n 
+               =⟨ “Symmetry of ·” ⟩
+                 suc m · suc k - suc n · suc k
+               =⟨ “Definition of · for `suc`” ⟩
+                 suc k + m · suc k - (suc k + n · suc k)
+               =⟨ “Symmetry of +” ⟩
+                 m · suc k + suc k - (suc k + n · suc k)
+               =⟨ “Subtraction of sum” ⟩
+                 m · suc k + suc k - suc k - n · suc k
+               =⟨ “Subtraction after addition” ⟩
+                 m · suc k - n · suc k
+               =⟨ “Symmetry of ·” ⟩
+                 suc k · m - suc k · n
+               =⟨ Induction hypothesis `suc k · (m - n) = suc k · m - suc k · n` ⟩
+                 suc k · (m - n)
+               =⟨ “Subtraction of successor from successor” ⟩
+                 suc k · (suc m - suc n)
+
+╍╍╍ TA's solution
+Theorem “Distributivity of · over subtraction”: k · (m - n) = k · m - k · n
+Proof:
+  By induction on `m : ℕ`:
+    Base case:
+        k · (0 - n) = k · 0 - k · n
+      ≡⟨ “Subtraction from zero” ⟩
+        k · 0 = k · 0 - k · n
+      ≡⟨ “Right-zero of ·” ⟩
+        0 = 0 - k · n
+      ≡⟨ “Subtraction from zero” ⟩
+        0 = 0
+      ≡⟨ “Reflexivity of =” ⟩
+        true
+    Induction step:
+        By induction on `n : ℕ`:
+          Base case:
+              k · (suc m - 0) = k · suc m - k · 0
+            ≡⟨ “Right-identity of subtraction” ⟩
+              k · suc m = k · suc m - k · 0
+            ≡⟨ “Right-zero of ·” ⟩
+              k · suc m = k · suc m - 0
+            ≡⟨ “Right-identity of subtraction” ⟩
+              k · suc m = k · suc m
+            ≡⟨ “Reflexivity of =” ⟩
+              true
+          Induction step:
+              k · (suc m - suc n) = k · suc m - k · suc n
+            ≡⟨ “Multiplying the successor” ⟩
+              k · (suc m - suc n) = (k + k · m) - (k + k · n)
+            ≡⟨ “Symmetry of +” ⟩
+              k · (suc m - suc n) = (k · m + k) - (k + k · n)
+            ≡⟨ “Subtraction of sum” ⟩
+              k · (suc m - suc n) = (k · m + k - k) - k · n
+            ≡⟨ “Subtraction after addition” ⟩
+              k · (suc m - suc n) = k · m - k · n
+            ≡⟨ “Subtraction of successor from successor” ⟩
+              k · (m - n) = k · m - k · n
+            ≡⟨ Induction hypothesis `k · (m - n) = k · m - k · n` ⟩
+              true
+
+Theorem “Monus exchange”: m + (n - m) = n + (m - n)
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 + (n - 0) = n + (0 - n)`:
+        0 + (n - 0) = n + (0 - n)
+      =⟨ “Right-identity of subtraction”⟩
+        0 + n = n + (0 - n)
+      =⟨ “Subtraction from zero”⟩
+        0 + n = n + 0 — This is “Symmetry of +”
+    Induction step `suc m + (n - suc m) = n + (suc m - n)`:
+      By induction on `n : ℕ`:
+        Base case `suc m + (0 - suc m) = 0 + (suc m - 0)`:
+            suc m + (0 - suc m) = 0 + (suc m - 0)
+          =⟨ “Right-identity of subtraction”⟩ 
+            suc m + (0 - suc m) = 0 + suc m 
+          =⟨ “Subtraction from zero” ⟩ 
+            suc m + 0 = 0 + suc m — This is “Symmetry of +”
+        Induction step `suc m + (suc n - suc m) = suc n + (suc m - suc n)`:
+            suc m + (suc n - suc m)
+          = ⟨ “Subtraction of successor from successor” ⟩ 
+            suc m + (n - m)
+          = ⟨ “Definition of + for `suc`”  ⟩ 
+            suc (m + (n - m))
+          = ⟨ Induction hypothesis `m + (n - m) = n + (m - n)` ⟩ 
+            suc (n + (m - n))
+          = ⟨ “Definition of + for `suc`” ⟩ 
+            suc n + (m - n)
+          = ⟨ “Subtraction of successor from successor” ⟩ 
+            suc n + (suc m - suc n)

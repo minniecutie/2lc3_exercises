@@ -1,0 +1,301 @@
+Axiom “Leibniz for ∃ range”:
+    (∀ x • R₁ ≡ R₂) ⇒ ((∃ x ❙ R₁ • P) ≡ (∃ x ❙ R₂ • P))
+
+Axiom “Leibniz for ∃ body”:
+    (∀ x • R ⇒ (P₁ ≡ P₂)) ⇒ ((∃ x ❙ R • P₁) ≡ (∃ x ❙ R • P₂))
+
+Axiom (8.13) “Empty range for ∃”:
+  (∃ x ❙ false • P)  ≡  false
+
+Axiom (8.14) “One-point rule for ∃”:
+  (∃ x ❙ x = E • P)  ≡  P[x ≔ E]
+
+Axiom (8.15) “Distributivity of ∃ over ∨”:
+  (∃ x ❙ R • P) ∨ (∃ x ❙ R • Q) ≡ (∃ x ❙ R • P ∨ Q)
+
+Axiom (8.17) “Range split for ∃”:
+     (∃ x ❙ R ∨ S  • P)  ∨  (∃ x ❙ R ∧ S  • P)
+   ≡ (∃ x ❙ R      • P)  ∨  (∃ x ❙ S      • P)
+
+Axiom (8.20) “Nesting for ∃”:
+    (∃ x, y ❙ R ∧ S • P)
+  ≡ (∃ x ❙ R • (∃ y ❙ S • P))
+
+Theorem (8.20a) “Nesting for ∃”:
+    (∃ x, y ❙ S • P)
+  ≡ (∃ x • (∃ y ❙ S • P))
+Proof:
+    (∃ x, y ❙ S • P)
+  =⟨ “Identity of ∧” ⟩
+    (∃ x, y ❙ S ∧ true • P)
+  =⟨ “Nesting for ∃” ⟩
+    (∃ x ❙ true • (∃ y ❙ S • P))
+  =⟨ “Reflexivity of =” ⟩ 
+    (∃ x • (∃ y ❙ S • P))
+
+Theorem “Replacement in ∃”:
+    (∃ y ❙ R ∧ e = f • P[x ≔ e])
+  ≡ (∃ y ❙ R ∧ e = f • P[x ≔ f])
+Proof:
+    (∃ y ❙ R ∧ e = f • P[x ≔ e])
+  =⟨ “One-point rule for ∃” ⟩
+    (∃ y ❙ R ∧ e = f • (∃ x ❙ x = e • P))
+  =⟨ “Nesting for ∃” ⟩
+    (∃ y, x ❙ R ∧ e = f ∧ x = e • P)
+  =⟨ Substitution ⟩
+    (∃ y, x ❙ R ∧ e = f ∧ (x = z)[z ≔ e] • P)
+  =⟨ “Replacement” (3.84a) ⟩
+    (∃ y, x ❙ R ∧ e = f ∧ (x = z)[z ≔ f] • P)
+  =⟨ Substitution ⟩
+    (∃ y, x ❙ R ∧ e = f ∧ x = f • P)
+  =⟨ “Nesting for ∃” ⟩
+    (∃ y ❙ R ∧ e = f • (∃ x ❙ x = f • P))
+  =⟨ “One-point rule for ∃” ⟩
+    (∃ y ❙ R ∧ e = f • P[x ≔ f])
+    
+Axiom (8.20a) “Dummy list permutation for ∃”:
+   (∃ x, y ❙ R • P) ≡ (∃ y, x ❙ R • P)
+
+Theorem (8.19) “Interchange of dummies”:
+    (∃ x ❙ R • (∃ y ❙ S • P))
+  ≡ (∃ y ❙ S • (∃ x ❙ R • P))
+Proof:
+    (∃ x ❙ R • (∃ y ❙ S • P))
+  =⟨ “Nesting for ∃” ⟩
+    (∃ x, y ❙ R ∧ S • P)
+  =⟨ “Symmetry of ∧” and “Dummy list permutation for ∃” ⟩
+    (∃ y, x ❙ S ∧ R • P)
+  =⟨ “Nesting for ∃” ⟩
+    (∃ y ❙ S • (∃ x ❙ R • P))
+    
+Axiom (9.17) “Generalised De Morgan”, “Definition of ∃”:
+    (∃ x ❙ R • P)  ≡  ¬ (∀ x ❙ R • ¬ P)
+
+Theorem (9.18) (9.18a) “Generalised De Morgan”:
+    ¬ (∃ x ❙ R • ¬ P)  ≡  (∀ x ❙ R • P)
+Proof:
+    ¬ (∃ x ❙ R • ¬ P)
+  =⟨ “Generalised De Morgan” (9.17) ⟩
+    ¬ ¬ (∀ x ❙ R • ¬ ¬ P)
+  =⟨ “Double negation”⟩ 
+      (∀ x ❙ R • P)
+      
+Theorem (9.18) (9.18b) “Generalised De Morgan”:
+    ¬ (∃ x ❙ R • P)  ≡  (∀ x ❙ R • ¬ P)
+Proof:
+    ¬ (∃ x ❙ R • P)
+  =⟨ “Double negation”⟩
+    ¬ (∃ x ❙ R • ¬ ¬ P)
+  =⟨ “Generalised De Morgan” (9.18a) ⟩
+    (∀ x ❙ R • ¬ P)  
+    
+Theorem (9.18) (9.18c) “Generalised De Morgan”:
+    (∃ x ❙ R • ¬ P)  ≡  ¬ (∀ x ❙ R • P)
+Proof:
+    (∃ x ❙ R • ¬ P)
+  =⟨ “Generalised De Morgan” (9.17) ⟩
+    ¬ (∀ x ❙ R • ¬ ¬ P)
+  =⟨ “Double negation” ⟩
+    ¬ (∀ x ❙ R • P)   
+    
+Theorem (9.19) “Trading for ∃”:
+   (∃ x ❙ R • P) ≡ (∃ x • R ∧ P)
+Proof:
+    (∃ x ❙ R • P)
+  =⟨ “Generalised De Morgan” (9.17) ⟩
+    ¬ (∀ x ❙ R • ¬ P) 
+  =⟨ “Trading for ∀” (9.3a) ⟩
+    ¬ (∀ x • ¬ R ∨ ¬ P)
+  =⟨ “Generalised De Morgan” (9.18c) ⟩
+    (∃ x • ¬ (¬ R ∨ ¬ P))
+  =⟨ “De Morgan”, “Double negation” ⟩
+    (∃ x • R ∧ P)    
+    
+Theorem (9.20) “Trading for ∃”:
+    (∃ x ❙ Q ∧ R • P) ≡ (∃ x ❙ Q • R ∧ P)
+Proof:
+    (∃ x ❙ Q ∧ R • P)
+  =⟨ “Trading for ∃” ⟩
+    (∃ x • Q ∧ R ∧ P)
+  =⟨ “Trading for ∃” ⟩  
+    (∃ x ❙ Q • R ∧ P)
+    
+Theorem (8.18) “Range split for ∃”:
+     (∃ x ❙ R ∨ S  • P)
+   ≡ (∃ x ❙ R      • P)
+   ∨ (∃ x ❙ S      • P)
+Proof:
+    (∃ x ❙ R ∨ S  • P)
+  =⟨ “Trading for ∃” (9.19) ⟩
+    (∃ x • (R ∨ S)  ∧ P) 
+  =⟨ “Distributivity of ∧ over ∨” ⟩
+    (∃ x • (R ∧ P) ∨ (S ∧ P)) 
+  =⟨ “Distributivity of ∃ over ∨” ⟩
+    (∃ x • R ∧ P) ∨ (∃ x • S ∧ P)
+  =⟨ “Trading for ∃” (9.19) ⟩
+    (∃ x ❙ R • P) ∨ (∃ x ❙ S • P)  
+    
+Theorem (8.16) “Disjoint range split for ∃”:
+   (∀ x • R ∧ S ≡ false) ⇒
+   ((∃ x ❙ R ∨ S • P) ≡ (∃ x ❙ R • P) ∨ (∃ x ❙ S • P))
+Proof:
+  Assuming `(∀ x • R ∧ S ≡ false)`:
+      (∃ x ❙ R ∨ S • P) 
+    =⟨ (8.18) ⟩ 
+      (∃ x ❙ R • P) ∨ (∃ x ❙ S • P)
+      
+Theorem (9.21) “Distributivity of ∧ over ∃”:
+    P ∧ (∃ x ❙ R • Q)  ≡  (∃ x ❙ R • P ∧ Q)
+Proof:
+    (∃ x ❙ R • P ∧ Q)
+  =⟨ “Generalised De Morgan” (9.17) ⟩
+    ¬ (∀ x ❙ R • ¬ (P ∧ Q))
+  =⟨ “De Morgan” ⟩
+    ¬ (∀ x ❙ R • ¬ P ∨ ¬ Q)
+  =⟨ “Distributivity of ∨ over ∀” ⟩
+    ¬ (¬ P ∨ (∀ x ❙ R • ¬ Q))  
+  =⟨ “De Morgan”, “Double negation” ⟩
+    P ∧ ¬ (∀ x ❙ R • ¬ Q)  
+  =⟨ “Generalised De Morgan” (9.17) ⟩
+    P ∧ (∃ x ❙ R • Q)  
+ 
+Theorem (9.22): P ∧ (∃ x • R)  ≡  (∃ x ❙ R • P)
+Proof:
+    P ∧ (∃ x • R)
+  =⟨ “Distributivity of ∧ over ∃” ⟩ 
+    (∃ x • R ∧ P)
+  =⟨ “Trading for ∃” (9.19) ⟩
+    (∃ x ❙ R • P)
+    
+Theorem “Distributivity of ∧ over ∀”:
+    (∃ x • R)  ⇒  (P ∧ (∀ x ❙ R • Q)  ≡  (∀ x ❙ R • P ∧ Q))
+Proof:
+    (∃ x • R)  ⇒  (P ∧ (∀ x ❙ R • Q)  ≡  (∀ x ❙ R • P ∧ Q))
+  =⟨ “Generalised De Morgan” (9.17) ⟩
+    ¬(∀ x • ¬ R)  ⇒  (P ∧ (∀ x ❙ R • Q)  ≡  (∀ x ❙ R • P ∧ Q)) — This is (9.7)
+    
+Theorem (9.23) “Distributivity of ∨ over ∃”:
+    (∃ x • R)  ⇒  (P ∨ (∃ x ❙ R • Q)  ≡  (∃ x ❙ R • P ∨ Q))
+Proof:
+  Assuming `∃ x • R`:
+      P ∨ (∃ x ❙ R • Q)
+    =⟨ “Generalised De Morgan” (9.17) ⟩
+      P ∨ ¬ (∀ x ❙ R • ¬ Q)
+    =⟨ “Double negation” ⟩
+       ¬ ¬ P ∨ ¬ (∀ x ❙ R • ¬ Q)
+    =⟨ “De Morgan” ⟩
+       ¬ (¬ P ∧ (∀ x ❙ R • ¬ Q))
+    =⟨ “Distributivity of ∧ over ∀” with Assumption `∃ x • R` ⟩  
+       ¬ (∀ x ❙ R • ¬ P ∧ ¬ Q)
+    =⟨ “Generalised De Morgan” (9.18c) ⟩
+       ∃ x ❙ R • ¬ (¬ P ∧ ¬ Q)
+    =⟨ “De Morgan”, “Double negation” ⟩
+       ∃ x ❙ R • P ∨ Q
+
+Theorem (9.24) “False ∃ body”: (∃ x ❙ R • false) ≡ false
+Proof:
+    ∃ x ❙ R • false
+  =⟨ (9.22) ⟩
+    false ∧ (∃ x • R)
+  =⟨ “Zero of ∧” ⟩
+    false   
+    
+Theorem (9.25) “Range weakening for ∃” “Range strengthening for ∃”:
+    (∃ x ❙ R • P) ⇒ (∃ x ❙ Q ∨ R • P)
+Proof:
+    (∃ x ❙ R • P)
+  ⇒⟨ “Strengthening” (3.76a) ⟩
+    (∃ x ❙ R • P) ∨ (∃ x ❙ Q • P)
+  =⟨ “Range split for ∃” ⟩
+     ∃ x ❙ Q ∨ R • P
+     
+Theorem (9.26) “Body weakening for ∃” “Body strengthening for ∃”:
+    (∃ x ❙ R • P) ⇒ (∃ x ❙ R • P ∨ Q)
+Proof:
+    (∃ x ❙ R • P)
+  ⇒⟨ “Strengthening” (3.76a) ⟩
+    (∃ x ❙ R • P) ∨ (∃ x ❙ R • Q)
+  =⟨ “Distributivity of ∃ over ∨” ⟩
+    (∃ x ❙ R • P ∨ Q)  
+
+Theorem (9.27) “Monotonicity of ∃” “Body monotonicity of ∃”:
+    (∀ x ❙ R • Q ⇒ P) ⇒ ((∃ x ❙ R • Q) ⇒ (∃ x ❙ R • P))
+Proof:
+  Assuming `(∀ x ❙ R • Q ⇒ P)` and using with “Contrapositive”:
+      (∃ x ❙ R • Q) ⇒ (∃ x ❙ R • P)
+    =⟨ “Contrapositive” ⟩
+      ¬ (∃ x ❙ R • P) ⇒ ¬ (∃ x ❙ R • Q) 
+    =⟨ “Generalised De Morgan” (9.18b) ⟩
+      (∀ x ❙ R • ¬ P) ⇒ (∀ x ❙ R • ¬ Q)
+    =⟨ “Monotonicity of ∀” with Assumption `(∀ x ❙ R • Q ⇒ P)`⟩ 
+      true
+      
+Theorem (9.27a) “Range monotonicity of ∃”:
+    (∀ x ❙ P • Q ⇒ R) ⇒ ((∃ x ❙ Q • P) ⇒ (∃ x ❙ R • P))
+Proof:
+    (∀ x ❙ P • Q ⇒ R)
+  ⇒⟨ “Monotonicity of ∃” ⟩
+    (∃ x ❙ P • Q) ⇒ (∃ x ❙ P • R)
+  =⟨ “Trading for ∃” ⟩
+    (∃ x • P ∧ Q) ⇒ (∃ x • P ∧ R)
+  =⟨ “Trading for ∃” ⟩  
+    (∃ x ❙ Q • P) ⇒ (∃ x ❙ R • P)
+    
+Theorem (9.28) “∃-Introduction”: P[x ≔ E] ⇒ (∃ x • P)
+Proof:
+    P[x ≔ E]
+  =⟨ “One-point rule for ∃” ⟩
+    ∃ x ❙ x = E • P
+  ⇒⟨ “Range weakening for ∃” ⟩
+    ∃ x ❙ (x = E) ∨ ¬ (x = E) • P
+  =⟨ “LEM” ⟩
+    ∃ x ❙ true • P
+  =⟨ “Reflexivity of =” ⟩
+    (∃ x • P)
+    
+Theorem (9.29a) “Interchange of quantifications”:
+    (∃ x • (∀ y • P)) ⇒ (∀ y • (∃ x • P))
+Proof:
+    (∃ x • (∀ y • P))
+  ⇒⟨ “Introducing fresh ∀” ⟩
+    ∀ y • (∃ x • (∀ y • P))
+  ⇒⟨ “Monotonicity of ∀” with
+     “Monotonicity of ∃” with “Instantiation” (9.13a) ⟩
+    ∀ y • (∃ x • P[y ≔ y])
+  ≡⟨ Substitution ⟩
+    ∀ y • (∃ x • P)
+    
+Theorem (9.30a) “Witness”:
+  (∃ x ❙ R • P) ⇒ Q  ≡  (∀ x • R ∧ P ⇒ Q)
+Proof:
+    (∃ x ❙ R • P) ⇒ Q
+  ≡⟨ “Material implication”, “Trading for ∃” (9.19) ⟩
+    ¬ (∃ x • R ∧ P) ∨ Q
+  ≡⟨ “Generalised De Morgan” (9.18b) ⟩
+    (∀ x • ¬ (R ∧ P)) ∨ Q
+  ≡⟨ “Distributivity of ∨ over ∀” , “Material implication” ⟩
+    (∀ x • R ∧ P ⇒ Q)
+    
+Theorem (9.30b) “Witness”:
+  (∃ x • P) ⇒ Q  ≡  (∀ x • P ⇒ Q)
+Proof:
+    (∃ x • P) ⇒ Q 
+  =⟨ “Reflexivity of =” ⟩
+    (∃ x ❙ true • P) ⇒ Q 
+  =⟨ “Witness” ⟩
+    (∀ x • true ∧ P ⇒ Q)
+  =⟨ “Identity of ∧” ⟩
+     ∀ x • P ⇒ Q 
+     
+Theorem (9.30c) “Witness”:
+  (∃ x ❙ R • P) ⇒ Q  ≡  (∀ x ❙ R • P ⇒ Q)
+Proof:
+    (∃ x ❙ R • P) ⇒ Q
+  =⟨ “Witness” (9.30a) ⟩
+    (∀ x • R ∧ P ⇒ Q)
+  =⟨ “Shunting” ⟩
+    (∀ x • R ⇒ P ⇒ Q)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x ❙ R • P ⇒ Q)   
+    
+    

@@ -1,0 +1,444 @@
+Axiom “Self-inverse of ˘”: R ˘ ˘      =  R
+
+Lemma “Cancellation of ˘”:  R ˘ = S ˘  ≡  R = S
+Proof: 
+  Using “Mutual implication”:
+    Subproof for `R = S ⇒ R ˘ = S ˘`:
+      Assuming `R = S`:
+        By Assumption `R = S`, “Reflexivity of =”
+    Subproof for `R ˘ = S ˘  ⇒  R = S`:
+      Assuming `R ˘ = S ˘`:
+          R = S
+        =⟨ “Self-inverse of ˘” ⟩
+          R ˘ ˘ = S
+        =⟨ Assumption `R ˘ = S ˘` ⟩
+          S ˘ ˘ = S — This is “Self-inverse of ˘”           
+
+Axiom “Monotonicity of ˘”: R ⊆ S      ⇒  R ˘ ⊆ S ˘
+
+Theorem “Isotonicity of ˘”:  R ⊆ S  ≡  R ˘ ⊆ S ˘
+Proof:
+  Using “Mutual implication”:
+    Subproof for `R ⊆ S  ⇒  R ˘ ⊆ S ˘`:
+      By “Monotonicity of ˘”
+    Subproof for `R ˘ ⊆ S ˘ ⇒ R ⊆ S`:
+      By “Monotonicity of ˘”, “Self-inverse of ˘” 
+
+Theorem “˘ connection”: R ⊆ S ˘  ≡  R ˘ ⊆ S
+Proof:
+    R ⊆ S ˘
+  =⟨ “Self-inverse of ˘” ⟩
+    R ˘ ˘ ⊆ S ˘
+  =⟨ “Isotonicity of ˘” ⟩
+    R ˘ ⊆ S  
+
+Axiom “Converse of 𝕀”:    𝕀 ˘          =  𝕀
+Axiom “Converse of ⨾”:    (R ⨾ S) ˘    =  S ˘ ⨾ R ˘
+
+Theorem “Converse of bottom relations”:
+    is-bottom R  ≡  is-bottom (R ˘)
+Proof:
+      is-bottom R  ≡  is-bottom (R ˘)
+    =⟨ “Definition of `is-bottom`” ⟩
+      (∀ S • R ⊆ S) ≡ (∀ T • R ˘ ⊆ T)
+  Proof for this:
+    Using “Mutual implication”:
+      Subproof for `(∀ S • R ⊆ S) ⇒ (∀ T • R ˘ ⊆ T)`:
+        Assuming (1) `∀ S • R ⊆ S`:
+          For any `T`:
+              R ˘
+            ⊆⟨ “Monotonicity of ˘” with Assumption (1) ⟩
+              T ˘ ˘
+            =⟨ “Self-inverse of ˘” ⟩
+              T  
+      Subproof for `(∀ T • R ˘ ⊆ T) ⇒ (∀ S • R ⊆ S)`:
+        Assuming (2) `∀ T • R ˘ ⊆ T`:
+          For any `S`:
+              R
+            =⟨ “Self-inverse of ˘” ⟩
+              R ˘ ˘
+            ⊆⟨ “Monotonicity of ˘” with Assumption (2) ⟩
+              S ˘ ˘  
+            =⟨ “Self-inverse of ˘” ⟩
+              S
+
+╍╍╍ ∀ T • R ˘ ⊆ T
+╍╍╍ Let T = S ˘
+╍╍╍ R ˘ ⊆ S ˘
+╍╍╍ Apply monotonicity, we have: R ˘ ˘ ⊆ S ˘ ˘
+
+╍╍╍ Assumption (2): ∀ S' • R ˘ ⊆ S'
+╍╍╍ Let S' = S ˘
+╍╍╍ Then we have R ˘ ⊆ S ˘ 
+╍╍╍ Apply monotonicity, we have: R ˘ ˘ ⊆ S ˘ ˘
+
+Theorem “Converse of top relations”:
+    is-top R  ≡  is-top (R ˘)
+Proof:
+       is-top R  ≡  is-top (R ˘)
+    =⟨ “Definition of `is-top`” ⟩
+      (∀ S • S ⊆ R) ≡ (∀ T • T ⊆ R ˘)
+  Proof for this:
+    Using “Mutual implication”:
+      Subproof for `(∀ S • S ⊆ R) ⇒ (∀ T • T ⊆ R ˘)`:
+        Assuming (1) `∀ S • S ⊆ R`:
+          For any `T`:
+              T
+            =⟨ “Self-inverse of ˘” ⟩
+              T ˘ ˘
+            ⊆⟨ “Monotonicity of ˘” with Assumption (1) ⟩
+              R ˘  
+      Subproof for `(∀ T • T ⊆ R ˘) ⇒ (∀ S • S ⊆ R)`:
+        Assuming (2) `∀ T • T ⊆ R ˘`:
+          For any `S`:
+              S
+            =⟨ “Self-inverse of ˘” ⟩
+              S ˘ ˘
+            ⊆⟨ “Monotonicity of ˘” with Assumption (2) ⟩
+              R ˘ ˘  
+            =⟨ “Self-inverse of ˘” ⟩
+              R
+
+Declaration: symmetric : A ↔ A  →  𝔹
+Declaration: equivalence, is-PER : A ↔ A  →  𝔹
+
+Axiom “Definition of symmetry”:       symmetric R      ≡  R ˘ ⊆ R
+Axiom “Definition of equivalence”:    equivalence R    ≡  reflexive R
+                                                          ∧ symmetric R
+                                                          ∧ transitive R
+Axiom “Definition of PER”:            is-PER R         ≡  symmetric R
+                                                          ∧ transitive R
+
+Lemma “Definition of symmetry”:
+    symmetric R   ≡   R ˘ = R
+Proof:
+      symmetric R   ≡   R ˘ = R
+    =⟨ “Definition of symmetry” ⟩
+      R ˘ ⊆ R ≡ R ˘ = R
+    =⟨ “Mutual inclusion” ⟩
+      R ˘ ⊆ R ≡ R ˘ ⊆ R ∧ R ⊆ R ˘
+    =⟨ “Definition of ⇒” (3.60) ⟩
+      R ˘ ⊆ R ⇒ R ⊆ R ˘ 
+    =⟨ “˘ connection” ⟩
+      R  ⊆ R ˘ ⇒ R ⊆ R ˘ — This is “Reflexivity of ⇒”
+
+Lemma “Definition of PER”:
+    is-PER R  ≡   R ˘ ⊆ R ∧ R ⨾ R ⊆ R
+Proof:
+    is-PER R
+  =⟨ “Definition of PER” ⟩
+    symmetric R ∧ transitive R
+  =⟨ “Definition of symmetry”, “Definition of transitivity” ⟩
+    R ˘ ⊆ R ∧ R ⨾ R ⊆ R
+
+Lemma “Definition of PER”:
+    is-PER R  ≡   R ˘ = R ∧ R ⨾ R ⊆ R
+Proof:
+    is-PER R
+  =⟨ “Definition of PER” ⟩
+    symmetric R ∧ transitive R
+  =⟨ “Definition of symmetry”, “Definition of transitivity” ⟩
+    R ˘ = R ∧ R ⨾ R ⊆ R
+
+Theorem “Reflexivity of converse”:
+    reflexive R ≡ reflexive (R ˘)
+Proof:
+    reflexive (R ˘)
+  =⟨ “Definition of reflexivity” ⟩
+    𝕀 ⊆ R ˘
+  =⟨ “˘ connection”, “Converse of 𝕀” ⟩
+    𝕀 ⊆ R
+  =⟨ “Definition of reflexivity” ⟩  
+    reflexive R
+
+Theorem “Symmetry of converse”:
+    symmetric R ≡ symmetric (R ˘)
+Proof:
+    symmetric (R ˘)
+  =⟨ “Definition of symmetry” ⟩
+    R ˘ = R ˘ ˘
+  =⟨ “Self-inverse of ˘” ⟩
+    R ˘ = R
+  =⟨ “Definition of symmetry” ⟩
+    symmetric R  
+
+Theorem “Transitivity of converse”:
+    transitive R ≡ transitive (R ˘)
+Proof:
+    transitive (R ˘)
+  =⟨ “Definition of transitivity” ⟩
+    R ˘ ⨾ R ˘ ⊆ R ˘
+  =⟨ “Converse of ⨾” ⟩
+    (R ⨾ R) ˘ ⊆ R ˘
+  =⟨ “Isotonicity of ˘” ⟩
+    R ⨾ R ⊆ R
+  =⟨ “Definition of transitivity” ⟩
+    transitive R
+   
+Theorem “Idempotency of converse”:
+    idempotent R ≡ idempotent (R ˘)
+Proof:
+    idempotent (R ˘)
+  =⟨ “Definition of idempotency” ⟩
+    R ˘ ⨾ R ˘ = R ˘
+  =⟨ “Converse of ⨾” ⟩
+    (R ⨾ R) ˘ = R ˘
+  =⟨ “Cancellation of ˘” ⟩
+    R ⨾ R = R
+  =⟨ “Definition of idempotency” ⟩
+    idempotent R
+
+Theorem “Converse of an equivalence”:
+    equivalence R ≡ equivalence (R ˘)
+Proof:
+  By “Definition of equivalence” , “Reflexivity of converse”, 
+     “Symmetry of converse”, “Transitivity of converse”
+
+Declaration: univalent, total :       A ↔ B  →  𝔹
+Declaration: injective, surjective :  A ↔ B  →  𝔹
+Declaration: mapping, bijective :     A ↔ B  →  𝔹
+
+Axiom “Definition of univalence”:    univalent R   ≡  R ˘ ⨾ R ⊆ 𝕀
+Axiom “Definition of totality”:      total R       ≡  𝕀 ⊆ R ⨾ R ˘
+Axiom “Definition of injectivity”:   injective R   ≡  R ⨾ R ˘ ⊆ 𝕀
+Axiom “Definition of surjectivity”:  surjective R  ≡  𝕀 ⊆ R ˘ ⨾ R
+Axiom “Definition of mappings”:      mapping R     ≡  univalent R
+                                                      ∧ total R
+Axiom “Definition of bijectivity”:   bijective R   ≡  injective R
+                                                      ∧ surjective R
+
+Lemma “Definition of mappings”:      mapping R     ≡  R ˘ ⨾ R ⊆ 𝕀
+                                                      ∧ 𝕀 ⊆ R ⨾ R ˘
+Proof:
+  By “Definition of mappings”, “Definition of totality”,
+     “Definition of univalence”  
+
+Lemma “Definition of bijectivity”:   bijective R   ≡  R ⨾ R ˘ ⊆ 𝕀
+                                                      ∧ 𝕀 ⊆ R ˘ ⨾ R
+Proof:
+  By “Definition of bijectivity”, “Definition of surjectivity”,
+     “Definition of injectivity”
+
+Theorem “𝕀 is univalent”: univalent 𝕀
+Proof:
+    univalent 𝕀
+  =⟨ “Definition of univalence” ⟩
+    𝕀 ˘ ⨾ 𝕀 ⊆ 𝕀
+  =⟨ “Converse of 𝕀”, “Identity of ⨾” ⟩
+    𝕀 ⊆ 𝕀 — This is “Reflexivity of ⊆”  
+
+Theorem “𝕀 is total”: total 𝕀
+Proof:
+    total 𝕀
+  =⟨ “Definition of totality” ⟩
+    𝕀 ⊆ 𝕀 ⨾ 𝕀 ˘
+  =⟨ “Converse of 𝕀”, “Identity of ⨾” ⟩
+    𝕀 ⊆ 𝕀 — This is “Reflexivity of ⊆”  
+
+Theorem “𝕀 is injective”: injective 𝕀
+Proof:
+    injective 𝕀
+  =⟨ “Definition of injectivity” ⟩
+    𝕀 ⨾ 𝕀 ˘ ⊆ 𝕀
+  =⟨ “Converse of 𝕀”, “Identity of ⨾” ⟩
+    𝕀 ⊆ 𝕀 — This is “Reflexivity of ⊆”  
+
+Theorem “𝕀 is surjective”: surjective 𝕀
+Proof:
+    surjective 𝕀
+  =⟨ “Definition of surjectivity” ⟩
+    𝕀 ⊆ 𝕀 ˘ ⨾ 𝕀
+  =⟨ “Converse of 𝕀”, “Identity of ⨾” ⟩
+    𝕀 ⊆ 𝕀 — This is “Reflexivity of ⊆”   
+
+Theorem “𝕀 is mapping”: mapping 𝕀
+Proof:
+  By “Definition of mappings”, “𝕀 is univalent”, 
+     “𝕀 is total”, “Idempotency of ∧” 
+     
+Theorem “𝕀 is bijective”: bijective 𝕀
+Proof:
+  By “Definition of bijectivity”, “𝕀 is injective”, 
+     “𝕀 is surjective”, “Idempotency of ∧” 
+
+Theorem “total in univalent”:
+     total R ⇒ univalent S ⇒ R ⊆ S ⇒ R = S
+Proof:
+  Assuming `total R` and using with “Definition of totality”,
+           `univalent S` and using with “Definition of univalence”,
+           `R ⊆ S`:
+        R = S
+      =⟨ “Mutual inclusion” ⟩
+        R ⊆ S ∧ S ⊆ R
+      =⟨ Assumption `R ⊆ S`, “Identity of ∧” ⟩
+        S ⊆ R
+    Proof for this:
+        S
+      =⟨ “Identity of ⨾” ⟩
+        𝕀 ⨾ S
+      ⊆⟨ “Monotonicity of ⨾” with Assumption `total R` ⟩   
+        R ⨾ R ˘ ⨾ S 
+      ⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ⨾” 
+          with “Monotonicity of ˘” with Assumption `R ⊆ S` ⟩
+        R ⨾ S ˘ ⨾ S
+      ⊆⟨ “Monotonicity of ⨾” with Assumption `univalent S` ⟩ 
+        R ⨾ 𝕀   
+      =⟨ “Identity of ⨾” ⟩
+        R 
+
+Theorem “Flip `⊆-univalent-⨾`”:
+    univalent F ⇒ Q ⊆ F ⨾ R ⇒ F ˘ ⨾ Q ⊆ R
+Proof:
+  Assuming `univalent F` and using with “Definition of univalence”,
+           `Q ⊆ F ⨾ R`:
+      F ˘ ⨾ Q
+    ⊆ ⟨ “Monotonicity of ⨾” with Assumption `Q ⊆ F ⨾ R` ⟩
+      F ˘ ⨾ (F ⨾ R) 
+    =⟨ “Associativity of ⨾” ⟩
+      (F ˘ ⨾ F) ⨾ R
+    ⊆ ⟨ “Monotonicity of ⨾” with Assumption `univalent F` ⟩ 
+       𝕀 ⨾ R
+    =⟨ “Identity of ⨾” ⟩
+       R  
+
+Theorem “Flip `⊆-⨾-univalent˘`”:
+    univalent F ⇒ Q ⊆ R ⨾ F ˘ ⇒ Q ⨾ F ⊆ R
+Proof:
+  Assuming `univalent F` and using with “Definition of univalence”,
+           `Q ⊆ R ⨾ F ˘`:
+      Q ⨾ F
+    ⊆ ⟨ “Monotonicity of ⨾” with Assumption `Q ⊆ R ⨾ F ˘` ⟩
+      (R ⨾ F ˘) ⨾ F 
+    =⟨ “Associativity of ⨾” ⟩
+      R ⨾ (F ˘ ⨾ F)
+    ⊆ ⟨ “Monotonicity of ⨾” with Assumption `univalent F` ⟩ 
+       R ⨾ 𝕀
+    =⟨ “Identity of ⨾” ⟩
+       R      
+
+Theorem “Flip `⊆-⨾-injective`”:
+    injective F ⇒ Q ⊆ R ⨾ F ⇒ Q ⨾ F ˘ ⊆ R
+Proof:
+  Assuming `injective F` and using with “Definition of injectivity”,
+           `Q ⊆ R ⨾ F`:
+      Q ⨾ F ˘ 
+    ⊆ ⟨ “Monotonicity of ⨾” with Assumption `Q ⊆ R ⨾ F` ⟩ 
+      (R ⨾ F) ⨾ F ˘
+    =⟨ “Associativity of ⨾” ⟩
+      R ⨾ (F ⨾ F ˘)
+    ⊆ ⟨ “Monotonicity of ⨾” with Assumption `injective F` ⟩
+      R ⨾ 𝕀
+    =⟨ “Identity of ⨾” ⟩
+      R  
+
+Theorem “Flip `total˘-⨾-⊆`”: total F ⇒ F ˘ ⨾ Q ⊆ R ⇒ Q ⊆ F ⨾ R
+Proof:
+  Assuming `total F` and using with “Definition of totality”,
+           `F ˘ ⨾ Q ⊆ R`:
+      F ⨾ R
+    ⊇ ⟨ “Monotonicity of ⨾” with Assumption `F ˘ ⨾ Q ⊆ R` ⟩
+      F ⨾ (F ˘ ⨾ Q)
+    =⟨ “Associativity of ⨾” ⟩
+      (F ⨾ F ˘) ⨾ Q
+    ⊇ ⟨ “Monotonicity of ⨾” with Assumption `total F` ⟩
+      𝕀 ⨾ Q
+    =⟨ “Identity of ⨾” ⟩
+      Q
+
+Theorem “Flip `⨾-total-⊆`”: total F ⇒ Q ⨾ F ⊆ R ⇒ Q ⊆ R ⨾ F ˘
+Proof:
+  Assuming `total F` and using with “Definition of totality”,
+           `Q ⨾ F ⊆ R`:
+      R ⨾ F ˘
+    ⊇ ⟨ “Monotonicity of ⨾” with Assumption `Q ⨾ F ⊆ R` ⟩
+      (Q ⨾ F) ⨾ F ˘
+    =⟨ “Associativity of ⨾” ⟩
+       Q ⨾ (F ⨾ F ˘)
+    ⊇ ⟨ “Monotonicity of ⨾” with Assumption `total F` ⟩
+       Q ⨾ 𝕀
+    =⟨ “Identity of ⨾” ⟩
+       Q   
+
+Theorem “Flip `⨾-mapping-⊆`”: mapping F ⇒ (Q ⨾ F ⊆ R ≡ Q ⊆ R ⨾ F ˘)
+Proof:
+  Assuming `mapping F` and using with “Definition of mappings”:
+    Using “Mutual implication”:
+      Subproof for `Q ⨾ F ⊆ R ⇒ Q ⊆ R ⨾ F ˘`:
+        By “Flip `⨾-total-⊆`” with Assumption `mapping F`
+      Subproof for `Q ⊆ R ⨾ F ˘ ⇒ Q ⨾ F ⊆ R`:
+        By “Flip `⊆-⨾-univalent˘`” with Assumption `mapping F`
+
+Theorem “Flip `mapping˘-⨾-⊆`”: mapping F ⇒ (F ˘ ⨾ Q ⊆ R  ≡  Q ⊆ F ⨾ R)
+Proof:
+  Assuming `mapping F` and using with “Definition of mappings”:
+    Using “Mutual implication”:
+      Subproof for `F ˘ ⨾ Q ⊆ R ⇒ Q ⊆ F ⨾ R`:
+        By “Flip `total˘-⨾-⊆`” with Assumption `mapping F`
+      Subproof for `Q ⊆ F ⨾ R ⇒ F ˘ ⨾ Q ⊆ R`:
+        By “Flip `⊆-univalent-⨾`” with Assumption `mapping F`  
+
+Theorem “Flip `surj-⨾-⊆`”: surjective F ⇒ F ⨾ Q ⊆ R ⇒ Q ⊆ F ˘ ⨾ R
+Proof:
+  Assuming `surjective F` and using with “Definition of surjectivity”,
+           `F ⨾ Q ⊆ R`:
+      F ˘ ⨾ R
+    ⊇⟨ “Monotonicity of ⨾” with Assumption `F ⨾ Q ⊆ R` ⟩
+      (F ˘ ⨾ F) ⨾ Q
+    ⊇⟨ “Monotonicity of ⨾” with Assumption `surjective F` ⟩
+      𝕀 ⨾ Q
+    =⟨ “Identity of ⨾” ⟩
+      Q 
+
+Theorem “Composition of mappings”:
+    mapping F ∧ mapping G ⇒ mapping (F ⨾ G)
+Proof:
+  Assuming `mapping F` and using with “Definition of mappings”,
+           `mapping G` and using with “Definition of mappings”:
+    Using “Definition of mappings”:
+      Subproof for `(F ⨾ G) ˘ ⨾ (F ⨾ G) ⊆ 𝕀`:
+          (F ⨾ G) ˘ ⨾ (F ⨾ G) ⊆ 𝕀
+        =⟨ “Flip `⨾-mapping-⊆`” with Assumption `mapping G` ⟩
+          (F ⨾ G) ˘ ⨾ F ⊆ 𝕀 ⨾ G ˘
+        =⟨ “Identity of ⨾” ⟩
+          (F ⨾ G) ˘ ⨾ F ⊆ G ˘
+        =⟨ “Flip `⨾-mapping-⊆`” with Assumption `mapping F` ⟩
+          (F ⨾ G) ˘ ⊆ G ˘ ⨾ F ˘
+        =⟨ “Converse of ⨾”, “Reflexivity of ⊆” ⟩
+          true 
+      Subproof for `𝕀 ⊆ (F ⨾ G) ⨾ (F ⨾ G) ˘`:
+          𝕀 ⊆ (F ⨾ G) ⨾ (F ⨾ G) ˘
+        =⟨ “Flip `mapping˘-⨾-⊆`” with Assumption `mapping F` ⟩
+          F ˘ ⨾ 𝕀 ⊆ G ⨾ (F ⨾ G) ˘
+        =⟨ “Identity of ⨾” ⟩ 
+          F ˘ ⊆ G ⨾ (F ⨾ G) ˘
+        =⟨ “Flip `mapping˘-⨾-⊆`” with Assumption `mapping G` ⟩
+          G ˘ ⨾ F ˘ ⊆ (F ⨾ G) ˘
+        =⟨ “Converse of ⨾”, “Reflexivity of ⊆” ⟩
+          true 
+
+Theorem “Inverse of mapping”:
+    mapping F ⇒ G is-inverse-of F ⇒ G = F ˘
+Proof:
+  Assuming `mapping F` and using with “Definition of mappings”,
+           `G is-inverse-of F` and using with “Definition of inverse”:
+    Using “Mutual inclusion”:
+      Subproof for `G ⊆ F ˘`:
+          F ˘
+        =⟨ “Identity of ⨾” ⟩
+          𝕀 ⨾ F ˘
+        =⟨ Assumption `G is-inverse-of F` ⟩  
+          (G ⨾ F) ⨾ F ˘
+        ⊇⟨ “Monotonicity of ⨾” with Assumption `mapping F` ⟩
+          G ⨾ 𝕀
+        =⟨ “Identity of ⨾” ⟩
+          G
+      Subproof for `F ˘ ⊆ G`:     
+          F ˘
+        =⟨ “Identity of ⨾” ⟩
+          F ˘ ⨾ 𝕀
+        =⟨ Assumption `G is-inverse-of F` ⟩
+          F ˘ ⨾ (F ⨾ G)
+        ⊆⟨ “Monotonicity of ⨾” with Assumption `mapping F` ⟩
+          𝕀 ⨾ G
+        =⟨ “Identity of ⨾” ⟩
+          G

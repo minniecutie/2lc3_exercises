@@ -1,0 +1,244 @@
+Theorem “Zero or successor of predecessor”: n = 0 ∨ n = suc (pred n)
+Proof:
+    n ≠ 0 ≡ n = suc (pred n)    — This is “Predecessor of non-zero”
+  =⟨ “Definition of ≠” ⟩
+    ¬ (n = 0) ≡ n = suc (pred n)
+  =⟨ “Mutual implication” ⟩
+    (¬ (n = 0) ⇒ n = suc (pred n)) ∧ (n = suc (pred n) ⇒ ¬ (n = 0))
+  ⇒⟨ “Strengthening” (3.76b) ⟩
+    ¬ (n = 0) ⇒ n = suc (pred n)
+  =⟨ “Material implication” ⟩
+    ¬ ¬ (n = 0) ∨ n = suc (pred n)
+  =⟨ “Double negation” ⟩
+    n = 0 ∨ n = suc (pred n)
+ 
+Theorem “Right-identity of subtraction”: m - 0 = m
+Proof:
+  By cases: `m = 0`, `m = suc (pred m)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `m = 0`:
+        m - 0 = m
+      ≡⟨ Assumption `m = 0` ⟩
+        0 - 0 = 0
+      — This is “Subtraction from zero”
+    Case `m = suc (pred m)`:
+        m - 0
+      =⟨ Assumption `m = suc (pred m)` ⟩
+        (suc (pred m)) - 0
+      =⟨ “Subtraction of zero from successor” ⟩
+        suc (pred m)
+      =⟨ Assumption `m = suc (pred m)` ⟩
+        m
+
+Theorem “Subtraction from multiplication with successor”: m · (suc n) - m = m · n
+Proof:
+  By cases: `m = 0`, `m = suc (pred m)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `m = 0`:
+        m · (suc n) - m
+      =⟨ Assumption `m = 0` ⟩
+        0 · (suc n) - 0
+      =⟨ “Right-identity of subtraction” ⟩
+        0 · (suc n) 
+      =⟨ “Definition of · for 0” ⟩
+        0  
+      =⟨ “Definition of · for 0”⟩
+        0 · n
+      =⟨ Assumption `m = 0`⟩
+        m · n
+    Case `m = suc (pred m)`:
+        m · (suc n) - m
+      = ⟨ “Multiplying the successor” ⟩
+        (m + m · n) - m
+      = ⟨ “Subtraction after addition” ⟩
+        m · n
+ 
+Theorem “Zero is unique least element”:
+    a ≤ 0  ≡  a = 0
+Proof:
+  By cases: `a = 0`, `a = suc (pred a)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `a = 0`:
+        a ≤ 0 
+      =⟨ Assumption `a = 0` ⟩
+        0 ≤ 0 
+      =⟨ “Reflexivity of ≤” ⟩
+        true
+      =⟨ “Reflexivity of =” ⟩
+        0 = 0
+      =⟨ Assumption `a = 0` ⟩
+        a = 0 
+    Case `a = suc (pred a)`:
+        a ≤ 0 ≡ a = 0
+      =⟨ Assumption `a = suc (pred a)`⟩ 
+        suc (pred a) ≤ 0 ≡ suc (pred a) = 0
+      =⟨ “Successor is not at most zero” ⟩
+        false ≡ suc (pred a) = 0
+      =⟨ “Zero is not successor” ⟩
+        false ≡ false
+      =⟨ “Identity of ≡” ⟩ 
+        true
+        
+Theorem “Zero sum”:
+    0 = a + b  ≡  0 = a  ∧  0 = b
+Proof:
+  By cases: `a = 0`, `a = suc (pred a)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `a = 0`:
+        0 = a + b  ≡  0 = a  ∧  0 = b
+      =⟨ Assumption `a = 0`⟩
+        0 = 0 + b  ≡  0 = 0  ∧  0 = b
+      =⟨ “Left-identity of +”⟩
+        0 = b  ≡  0 = 0  ∧  0 = b
+      =⟨ “Reflexivity of =”⟩
+        0 = b  ≡  true  ∧  0 = b
+      =⟨ “Identity of ∧”⟩
+        0 = b  ≡  0 = b
+      =⟨ “Identity of ≡”⟩
+        true
+    Case `a = suc (pred a)`:
+        0 = a + b
+      =⟨ Assumption `a = suc (pred a)`⟩
+        0 = suc (pred a) + b
+      =⟨ “Definition of + for `suc`”⟩
+        0 = suc (pred a + b)
+      =⟨ “Zero is not successor”⟩
+        false
+      =⟨ “Zero of ∧”⟩
+        false ∧ 0 = b
+      =⟨ “Zero is not successor”⟩
+        0 = suc (pred a) ∧ 0 = b
+      =⟨ Assumption `a = suc (pred a)`⟩
+        0 = a ∧ 0 = b
+
+
+Theorem “Zero is <-least element”: 0 < a ∨ 0 = a
+Proof:
+  By cases: `a = 0`, `a = suc (pred a)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `a = 0`:
+        0 < a ∨ 0 = a
+      =⟨ Assumption `a = 0` ⟩
+        0 < 0 ∨ 0 = 0
+      =⟨ “Reflexivity of =” ⟩
+        0 < 0 ∨ true
+      =⟨ “Zero of ∨” ⟩
+        true
+    Case `a = suc (pred a)`:
+        0 < a ∨ 0 = a
+      =⟨ Assumption `a = suc (pred a)` ⟩ 
+        0 < suc (pred a) ∨ 0 = suc (pred a)
+      =⟨ “Zero is less than successor” ⟩ 
+        true ∨ 0 = suc (pred a)
+      =⟨ “Zero of ∨” ⟩ 
+        true 
+        
+Theorem “Only zero is less than one”: a < 1  ≡  a = 0
+Proof:
+  By cases: `a = 0`, `a = suc (pred a)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `a = 0`:
+        a < 1  ≡  a = 0
+      =⟨ Assumption `a = 0` ⟩
+        0 < 1  ≡  0 = 0
+      =⟨ “Reflexivity of =” ⟩
+        0 < 1  ≡  true
+      =⟨ “Identity of ≡” ⟩
+        0 < 1  
+      =⟨ Fact `1 = suc 0`⟩
+        0 < suc 0
+      =⟨ “Less than successor”⟩
+        true
+    Case `a = suc (pred a)`:
+        a < 1  
+      =⟨ Assumption `a = suc (pred a)`⟩
+        suc (pred a) < 1  
+      =⟨ Fact `1 = suc 0` ⟩ 
+        suc (pred a) < suc 0
+      =⟨ “<-Isotonicity of successor” ⟩ 
+        pred a < 0
+      =⟨ “Nothing is less than zero” ⟩ 
+        false
+      =⟨ “Zero is not successor” ⟩ 
+        suc (pred a) = 0
+      =⟨ Assumption `a = suc (pred a)` ⟩ 
+        a = 0
+
+Lemma “Zero is not product of successors”:
+    suc a · suc b = 0  ≡  false
+Proof:
+    suc a · suc b = 0
+  =⟨ “Zero product” ⟩
+    suc a = 0 ∨ suc b = 0
+  =⟨ “Zero is not successor” ⟩
+    false ∨ false
+  =⟨ “Idempotency of ∨”⟩
+    false 
+ 
+Lemma “Cancellation of multiplication with successor”:
+    suc c · a = suc c · b  ≡  a = b
+Proof:
+  By induction on `a : ℕ`:
+    Base case `suc c · 0 = suc c · b  ≡  0 = b`:
+        suc c · 0 = suc c · b
+      ≡⟨ “Right-zero of ·” ⟩
+        0 = suc c · b
+      ≡⟨ “Definition of · for `suc`” ⟩
+        0 = b + c · b
+      ≡⟨ “Zero sum” ⟩
+        0 = b ∧ 0 = c · b
+      ≡⟨ Substitution ⟩
+        0 = b ∧ (0 = c · z)[z ≔ b]
+      ≡⟨ “Replacement” ⟩
+        0 = b ∧ (0 = c · z)[z ≔ 0]
+      ≡⟨ Substitution ⟩
+        0 = b ∧ 0 = c · 0
+      ≡⟨ “Right-zero of ·” ⟩
+        0 = b ∧ true
+      ≡⟨ “Identity of ∧” ⟩
+        0 = b
+    Induction step `suc c · suc a = suc c · b  ≡  suc a = b`:
+      By induction on `b : ℕ`:
+        Base case `suc c · suc a = suc c · 0  ≡  suc a = 0`:
+            suc c · suc a = suc c · 0
+          ≡⟨ “Right-zero of ·” ⟩
+            suc c · suc a = 0
+          ≡⟨ “Zero is not product of successors” ⟩
+            false
+          ≡⟨ “Zero is not successor” ⟩
+            suc a = 0
+        Induction step `suc c · suc a = suc c · suc b  ≡  suc a = suc b`:
+            suc c · suc a = suc c · suc b
+          ≡⟨ “Multiplying the successor” ⟩
+            suc c + suc c · a = suc c + suc c · b
+          ≡⟨ “Cancellation of +” ⟩
+            suc c · a = suc c · b
+          ≡⟨ Induction hypothesis `suc c · a = suc c · b  ≡  a = b` ⟩
+            a = b
+          ≡⟨ “Cancellation of `suc`” ⟩
+            suc a = suc b
+      
+Theorem “Cancellation of ·”:
+    c ≠ 0 ⇒ (c · a = c · b  ≡  a = b)
+Proof:
+  By cases: `c = 0`, `c = suc (pred c)`
+    Completeness: By “Zero or successor of predecessor”
+    Case `c = 0`:
+        c ≠ 0 ⇒ (c · a = c · b  ≡  a = b)
+      =⟨ Assumption `c = 0`⟩
+        0 ≠ 0 ⇒ (c · a = c · b  ≡  a = b)
+      =⟨ “Irreflexivity of ≠” ⟩
+        false ⇒ (c · a = c · b  ≡  a = b)
+      =⟨ “ex falso quodlibet” ⟩
+        true
+    Case `c = suc (pred c)`:
+         c ≠ 0 ⇒ (c · a = c · b  ≡  a = b)
+      =⟨ Assumption `c = suc (pred c)`⟩
+         suc (pred c) ≠ 0 ⇒ (suc (pred c) · a = suc (pred c) · b  ≡  a = b)
+      =⟨ “Zero is not successor” ⟩
+         true ⇒ (suc (pred c) · a = suc (pred c) · b  ≡  a = b)
+      =⟨ “Cancellation of multiplication with successor” ⟩
+         true ⇒ true
+      =⟨ “Reflexivity of ⇒” ⟩
+         true      
+ 

@@ -1,0 +1,226 @@
+Declaration: _∩_ : A ↔ B → A ↔ B → A ↔ B
+
+Axiom “Characterisation of ∩”: Q ⊆ R ∩ S   ≡   Q ⊆ R  ∧ Q ⊆ S
+
+Theorem “Weakening for ∩”: Q ∩ R ⊆ Q  ∧  Q ∩ R ⊆ R
+Proof:
+    Q ∩ R ⊆ Q  ∧  Q ∩ R ⊆ R
+  =⟨ “Characterisation of ∩” ⟩
+    Q ∩ R ⊆ Q ∩ R
+  =⟨ “Reflexivity of ⊆” ⟩
+    true  
+
+Theorem “Symmetry of ∩”: Q ∩ R  ⊆  R ∩ Q
+Proof:
+    Q ∩ R  ⊆  R ∩ Q
+  =⟨ “Characterisation of ∩” ⟩
+    Q ∩ R  ⊆  R ∧ Q ∩ R  ⊆ Q
+  =⟨ “Weakening for ∩” ⟩
+    true   
+
+Corollary “Symmetry of ∩”: Q ∩ R  =  R ∩ Q
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `Q ∩ R  ⊆  R ∩ Q`:
+      By “Symmetry of ∩”
+    Subproof for `R ∩ Q  ⊆ Q ∩ R`:
+      By “Symmetry of ∩”
+
+Lemma “One”: (Q ∩ R) ∩ S ⊆ Q
+Proof:
+    (Q ∩ R) ∩ S
+  ⊆⟨ “Weakening for ∩” ⟩
+     Q ∩ R
+  ⊆⟨ “Weakening for ∩” ⟩
+     Q
+
+Lemma “Two”: (Q ∩ R) ∩ S ⊆ R
+Proof:
+    (Q ∩ R) ∩ S
+  ⊆⟨ “Weakening for ∩” ⟩
+     Q ∩ R
+  ⊆⟨ “Weakening for ∩” ⟩
+     R
+
+Lemma “Three”: (Q ∩ R) ∩ S ⊆ S
+Proof:
+  By “Weakening for ∩”
+
+Theorem “Associativity of ∩”: (Q ∩ R) ∩ S  ⊆  Q ∩ (R ∩ S)
+Proof:
+    (Q ∩ R) ∩ S  ⊆  Q ∩ (R ∩ S)
+  =⟨ “Characterisation of ∩” ⟩
+    (Q ∩ R) ∩ S  ⊆ Q ∧ (Q ∩ R) ∩ S  ⊆ (R ∩ S)
+  =⟨ “Characterisation of ∩” ⟩
+    (Q ∩ R) ∩ S  ⊆ Q ∧ (Q ∩ R) ∩ S  ⊆ R 
+     ∧ (Q ∩ R) ∩ S  ⊆ S
+  =⟨ “One”, “Two”, “Three”, “Idempotency of ∧” ⟩
+    true
+
+Corollary “Associativity of ∩”: (Q ∩ R) ∩ S  =  Q ∩ (R ∩ S)
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `(Q ∩ R) ∩ S  ⊆  Q ∩ (R ∩ S)`:
+      By “Associativity of ∩”
+    Subproof for `Q ∩ (R ∩ S)  ⊆ (Q ∩ R) ∩ S`:
+      By “Associativity of ∩”, “Symmetry of ∩”
+
+Theorem “Idempotency of ∩”: R ∩ R = R
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `R ∩ R ⊆ R`:
+      By “Weakening for ∩”
+    Subproof for `R ⊆ R ∩ R`:
+      By “Characterisation of ∩”, “Reflexivity of ⊆”,
+         “Idempotency of ∧”
+
+Theorem “Monotonicity of ∩”: Q ⊆ R  ⇒  Q ∩ S ⊆ R ∩ S
+Proof:
+  Assuming `Q ⊆ R`:
+    Using “Characterisation of ∩”:
+      Subproof for `Q ∩ S ⊆ R`:
+          Q ∩ S
+        ⊆⟨ “Weakening for ∩” ⟩
+          Q
+        ⊆⟨ Assumption `Q ⊆ R` ⟩
+          R
+      Subproof for `Q ∩ S ⊆ S`:
+        By “Weakening for ∩”
+
+Theorem “Monotonicity of ∩”: Q ⊆ R  ⇒ S ⊆ T ⇒  Q ∩ S ⊆ R ∩ T
+Proof:
+  Assuming `Q ⊆ R`, `S ⊆ T`:
+      Q ∩ S
+    ⊆⟨ “Monotonicity of ∩” with Assumption `Q ⊆ R` ⟩
+      R ∩ S
+    ⊆⟨ “Monotonicity of ∩” with Assumption `S ⊆ T` ⟩
+      R ∩ T
+     
+Theorem “Inclusion via ∩”: Q ⊆ R  ≡  Q ∩ R = Q
+Proof:
+  Using “Mutual implication”:
+    Subproof for `Q ⊆ R ⇒ Q ∩ R = Q`:
+      Assuming `Q ⊆ R`:
+        Using “Mutual inclusion”:
+          Subproof for `Q ∩ R ⊆ Q`:
+            By “Weakening for ∩”
+          Subproof for `Q ⊆ Q ∩ R`:
+              Q
+            =⟨ “Idempotency of ∩” ⟩
+              Q ∩ Q
+            ⊆⟨ “Monotonicity of ∩” with Assumption `Q ⊆ R` ⟩
+              Q ∩ R
+    Subproof for `Q ∩ R = Q ⇒ Q ⊆ R`:
+      Assuming `Q ∩ R = Q`:
+        By Assumption `Q ∩ R = Q`, “Weakening for ∩” 
+
+Theorem “Sub-distributivity of ⨾ over ∩”:
+    Q ⨾ (R ∩ S)  ⊆  Q ⨾ R  ∩  Q ⨾ S
+Proof:
+  Using “Characterisation of ∩”:
+    Subproof for `Q ⨾ (R ∩ S)  ⊆  Q ⨾ R`:
+        Q ⨾ (R ∩ S)  ⊆  Q ⨾ R
+      ⇐⟨ “Monotonicity of ⨾” ⟩
+        (R ∩ S) ⊆ R — This is “Weakening for ∩”
+    Subproof for `Q ⨾ (R ∩ S)  ⊆  Q ⨾ S`:
+        Q ⨾ (R ∩ S)  ⊆  Q ⨾ S
+      ⇐⟨ “Monotonicity of ⨾” ⟩
+        (R ∩ S) ⊆ S — This is “Weakening for ∩”   
+
+Theorem “Sub-distributivity of ⨾ over ∩”:
+    (Q ∩ R) ⨾ S  ⊆  Q ⨾ S  ∩  R ⨾ S
+Proof:
+  Using “Characterisation of ∩”:
+    Subproof for `(Q ∩ R) ⨾ S  ⊆  Q ⨾ S`:
+        (Q ∩ R) ⨾ S  ⊆  Q ⨾ S
+      ⇐⟨ “Monotonicity of ⨾” ⟩
+        (Q ∩ R) ⊆ Q — This is “Weakening for ∩”
+    Subproof for `(Q ∩ R) ⨾ S  ⊆  R ⨾ S`:
+        (Q ∩ R) ⨾ S  ⊆  R ⨾ S
+      ⇐⟨ “Monotonicity of ⨾” ⟩
+        (Q ∩ R) ⊆ R — This is “Weakening for ∩”
+
+Theorem “Converse of ∩”:     (R ∩ S) ˘  ⊆  R ˘ ∩ S ˘
+Proof:
+  Using “Characterisation of ∩”:
+    Subproof for `(R ∩ S) ˘ ⊆ R ˘`:
+        (R ∩ S) ˘ ⊆ R ˘
+      ⇐⟨ “Monotonicity of ˘” ⟩
+        (R ∩ S) ⊆ R — This is “Weakening for ∩”
+    Subproof for `(R ∩ S) ˘ ⊆ S ˘`:
+        (R ∩ S) ˘ ⊆ S ˘
+      ⇐⟨ “Monotonicity of ˘” ⟩
+        (R ∩ S) ⊆ S — This is “Weakening for ∩”
+
+Theorem “Converse of ∩”:     (R ∩ S) ˘  =  R ˘ ∩ S ˘
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `(R ∩ S) ˘ ⊆  R ˘ ∩ S ˘`:
+      By “Converse of ∩”
+    Subproof for `R ˘ ∩ S ˘ ⊆ (R ∩ S) ˘`:
+          R ˘ ∩ S ˘ ⊆ (R ∩ S) ˘
+        =⟨ “Self-inverse of ˘” ⟩
+          (R ˘ ∩ S ˘) ˘ ˘  ⊆ (R ∩ S) ˘
+        ⇐⟨ “Monotonicity of ˘” ⟩
+          (R ˘ ∩ S ˘) ˘ ⊆ (R ∩ S)
+      Proof for this:
+          (R ˘ ∩ S ˘) ˘
+        ⊆⟨ “Converse of ∩” ⟩
+           R ˘ ˘ ∩ S ˘ ˘
+        =⟨ “Self-inverse of ˘” ⟩
+           R ∩ S  
+
+Declaration: antisymmetric, order : A ↔ A  →  𝔹
+Axiom “Definition of antisymmetry”:   antisymmetric R  ≡  R ∩ R ˘ ⊆ 𝕀
+Axiom “Definition of order”:          order R          ≡  reflexive R
+                                                          ∧ antisymmetric R
+                                                          ∧ transitive R
+
+Theorem “Antisymmetry of converse”:  antisymmetric R  ≡  antisymmetric (R ˘)
+Proof:
+    antisymmetric (R ˘)
+  =⟨ “Definition of antisymmetry” ⟩
+    R ˘ ∩ R ˘ ˘ ⊆ 𝕀
+  =⟨ “Self-inverse of ˘” ⟩
+    R ∩ R ˘ ⊆ 𝕀
+  =⟨ “Definition of antisymmetry” ⟩
+    antisymmetric R  
+
+Theorem “Converse of an order”:  order E  ≡  order (E ˘)
+Proof:
+  By “Definition of order”, “Antisymmetry of converse”, 
+     “Reflexivity of converse”, “Transitivity of converse”
+
+Theorem “Order is preorder”: order E ⇒ preorder E
+Proof:
+    order E
+  =⟨ “Definition of order” ⟩
+    reflexive E ∧ antisymmetric E ∧ transitive E
+  ⇒⟨ “Weakening” (3.76b) ⟩
+    reflexive E ∧ transitive E
+  =⟨ “Definition of preorder” ⟩
+    preorder E  
+
+Theorem “Order is idempotent”: order E ⇒ idempotent E
+Proof:
+    order E
+  ⇒⟨ “Order is preorder” ⟩
+    preorder E
+  ⇒⟨ “Idempotency of preorders” ⟩
+    idempotent E  
+
+Theorem “Definition of order”:    order E  ≡  𝕀 ⊆ E
+                                              ∧ E ∩ E ˘ ⊆ 𝕀
+                                              ∧ E ⨾ E ⊆ E
+                                              ∧ E ⨾ E = E
+Proof:
+    order E
+  =⟨ “Identity of ∧”, “Order is idempotent” ⟩
+    order E ∧ (order E ⇒ idempotent E)
+  =⟨ “Strong modus ponens” ⟩
+    order E ∧ idempotent E  
+  =⟨ “Definition of order” ⟩
+    reflexive E ∧ antisymmetric E ∧ transitive E ∧ idempotent E 
+  =⟨ “Definition of reflexivity”, “Definition of antisymmetry”,
+     “Definition of transitivity”, “Definition of idempotency” ⟩
+    𝕀 ⊆ E ∧ E ∩ E ˘ ⊆ 𝕀 ∧ E ⨾ E ⊆ E ∧ E ⨾ E = E 

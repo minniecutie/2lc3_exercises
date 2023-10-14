@@ -1,0 +1,148 @@
+Precedence 115 for: _**_
+Associating to the right: _**_
+Declaration: _**_ :  (A ↔ A)  →  ℕ  →  (A ↔ A)
+
+Axiom “Definition of **”:  R ** 0    =  𝕀
+Axiom “Definition of **”:  R ** suc i  =  R ⨾ R ** i
+
+Theorem “Right-identity of **”: R ** 1 = R
+Proof:
+    R ** 1
+  =⟨ Fact `1 = suc 0` ⟩
+    R ** suc 0
+  =⟨ “Definition of **” ⟩
+    R ⨾ R ** 0
+  =⟨ “Definition of **” ⟩
+    R ⨾ 𝕀
+  =⟨ “Identity of ⨾” ⟩
+    R 
+     
+Theorem “Addition in **”: R ** (i + j) = R ** i ⨾ R ** j
+Proof:
+  By induction on `i : ℕ`:
+    Base case `R ** (0 + j) = R ** 0 ⨾ R ** j`:
+        R ** (0 + j) = R ** 0 ⨾ R ** j
+      =⟨ “Left-identity of +”, “Definition of **”, “Identity of ⨾” ⟩
+        R ** j = R ** j — This is “Reflexivity of =” 
+    Induction step `R ** (suc i + j) = R ** (suc i) ⨾ R ** j`:
+        R ** (suc i + j)
+      =⟨ “Definition of + for `suc`” ⟩
+        R ** suc (i + j)
+      =⟨ “Definition of **” ⟩
+        R ⨾ R ** (i + j)
+      =⟨ Induction hypothesis ⟩
+        R ⨾ R ** i ⨾ R ** j
+      =⟨ “Definition of **” ⟩
+        R ** (suc i) ⨾ R ** j    
+
+Declaration: _* : A ↔ A  →  A ↔ A
+
+Axiom “Definition of `_*`”:    R * = (⋃ i : ℕ • R ** i)
+
+Theorem “Characterisation of `_*`: Expanding”:  R ⊆ R *
+Proof:
+    R *
+  =⟨ “Definition of `_*`” ⟩
+    ⋃ i : ℕ • R ** i
+  =⟨ “Zero of ∨” ⟩
+    ⋃ i : ℕ ❙ i = 1 ∨ true • R ** i
+  =⟨ “Range split for ⋃” ⟩
+    (⋃ i : ℕ ❙ true • R ** i) ∪ (⋃ i : ℕ ❙ i = 1 • R ** i)
+  =⟨ “One-point rule for ⋃”, Substitution ⟩
+    (⋃ i : ℕ ❙ true • R ** i) ∪ R ** 1
+  =⟨ “Right-identity of **” ⟩
+    (⋃ i : ℕ ❙ true • R ** i) ∪ R
+  ⊇⟨ “Weakening for ∪” ⟩
+    R    
+
+Theorem “Characterisation of `_*`: Reflexivity”:
+    reflexive (R *)
+Proof:
+  Using “Definition of reflexivity”:
+      R *
+    =⟨ “Definition of `_*`” ⟩
+      ⋃ i : ℕ • R ** i
+    =⟨ “Zero of ∨” ⟩
+      ⋃ i : ℕ ❙ i = 0 ∨ true • R ** i
+    =⟨ “Range split for ⋃” ⟩
+      (⋃ i : ℕ ❙ true • R ** i) ∪ (⋃ i : ℕ ❙ i = 0 • R ** i)
+    =⟨ “One-point rule for ⋃”, Substitution ⟩
+      (⋃ i : ℕ ❙ true • R ** i) ∪ R ** 0
+    =⟨ “Definition of **” ⟩
+      (⋃ i : ℕ ❙ true • R ** i) ∪ 𝕀
+    ⊇⟨ “Weakening for ∪” ⟩
+      𝕀
+
+Theorem “Characterisation of `_*`: Transitivity”:
+   transitive (R *)
+Proof:
+  Using “Definition of transitivity”:
+    Subproof for `R * ⨾ R * ⊆ R *`:
+          R * ⨾ R * ⊆ R *
+        =⟨ “Definition of `_*`” ⟩
+          (⋃ i : ℕ • R ** i) ⨾ (⋃ j : ℕ • R ** j) 
+          ⊆ (⋃ k : ℕ • R ** k)
+        =⟨ “Distributivity of ⨾ over ⋃” ⟩
+          (⋃ i : ℕ • R ** i ⨾ (⋃ j : ℕ • R ** j))
+          ⊆ (⋃ k : ℕ • R ** k)
+        =⟨ “Distributivity of ⨾ over ⋃” ⟩
+          (⋃ i : ℕ • (⋃ j : ℕ • R ** i ⨾ R ** j))
+          ⊆ (⋃ k : ℕ • R ** k)
+        =⟨ “Characterisation of ⋃” ⟩
+          ∀ i : ℕ • (⋃ j : ℕ • R ** i ⨾ R ** j)
+          ⊆ (⋃ k : ℕ • R ** k)
+        =⟨ “Characterisation of ⋃” ⟩
+          ∀ i : ℕ • ∀ j : ℕ • R ** i ⨾ R ** j
+          ⊆ ⋃ k : ℕ • R ** k
+        =⟨ “Addition in **” ⟩
+          ∀ i : ℕ • ∀ j : ℕ • R ** (i + j)
+          ⊆ ⋃ k : ℕ • R ** k 
+      Proof for this:
+        For any `i : ℕ`, `j : ℕ`:
+            ⋃ k : ℕ • R ** k
+          =⟨ “Zero of ∨” ⟩
+            ⋃ k : ℕ ❙ true ∨ k = i + j • R ** k 
+          =⟨ “Range split for ⋃” ⟩
+            (⋃ k : ℕ ❙ true • R ** k) ∪ (⋃ k : ℕ ❙ k = i + j • R ** k) 
+          ⊇⟨ “Weakening for ∪” ⟩
+            ⋃ k : ℕ ❙ k = i + j • R ** k
+          =⟨ “One-point rule for ⋃” ⟩
+            (R ** k)[k ≔ i + j]
+          =⟨ Substitution ⟩
+             R ** (i + j)  
+                     
+Theorem “Characterisation of `_*`: Expansion of powers”:
+    R ⊆ S  ⇒  reflexive S  ⇒  transitive S  ⇒ R ** i ⊆ S
+Proof:
+  Assuming `R ⊆ S`,
+           `reflexive S` and using with “Definition of reflexivity”,
+           `transitive S` and using with “Definition of transitivity”:
+    By induction on `i : ℕ`:
+      Base case `R ** 0 ⊆ S`:
+        By “Definition of **”, Assumption `reflexive S`
+      Induction step `R ** (suc i) ⊆ S`:
+          R ** (suc i)
+        =⟨ “Definition of **” ⟩ 
+          R ⨾ R ** i
+        ⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+          S ⨾ R ** i
+        ⊆⟨ Monotonicity with Induction hypothesis ⟩
+          S ⨾ S
+        ⊆⟨ Assumption `transitive S` ⟩
+          S
+
+Theorem “Characterisation of `_*`: Minimality”:
+    R ⊆ S  ⇒  reflexive S  ⇒  transitive S  ⇒ R * ⊆ S
+Proof:
+  Assuming `R ⊆ S`, `reflexive S`, `transitive S`: 
+       R * ⊆ S
+     =⟨ “Definition of `_*`” ⟩ 
+       (⋃ i : ℕ • R ** i) ⊆ S
+     =⟨ “Characterisation of ⋃” ⟩
+        ∀ i : ℕ • R ** i ⊆ S
+     =⟨ “Characterisation of `_*`: Expansion of powers” 
+        with Assumption `R ⊆ S` and Assumption `reflexive S` and
+        Assumption `transitive S` ⟩ 
+        ∀ i : ℕ • true
+     =⟨ “True ∀ body” ⟩
+        true 

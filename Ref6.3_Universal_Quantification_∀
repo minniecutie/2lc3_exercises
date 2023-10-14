@@ -1,0 +1,349 @@
+Axiom “Leibniz for ∀ range”:
+    (∀ x • R₁ ≡ R₂) ⇒ ((∀ x ❙ R₁ • P) ≡ (∀ x ❙ R₂ • P))
+
+Axiom “Leibniz for ∀ body”:
+    (∀ x • R ⇒ (P₁ ≡ P₂)) ⇒ ((∀ x ❙ R • P₁) ≡ (∀ x ❙ R • P₂))
+
+Axiom (8.13) “Empty range for ∀”:
+  (∀ x ❙ false • P)  ≡  true
+
+Axiom (8.14) “One-point rule for ∀”:
+  (∀ x ❙ x = E • P)  ≡  P[x ≔ E]
+
+Axiom (8.15) “Distributivity of ∀ over ∧”:
+  (∀ x ❙ R • P) ∧ (∀ x ❙ R • Q) ≡ (∀ x ❙ R • P ∧ Q)
+
+Axiom (8.17) “Range split for ∀”:
+     (∀ x ❙ R ∨ S  • P)  ∧  (∀ x ❙ R ∧ S  • P)
+   ≡ (∀ x ❙ R      • P)  ∧  (∀ x ❙ S      • P)
+
+Axiom (8.20) “Nesting for ∀”:
+    (∀ x, y ❙ R ∧ S • P)
+  ≡ (∀ x ❙ R • (∀ y ❙ S • P))
+
+Theorem (8.20a) “Nesting for ∀”:
+    (∀ x, y ❙ S • P)
+  ≡ (∀ x • (∀ y ❙ S • P))
+Proof:
+    (∀ x, y ❙ S • P)
+  =⟨ “Identity of ∧” ⟩
+    (∀ x, y ❙ S ∧ true • P)
+  =⟨ “Nesting for ∀” ⟩
+    (∀ x ❙ true • (∀ y ❙ S • P))
+  =⟨ “Reflexivity of =” ⟩ 
+    (∀ x • (∀ y ❙ S • P)) 
+    
+Theorem “Replacement in ∀”:
+    (∀ y ❙ R ∧ e = f • P[x ≔ e])
+  ≡ (∀ y ❙ R ∧ e = f • P[x ≔ f])
+Proof:
+    (∀ y ❙ R ∧ e = f • P[x ≔ e])
+  =⟨ “One-point rule for ∀” ⟩
+    (∀ y ❙ R ∧ e = f • (∀ x ❙ x = e • P))
+  =⟨ “Nesting for ∀” ⟩
+    (∀ y, x ❙ R ∧ e = f ∧ x = e • P)
+  =⟨ Substitution ⟩
+    (∀ y, x ❙ R ∧ e = f ∧ (x = z)[z ≔ e] • P)
+  =⟨ “Replacement” (3.84a) ⟩
+    (∀ y, x ❙ R ∧ e = f ∧ (x = z)[z ≔ f] • P)
+  =⟨ Substitution ⟩
+    (∀ y, x ❙ R ∧ e = f ∧ x = f • P)
+  =⟨ “Nesting for ∀” ⟩
+    (∀ y ❙ R ∧ e = f • (∀ x ❙ x = f • P))
+  =⟨ “One-point rule for ∀” ⟩
+    (∀ y ❙ R ∧ e = f • P[x ≔ f])
+    
+Axiom (8.20a) “Dummy list permutation for ∀”:
+   (∀ x, y ❙ R • P) ≡ (∀ y, x ❙ R • P)
+
+Theorem (8.19) “Interchange of dummies for ∀”:
+    (∀ x ❙ R • (∀ y ❙ S • P))
+  ≡ (∀ y ❙ S • (∀ x ❙ R • P))
+Proof:
+    (∀ x ❙ R • (∀ y ❙ S • P))
+  =⟨ “Nesting for ∀” ⟩
+    (∀ x, y ❙ R ∧ S • P)
+  =⟨ “Symmetry of ∧” and “Dummy list permutation for ∀” ⟩
+    (∀ y, x ❙ S ∧ R • P)
+  =⟨ “Nesting for ∀” ⟩
+    (∀ y ❙ S • (∀ x ❙ R • P))
+    
+Axiom (9.2) “Trading for ∀”:
+   (∀ x ❙ R • P) ≡ (∀ x • R ⇒ P)
+
+Theorem (9.3) (9.3a) “Trading for ∀”:
+   (∀ x ❙ R • P) ≡ (∀ x • ¬ R ∨ P)
+Proof:
+    (∀ x ❙ R • P)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • R ⇒ P)
+  =⟨ “Material implication” ⟩
+    (∀ x • ¬ R ∨ P)  
+  
+Theorem (9.3) (9.3b) “Trading for ∀”:
+   (∀ x ❙ R • P) ≡ (∀ x • R ∧ P ≡ R)
+Proof:
+    (∀ x ❙ R • P)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • R ⇒ P)
+  =⟨ “Definition of ⇒” (3.60) ⟩
+    (∀ x • R ∧ P ≡ R)
+    
+Theorem (9.3) (9.3c) “Trading for ∀”:
+   (∀ x ❙ R • P) ≡ (∀ x • R ∨ P ≡ P)
+Proof:
+    (∀ x ❙ R • P)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • R ⇒ P)
+  =⟨ “Definition of ⇒” (3.57) ⟩
+    (∀ x • R ∨ P ≡ P)
+    
+Theorem (9.4) (9.4a) “Trading for ∀”:
+   (∀ x ❙ Q ∧ R • P) ≡ (∀ x ❙ Q • R ⇒ P)
+Proof:
+    (∀ x ❙ Q ∧ R • P)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • Q ∧ R ⇒ P)
+  =⟨ “Shunting” ⟩
+    (∀ x • Q ⇒ R ⇒ P) 
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x ❙ Q • R ⇒ P)  
+
+Theorem (9.4) (9.4b) “Trading for ∀”:
+   (∀ x ❙ Q ∧ R • P) ≡ (∀ x ❙ Q • ¬ R ∨ P)
+Proof:
+    (∀ x ❙ Q ∧ R • P)
+  =⟨ “Trading for ∀” (9.4a) ⟩
+    (∀ x ❙ Q • R ⇒ P)
+  =⟨ “Definition of ⇒” (3.59) ⟩
+    (∀ x ❙ Q • ¬ R ∨ P) 
+    
+Theorem (9.4) (9.4c) “Trading for ∀”:
+   (∀ x ❙ Q ∧ R • P) ≡ (∀ x ❙ Q • R ∧ P ≡ R)
+Proof:
+    (∀ x ❙ Q ∧ R • P)
+  =⟨ “Trading for ∀” (9.4a) ⟩
+    (∀ x ❙ Q • R ⇒ P)
+  =⟨ “Definition of ⇒” (3.60) ⟩
+    (∀ x ❙ Q • R ∧ P ≡ R)
+    
+Theorem (9.4) (9.4d) “Trading for ∀”:
+   (∀ x ❙ Q ∧ R • P) ≡ (∀ x ❙ Q • R ∨ P ≡ P)
+Proof:
+    (∀ x ❙ Q ∧ R • P)
+  =⟨ “Trading for ∀” (9.4a) ⟩
+    (∀ x ❙ Q • R ⇒ P)
+  =⟨ “Definition of ⇒” (3.57) ⟩
+    (∀ x ❙ Q • R ∨ P ≡ P)
+    
+Theorem (8.18) “Range split for ∀”:
+     (∀ x ❙ R ∨ S  • P)
+   ≡ (∀ x ❙ R      • P)
+   ∧ (∀ x ❙ S      • P)
+Proof:
+    (∀ x ❙ R • P) ∧ (∀ x ❙ S • P)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • R ⇒ P) ∧ (∀ x • S ⇒ P)
+  =⟨ “Contrapositive” ⟩
+    (∀ x • ¬ P ⇒ ¬ R) ∧ (∀ x • ¬ P ⇒ ¬ S)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x ❙ ¬ P • ¬ R) ∧ (∀ x ❙ ¬ P • ¬ S)  
+  =⟨ “Distributivity of ∀ over ∧” ⟩
+    (∀ x ❙ ¬ P • ¬ R ∧ ¬ S)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • ¬ P ⇒ ¬ R ∧ ¬ S)
+  =⟨ “De Morgan”, “Contrapositive” ⟩
+    (∀ x • (R ∨ S) ⇒ P)   
+  =⟨ “Trading for ∀” (9.2) ⟩ 
+    (∀ x ❙ R ∨ S  • P)
+    
+Theorem (8.16) “Disjoint range split for ∀”:
+   (∀ x • R ∧ S ≡ false) ⇒
+   ((∀ x ❙ R ∨ S • P) ≡ (∀ x ❙ R • P) ∧ (∀ x ❙ S • P))
+Proof:
+  Assuming `(∀ x • R ∧ S ≡ false)`:
+      (∀ x ❙ R ∨ S • P)
+    =⟨ “Range split for ∀” (8.18) ⟩
+      (∀ x ❙ R • P) ∧ (∀ x ❙ S • P) 
+      
+Axiom (9.5) “Distributivity of ∨ over ∀”:
+    P ∨ (∀ x ❙ R • Q) ≡ (∀ x ❙ R • P ∨ Q)
+
+Theorem (9.6): P ∨ (∀ x • ¬ R) ≡ (∀ x ❙ R • P)
+Proof:
+    P ∨ (∀ x • ¬ R) 
+  =⟨ “Distributivity of ∨ over ∀” ⟩
+    (∀ x • ¬ R ∨ P)
+  =⟨ “Material implication”, “Trading for ∀” (9.2) ⟩
+    (∀ x ❙ R • P)  
+    
+Theorem “Distributivity of ⇒ over ∀”: P ⇒ (∀ x ❙ R • Q) ≡ (∀ x ❙ R • P ⇒ Q)
+Proof:
+    P ⇒ (∀ x ❙ R • Q) 
+  =⟨ “Material implication” , “Distributivity of ∨ over ∀” ⟩
+    (∀ x ❙ R • ¬ P ∨ Q) 
+  =⟨ “Material implication”⟩
+    (∀ x ❙ R • P ⇒ Q) 
+    
+Theorem (9.7) “Distributivity of ∧ over ∀”:
+    ¬(∀ x • ¬ R)  ⇒  (P ∧ (∀ x ❙ R • Q)  ≡  (∀ x ❙ R • P ∧ Q))
+Proof:
+  Assuming `¬(∀ x • ¬ R)`:
+      (∀ x ❙ R • P ∧ Q)
+    =⟨ “Distributivity of ∀ over ∧” ⟩
+      (∀ x ❙ R • P) ∧ (∀ x ❙ R • Q)  
+    =⟨ (9.6) ⟩
+      (P ∨ (∀ x • ¬ R)) ∧ (∀ x ❙ R • Q)
+    =⟨ Assumption `¬(∀ x • ¬ R)`⟩ 
+      (P ∨ false) ∧ (∀ x ❙ R • Q)
+    =⟨ “Identity of ∨” ⟩
+       P ∧ (∀ x ❙ R • Q)
+
+Theorem (9.8) “True ∀ body”: (∀ x ❙ R • true)
+Proof:
+    (∀ x ❙ R • true)
+  =⟨ (9.6) ⟩ 
+    true ∨ (∀ x • ¬ R)
+  =⟨ “Zero of ∨” ⟩
+    true 
+    
+Theorem “Introducing fresh ∀”: P ⇒ (∀ x ❙ R • P)
+Proof:
+    P ⇒ (∀ x ❙ R • P) 
+  =⟨ “Distributivity of ⇒ over ∀” ⟩
+    (∀ x ❙ R • P ⇒ P) 
+  =⟨ “Reflexivity of ⇒” ⟩
+    (∀ x ❙ R • true) 
+  =⟨ “True ∀ body” ⟩
+    true  
+    
+Theorem (9.9) “Sub-distributivity of ∀ over ≡”:
+   (∀ x ❙ R • P ≡ Q)
+   ⇒ ((∀ x ❙ R • P) ≡ (∀ x ❙ R • Q))
+Proof:
+    (∀ x ❙ R • P ≡ Q)
+  =⟨ “Trading for ∀” (9.2) ⟩ 
+    (∀ x • R ⇒ (P ≡ Q))
+  ⇒⟨ “Leibniz for ∀ body” ⟩
+    ((∀ x ❙ R • P) ≡ (∀ x ❙ R • Q))
+
+Theorem (9.10) “Range weakening for ∀” “Range strengthening for ∀”:
+    (∀ x ❙ Q ∨ R • P) ⇒ (∀ x ❙ Q • P)
+Proof:
+    (∀ x ❙ Q ∨ R • P) 
+  =⟨ “Range split for ∀” ⟩
+    (∀ x ❙ Q • P) ∧ (∀ x ❙ R • P)
+  ⇒⟨ “Weakening” (3.76b) ⟩
+    (∀ x ❙ Q • P) 
+    
+Theorem (9.11) “Body weakening for ∀” “Body strengthening for ∀”:
+    (∀ x ❙ R • P ∧ Q) ⇒ (∀ x ❙ R • P)
+Proof:
+    ∀ x ❙ R • P ∧ Q
+  =⟨ “Distributivity of ∀ over ∧” ⟩
+    (∀ x ❙ R • P) ∧ (∀ x ❙ R • Q)
+  ⇒⟨ “Weakening” (3.76b) ⟩
+    (∀ x ❙ R • P)  
+    
+Theorem (9.12) “Monotonicity of ∀” “Body monotonicity of ∀”:
+    (∀ x ❙ R • Q ⇒ P) ⇒ ((∀ x ❙ R • Q) ⇒ (∀ x ❙ R • P))
+Proof:
+  Using “Shunting”:
+    Subproof for `(∀ x ❙ R • Q ⇒ P) ∧ (∀ x ❙ R • Q) ⇒ (∀ x ❙ R • P)`:
+        (∀ x ❙ R • Q ⇒ P) ∧ (∀ x ❙ R • Q) 
+      =⟨ “Distributivity of ∀ over ∧” ⟩
+        (∀ x ❙ R • (Q ⇒ P) ∧ Q) 
+      =⟨ (3.66) ⟩
+        (∀ x ❙ R • P ∧ Q)
+      ⇒⟨ “Body weakening for ∀” ⟩
+        (∀ x ❙ R • P)   
+
+Theorem “Range antitonicity of ∀”:
+    (∀ x • R₂ ⇒ R₁) ⇒ ((∀ x ❙ R₁ • P) ⇒ (∀ x ❙ R₂ • P))
+Proof:
+    (∀ x ❙ R₁ • P) ⇒ (∀ x ❙ R₂ • P)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • R₁ ⇒ P) ⇒ (∀ x • R₂ ⇒ P) 
+  ⇐⟨ “Body monotonicity of ∀”⟩ 
+     ∀ x • (R₁ ⇒ P) ⇒ (R₂ ⇒ P)
+  ⇐⟨ “Body monotonicity of ∀” with “Transitivity of ⇒” (3.82a) with “Shunting” ⟩
+     (∀ x • R₂ ⇒ R₁)  
+     
+Theorem “Range antitonicity of ∀”:
+    (∀ x ❙ ¬ P • Q ⇒ R) ⇒ ((∀ x ❙ R • P) ⇒ (∀ x ❙ Q • P))
+Proof:
+    (∀ x ❙ ¬ P • Q ⇒ R)
+  =⟨ “Contrapositive” ⟩
+    (∀ x ❙ ¬ P • ¬ R ⇒ ¬ Q) 
+  ⇒⟨ “Body monotonicity of ∀” ⟩
+    (∀ x ❙ ¬ P • ¬ R) ⇒ (∀ x ❙ ¬ P • ¬ Q)
+  =⟨ “Trading for ∀” (9.2) ⟩
+    (∀ x • ¬ P ⇒ ¬ R) ⇒ (∀ x • ¬ P ⇒ ¬ Q)
+  =⟨ “Contrapositive”⟩    
+    (∀ x • R ⇒ P) ⇒ (∀ x • Q ⇒ P)
+  =⟨ “Trading for ∀” (9.2) ⟩ 
+    (∀ x ❙ R • P) ⇒ (∀ x ❙ Q • P)
+    
+Theorem (9.13) “Instantiation”: (∀ x • P) ⇒ P[x ≔ E]
+Proof:
+    P[x ≔ E]
+  =⟨ “One-point rule for ∀” ⟩
+    ∀ x ❙ x = E • P
+  ⇐⟨ “Range weakening for ∀” ⟩
+    ∀ x ❙ (x = E) ∨ ¬ (x = E) • P
+  =⟨ “LEM” ⟩
+    ∀ x ❙ true • P
+  =⟨ “Reflexivity of =” ⟩
+    (∀ x • P)    
+    
+Theorem (9.13a) “Instantiation”: (∀ x • P) ⇒ P[x ≔ x]
+Proof:
+    (∀ x • P)
+  ⇒⟨ “Instantiation” (9.13) ⟩
+     P[x ≔ x] 
+     
+Theorem (9.13b) “Instantiation”: (∀ x ❙ R • P) ⇒ (R ⇒ P)[x ≔ E]
+Proof:
+    (∀ x ❙ R • P)
+  =⟨ “Trading for ∀” (9.2) ⟩ 
+    (∀ x • R ⇒ P)
+  ⇒⟨ “Instantiation” (9.13) ⟩ 
+    (R ⇒ P)[x ≔ E]
+    
+Theorem “Fresh ∀”: P ≡ (∀ x • P)
+Proof:
+  Using “Mutual implication”:
+    Subproof for `P ⇒ (∀ x • P)`:
+      By “Introducing fresh ∀”
+    Subproof for `(∀ x • P) ⇒ P`:
+        (∀ x • P)
+      ⇒⟨ “Instantiation” (9.13) ⟩
+        P[x ≔ x]
+      ≡⟨ Substitution ⟩
+        P
+        
+Theorem (8.22) “Change of dummy”:
+  (∀ x • ∀ y • x = f y  ≡  y = g x)
+  ⇒ (  (∀ x ❙ R          • P         )
+     ≡ (∀ y ❙ R[x ≔ f y] • P[x ≔ f y])
+    )
+Proof:
+  Assuming `(∀ x • ∀ y • x = f y  ≡  y = g x)`:
+      (∀ y ❙ R[x ≔ f y] • P[x ≔ f y])
+    =⟨ “One-point rule for ∀” ⟩
+      (∀ y ❙ R[x ≔ f y] • (∀ x ❙ x = f y • P))
+    =⟨ “Nesting for ∀” ⟩
+      ∀ y, x ❙ R[x ≔ f y] ∧ x = f y • P
+    =⟨ “Replacement” (3.84a) ⟩
+      ∀ y, x ❙ R[x ≔ x] ∧ x = f y • P
+    =⟨ Substitution ⟩
+      ∀ y, x ❙ R ∧ x = f y • P 
+    =⟨ “Dummy list permutation for ∀”, “Nesting for ∀” ⟩
+      ∀ x ❙ R • (∀ y ❙ x = f y • P)
+    =⟨ Assumption `(∀ x • ∀ y • x = f y  ≡  y = g x)` ⟩
+      ∀ x ❙ R • (∀ y ❙ y = g x • P)
+    =⟨ “One-point rule for ∀” ⟩
+      ∀ x ❙ R • P[y ≔ g x]
+    =⟨ Substitution ⟩
+      ∀ x ❙ R • P 
+       

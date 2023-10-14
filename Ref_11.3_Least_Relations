@@ -1,0 +1,53 @@
+Axiom “Least relation”: ⊥ ⊆ R
+
+Theorem “Inclusion in ⊥”: R ⊆ ⊥  ⇒  R = ⊥
+Proof:
+  Assuming `R ⊆ ⊥`:
+    Using “Mutual inclusion”:
+      Subproof for `R ⊆ ⊥`: By Assumption `R ⊆ ⊥`
+      Subproof for `⊥ ⊆ R`: By “Least relation”
+
+Theorem “Inclusion in ⊥”: R ⊆ ⊥  ≡  R = ⊥
+Proof:
+  Using “Mutual implication”:
+    Subproof for `R ⊆ ⊥  ⇒  R = ⊥`:
+      By “Inclusion in ⊥”
+    Subproof for `R = ⊥ ⇒ R ⊆ ⊥`:
+      Assuming `R = ⊥`:
+        By Assumption `R = ⊥`, “Reflexivity of ⊆”
+
+Theorem “Zero of ∩”: ⊥ ∩ R = ⊥
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `⊥ ⊆ ⊥ ∩ R`:
+      By “Least relation”
+    Subproof for `⊥ ∩ R ⊆ ⊥`:
+      By “Weakening for ∩”
+      
+
+Theorem “Identity of ∪”: ⊥ ∪ R = R
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `R ⊆ ⊥ ∪ R`:
+      By “Weakening for ∪”
+    Subproof for `⊥ ∪ R ⊆ R`:
+      Using “Characterisation of ∪”:
+        Subproof for `⊥ ⊆ R`: 
+          By “Least relation”
+        Subproof for `R ⊆ R`:
+          By “Reflexivity of ⊆”
+
+Theorem “Converse of ⊥”: ⊥ ˘ = ⊥
+Proof:
+  Using “Mutual inclusion”:
+    Subproof for `⊥ ⊆ ⊥ ˘`:
+      By “Least relation”
+    Subproof for `⊥ ˘ ⊆ ⊥`:
+        ⊥ ˘ ⊆ ⊥
+      =⟨ “Self-inverse of ˘” ⟩
+        ⊥ ˘ ⊆ ⊥ ˘ ˘
+      ⇐⟨ “Monotonicity of ˘” ⟩
+        ⊥ ⊆ ⊥ ˘ — This is “Least relation” 
+
+Axiom “Left-zero of ⨾”  “Zero of ⨾”:   ⊥ ⨾ R = ⊥
+Axiom “Right-zero of ⨾” “Zero of ⨾”:   R ⨾ ⊥ = ⊥

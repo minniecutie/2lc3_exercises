@@ -1,0 +1,174 @@
+Theorem (3.84) (3.84a) “Replacement”:
+    (e = f) ∧ E[z ≔ e] ≡ (e = f) ∧ E[z ≔ f]
+Proof:
+    (e = f) ∧ E[z ≔ e] ≡ (e = f) ∧ E[z ≔ f]
+  ≡⟨ (3.62) ⟩
+    e = f ⇒ (E[z ≔ e] ≡ E[z ≔ f])
+  ≡⟨ “Definition of ≡” ⟩
+    e = f ⇒ E[z ≔ e] = E[z ≔ f] — This is “Leibniz”
+
+Theorem (3.84) (3.84b) “Replacement”:
+    (e = f) ⇒ E[z ≔ e] ≡ (e = f) ⇒ E[z ≔ f]
+Proof:
+    (e = f) ⇒ E[z ≔ e] ≡ (e = f) ⇒ E[z ≔ f]
+  =⟨ “Distributivity of ⇒ over ≡” ⟩
+    (e = f) ⇒ (E[z ≔ e] ≡ E[z ≔ f]) 
+  =⟨ “Definition of ≡” ⟩
+    (e = f) ⇒ (E[z ≔ e] = E[z ≔ f]) — This is “Leibniz” 
+
+Fact (Ex5-1a): d = 3 ⇒ 5 · d = 15
+Proof:
+    d = 3 ⇒ 5 · d = 15
+  ≡⟨ Substitution ⟩
+    d = 3 ⇒ (5 · z = 15)[z ≔ d]
+  ≡⟨ “Replacement” ⟩
+    d = 3 ⇒ (5 · z = 15)[z ≔ 3]
+  ≡⟨ Substitution ⟩
+    d = 3 ⇒ (5 · 3 = 15)
+  ≡⟨ Fact `5 · 3 = 15` ⟩
+    d = 3 ⇒ true
+  ≡⟨ “Right-zero of ⇒” ⟩
+    true
+
+Theorem (3.84) (3.84c) “Replacement”:
+    q ∧ (e = f) ⇒ E[z ≔ e] ≡ q ∧ (e = f) ⇒ E[z ≔ f]
+Proof:
+    q ∧ (e = f) ⇒ E[z ≔ e]
+  ≡⟨ “Shunting” ⟩
+    q ⇒ (e = f) ⇒ E[z ≔ e]
+  ≡⟨ “Replacement” ⟩
+    q ⇒ (e = f) ⇒ E[z ≔ f]
+  ≡⟨ “Shunting” ⟩
+    q ∧ (e = f) ⇒ E[z ≔ f]
+
+Theorem (3.85) (3.85a) “Replace by `true`”: p ⇒ E[z ≔ p] ≡ p ⇒ E[z ≔ true]
+Proof:
+    p ⇒ E[z ≔ p]
+  ≡⟨ “Identity of ≡” ⟩
+    (p ≡ true) ⇒ E[z ≔ p]
+  ≡⟨ “Definition of ≡” ⟩
+    (p = true) ⇒ E[z ≔ p]
+  ≡⟨ “Replacement” ⟩
+    (p = true) ⇒ E[z ≔ true]
+  ≡⟨ “Definition of ≡” ⟩
+    (p ≡ true) ⇒ E[z ≔ true]
+  ≡⟨ “Identity of ≡” ⟩
+    p ⇒ E[z ≔ true]
+
+Theorem (3.85) (3.85b) “Replace by `true`”: q ∧ p ⇒ E[z ≔ p] ≡ q ∧ p ⇒ E[z ≔ true]
+Proof:
+    q ∧ p ⇒ E[z ≔ p]
+  ≡⟨ “Shunting” ⟩
+    q ⇒ (p ⇒ E[z ≔ p])
+  ≡⟨ (3.85a) ⟩
+    q ⇒ (p ⇒ E[z ≔ true])
+  ≡⟨ “Shunting” ⟩
+    q ∧ p ⇒ E[z ≔ true]
+
+Theorem (3.85c) “Replace by `false`”: ¬ p ⇒ E[z ≔ p] ≡ ¬ p ⇒ E[z ≔ false]
+Proof:
+    ¬ p ⇒ E[z ≔ p]
+  ≡⟨ “Definition of ¬ from ≡”  ⟩
+    (false ≡ p) ⇒ E[z ≔ p]
+  ≡⟨ “Definition of ≡”  ⟩
+    (false = p) ⇒ E[z ≔ p]
+  ≡⟨ “Replacement” ⟩
+    (false = p) ⇒ E[z ≔ false]
+  ≡⟨ “Definition of ≡” ⟩
+    (false ≡ p) ⇒ E[z ≔ false]
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    ¬ p ⇒ E[z ≔ false]
+
+Theorem (3.86) (3.86a) “Replace by `false`”: E[z ≔ p] ⇒ p ≡ E[z ≔ false] ⇒ p
+Proof:
+    E[z ≔ p] ⇒ p
+  ≡⟨ “Contrapositive” ⟩
+    ¬ p ⇒ ¬ E[z ≔ p]
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    (p ≡ false) ⇒ ¬ E[z ≔ p]
+  ≡⟨ “Definition of ≡” ⟩
+    (p = false) ⇒ ¬ E[z ≔ p]
+  ≡⟨ Substitution ⟩
+    (p = false) ⇒ (¬ E)[z ≔ p]
+  ≡⟨ “Replacement” ⟩
+    (p = false) ⇒ (¬ E)[z ≔ false]
+  ≡⟨ Substitution ⟩
+    (p = false) ⇒ ¬ E[z ≔ false]
+  ≡⟨ “Definition of ≡” ⟩
+    (p ≡ false) ⇒ ¬ E[z ≔ false]
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    ¬ p ⇒ ¬ E[z ≔ false]
+  ≡⟨ “Contrapositive” ⟩
+    E[z ≔ false] ⇒ p
+
+Theorem (3.86) (3.86b) “Replace by `false`”: E[z ≔ p] ⇒ p ∨ q ≡ E[z ≔ false] ⇒ p ∨ q
+Proof:
+    E[z ≔ p] ⇒ p ∨ q
+  ≡⟨ “Contrapositive” ⟩
+    ¬ (p ∨ q) ⇒ ¬ E[z ≔ p]
+  ≡⟨ “De Morgan” ⟩
+    (¬ q ∧ ¬ p) ⇒ ¬ E[z ≔ p]
+  ≡⟨ “Shunting” ⟩
+    ¬ q ⇒ (¬ p ⇒ ¬ E[z ≔ p])
+  ≡⟨ Substitution ⟩
+    ¬ q ⇒ (¬ p ⇒ (¬ E)[z ≔ p])
+  ≡⟨ “Replace by `false`” (3.85c) ⟩
+    ¬ q ⇒ (¬ p ⇒ (¬ E)[z ≔ false])
+  ≡⟨ Substitution ⟩
+    ¬ q ⇒ (¬ p ⇒ ¬ E[z ≔ false])
+  ≡⟨ “Shunting” ⟩
+    (¬ q ∧ ¬ p) ⇒ ¬ E[z ≔ false]
+  ≡⟨ “De Morgan” ⟩
+    ¬ (p ∨ q) ⇒ ¬ E[z ≔ false]
+  ≡⟨ “Contrapositive” ⟩
+    E[z ≔ false] ⇒ (p ∨ q)
+
+Theorem (3.87) “Replace by `true`”: p ∧ E[z ≔ p] ≡ p ∧ E[z ≔ true]
+Proof:
+    p ∧ E[z ≔ p] ≡ p ∧ E[z ≔ true]
+  ≡⟨ (3.62) ⟩
+    p ⇒ (E[z ≔ p] ≡ E[z ≔ true])
+  ≡⟨ “Identity of ≡” ⟩
+    (p ≡ true) ⇒ (E[z ≔ p] ≡ E[z ≔ true])
+  ≡⟨ “Definition of ≡” ⟩
+    (p = true) ⇒ (E[z ≔ p] = E[z ≔ true]) — This is “Leibniz”
+
+Theorem (3.88) “Replace by `false`”: p ∨ E[z ≔ p] ≡ p ∨ E[z ≔ false]
+Proof:
+    p ∨ E[z ≔ p]
+  ≡⟨ “Double negation” ⟩
+    ¬ ¬ p ∨ E[z ≔ p]
+  ≡⟨ “Material implication” ⟩
+    ¬ p ⇒ E[z ≔ p]
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    (p ≡ false) ⇒ E[z ≔ p]
+  ≡⟨ “Definition of ≡” ⟩
+    (p = false) ⇒ E[z ≔ p]
+  ≡⟨ “Replacement” ⟩
+    (p = false) ⇒ E[z ≔ false]
+  ≡⟨ “Definition of ≡” ⟩
+    (p ≡ false) ⇒ E[z ≔ false]
+  ≡⟨ “Definition of ¬ from ≡” ⟩
+    ¬ p ⇒ E[z ≔ false]
+  ≡⟨ “Material implication” ⟩
+    ¬ ¬ p ∨ E[z ≔ false]
+  ≡⟨ “Double negation” ⟩
+    p ∨ E[z ≔ false]
+
+Theorem (3.89) “Shannon”: E[z ≔ p] ≡ (p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ false])
+Proof:
+    E[z ≔ p]
+  =⟨ “Identity of ∧”⟩
+    true ∧ E[z ≔ p] 
+  =⟨ “LEM”⟩
+    (p ∨ ¬ p) ∧ E[z ≔ p] 
+  =⟨ “Distributivity of ∧ over ∨”⟩
+    (p ∧ E[z ≔ p]) ∨ (¬ p ∧ E[z ≔ p])
+  =⟨ “Replace by `true`” (3.87)⟩
+    (p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ p])
+  =⟨ “Definition of ¬ from ≡”⟩
+    (p ∧ E[z ≔ true]) ∨ ((p ≡ false) ∧ E[z ≔ p])
+  =⟨ “Replacement” (3.84a) with “Definition of ≡”⟩
+    (p ∧ E[z ≔ true]) ∨ ((p ≡ false) ∧ E[z ≔ false])
+  =⟨ “Definition of ¬ from ≡” ⟩
+    (p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ false])

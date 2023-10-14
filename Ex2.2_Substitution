@@ -1,0 +1,115 @@
+Calculation:
+    (3 · x + 4 · y)[x ≔ y + 2]
+  =⟨ Substitution ⟩
+    3 · (y + 2) + 4 · y
+  =⟨ “Distributivity of · over +” ⟩
+    (3 · y + 3 · 2) + 4 · y
+  =⟨ “Reflexivity of =” ⟩
+    3 · y + 3 · 2 + 4 · y
+  =⟨ “Symmetry of +” ⟩
+    (3 · y + 4 · y) + 3 · 2
+  =⟨ “Distributivity of · over +” ⟩
+    (3  + 4) · y + 3 · 2
+  =⟨ Evaluation ⟩
+    7 · y + 6
+
+Calculation:
+    (2 · x + 3 · y)[y ≔ x + 5]
+  =⟨ Substitution ⟩
+    2 · x + 3 · (x + 5)
+  =⟨ “Distributivity of · over +” ⟩
+    2 · x + 3 · x + 3 · 5
+  =⟨ “Distributivity of · over +” ⟩
+    (2 + 3) · x + 3 · 5
+  =⟨ Evaluation ⟩
+    5 · x + 15
+
+Calculation:
+    (2 · x + 3 · y)[y ≔ x + 6][x ≔ y + 7]
+  =⟨ Substitution ⟩
+    (2 · x + 3 · (x + 6))[x ≔ y + 7]
+  =⟨ “Distributivity of · over +” ⟩
+    (2 · x + 3 · x + 3 · 6)[x ≔ y + 7]
+  =⟨ “Distributivity of · over +” ⟩
+    ((2 + 3) · x + 3 · 6)[x ≔ y + 7]
+  =⟨ Evaluation ⟩
+    (5 · x + 18)[x ≔ y + 7]
+  =⟨ Substitution ⟩
+    5 · (y + 7) + 18
+  =⟨ “Distributivity of · over +” ⟩
+    5 · y + 5 · 7 + 18
+  =⟨ “Associativity of +” ⟩
+    5 · y + (5 · 7 + 18)
+  =⟨ Evaluation ⟩
+    5 · y + (35 + 18)
+  =⟨ Evaluation ⟩
+    5 · y + 53
+
+Calculation:
+    (2 · x + 3 · y)[x ≔ y + 7][y ≔ x + 6]
+  =⟨ Substitution ⟩
+    (2 · (y + 7) + 3 · y)[y ≔ x + 6]
+  =⟨ “Distributivity of · over +” ⟩
+    (2 · y + 2 · 7 + 3 · y)[y ≔ x + 6]
+  =⟨ “Symmetry of +” ⟩
+    (2 · 7 + 2 · y + 3 · y)[y ≔ x + 6]
+  =⟨ “Associativity of +” ⟩
+    (2 · 7 + (2 · y + 3 · y))[y ≔ x + 6]
+  =⟨ “Distributivity of · over +” ⟩
+    (2 · 7 + ((2  + 3) · y))[y ≔ x + 6]
+  =⟨ Evaluation ⟩
+    (14 + 5 · y)[y ≔ x + 6]
+  =⟨ Substitution ⟩
+    14 + 5 · (x + 6)
+  =⟨ “Symmetry of +” ⟩
+    14 + 5 · (6 + x)
+  =⟨ “Distributivity of · over +” ⟩
+    14 + 5 · 6 + 5 · x
+  =⟨ Evaluation ⟩
+    14 + 30 + 5 · x
+  =⟨ Evaluation ⟩
+    44 + 5 · x
+
+Calculation:
+    (2 · x + 3 · y)[x, y ≔ y + 7, x + 6]
+  =⟨ Substitution ⟩
+     2 · (y + 7) + 3 · (x + 6)
+  =⟨ “Distributivity of · over +” ⟩
+     2 · y + 2 · 7 + 3 · x + 3 · 6
+  =⟨ Evaluation ⟩
+     2 · y + 14 + 3 · x + 18
+  =⟨ “Symmetry of +” ⟩
+     3 · x +  2 · y + 14 + 18
+  =⟨ “Associativity of +” ⟩
+     3 · x +  2 · y + (14 + 18)
+  =⟨ Evaluation ⟩
+     3 · x +  2 · y + 32
+  
+
+Calculation:
+    (2 · x + 3 · y)[x, y ≔ y + 1, (x + 4)[x ≔ y + 5]]
+  =⟨ Substitution ⟩
+    (2 · x + 3 · y)[x, y ≔ y + 1, y + 5 + 4]
+  =⟨ Evaluation ⟩
+    (2 · x + 3 · y)[x, y ≔ y + 1, y + 9]
+  =⟨ Substitution ⟩
+    2 · (y + 1) + 3 · (y + 9)
+  =⟨ “Distributivity of · over +” ⟩
+    2 · y + 2 · 1 + 3 · y + 3 · 9
+  =⟨ “Symmetry of +” ⟩
+    3 · y + 2 · y + 2 · 1  + 3 · 9
+  =⟨ “Associativity of +” ⟩
+    3 · y + 2 · y + (2 · 1  + 3 · 9)
+  =⟨ “Distributivity of · over +” ⟩
+    (3 + 2) · y + (2 · 1  + 3 · 9)
+  =⟨ Evaluation ⟩
+    5 · y + (2  + 27)
+  =⟨ Evaluation ⟩
+    5 · y + 29
+  
+
+  
+
+
+    
+

@@ -1,0 +1,157 @@
+Theorem “Successor”: suc n = n + 1
+Proof:
+    n + 1
+  =⟨ Fact `1 = suc 0` ⟩
+    n + suc 0
+  =⟨ “Symmetry of +” ⟩
+    suc 0 + n
+  =⟨ “Definition of + for `suc`” ⟩
+    suc (0 + n)
+  =⟨ “Left-identity of +” ⟩
+    suc n 
+
+Theorem “Associativity of +”: (a + b) + c = a + (b + c)
+Proof:
+  By induction on `a : ℕ`:
+    Base case `(0 + b) + c = 0 + (b + c)`:
+        (0 + b) + c
+      =⟨ “Left-identity of +” ⟩
+        b + c 
+      =⟨ “Left-identity of +” ⟩
+        0 + (b + c) 
+    Induction step `(suc a + b) + c = suc a + (b + c)`:
+        (suc a + b) + c
+      =⟨ “Definition of + for `suc`” ⟩
+        suc (a + b) + c
+      =⟨ “Definition of + for `suc`” ⟩
+        suc ((a + b) + c)
+      =⟨ Induction hypothesis ⟩
+        suc (a + (b + c))
+      =⟨ “Definition of + for `suc`” ⟩
+        suc a + (b + c)
+
+Theorem “Left-identity of ·”: 1 · n = n
+Proof:
+    1 · n 
+  = ⟨ Fact `suc 0 = 1`  ⟩ 
+    suc 0 · n 
+  = ⟨ “Definition of · for `suc`” ⟩
+    n + 0 · n
+  = ⟨ “Definition of · for 0” ⟩
+    n + 0
+  = ⟨ “Right-identity of +” ⟩
+    n 
+
+Theorem “Right-zero of ·”: m · 0 = 0
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 · 0 = 0`:
+        0 · 0
+      =⟨ “Definition of · for 0” ⟩
+        0
+    Induction step `(suc m) · 0 = 0`:
+        suc m · 0
+      =⟨ “Definition of · for `suc`”⟩
+        0 + m · 0
+      =⟨ “Left-identity of +”⟩
+        m · 0
+      =⟨ Induction hypothesis⟩
+        0
+
+ 
+Theorem “Multiplying the successor”: m · (suc n) = m + m · n
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 · (suc n) = 0 + 0 · n`:
+        0 · suc n
+      =⟨ “Definition of · for 0” ⟩
+        0
+      =⟨ “Left-identity of +” ⟩
+        0 + 0
+      =⟨ “Definition of · for 0” ⟩
+        0 + 0 · n
+    Induction step `(suc m) · (suc n) = (suc m) + (suc m) · n`:
+        (suc m) · (suc n)
+      =⟨ “Definition of · for `suc`”⟩
+        suc n + m · (suc n)
+      =⟨ Induction hypothesis⟩
+        suc n + (m + m · n)
+      =⟨ “Associativity of +”⟩
+        (suc n + m) + m · n
+      =⟨ “Definition of + for `suc`”⟩
+        suc(n + m) + m · n
+      =⟨ “Symmetry of +”⟩
+        suc(m + n) + m · n
+      =⟨ “Definition of + for `suc`”⟩
+        suc(m + n + m · n)
+      =⟨ “Associativity of +”⟩
+        suc(m + (n + m · n))
+      =⟨ “Definition of · for `suc`”⟩
+        suc(m + suc m · n)
+      =⟨ “Definition of + for `suc`”⟩
+        suc m + suc m · n
+
+Theorem “Symmetry of ·”: m · n = n · m
+Proof:
+  By induction on `m : ℕ`:
+    Base case `0 · n = n · 0`:
+        0 · n
+      =⟨ “Definition of · for 0” ⟩
+        0
+      =⟨ “Right-zero of ·” ⟩
+        n · 0
+    Induction step `(suc m) · n = n · (suc m)` :
+        suc m · n
+      = ⟨ “Definition of · for `suc`” ⟩
+        n + m · n
+      = ⟨ Induction hypothesis ⟩ 
+        n + n · m
+      = ⟨ “Multiplying the successor” ⟩ 
+        n · suc m
+ 
+        
+Theorem “Distributivity of · over +”: (k + m) · n = k · n + m · n
+Proof:
+  By induction on `k : ℕ`:
+    Base case `(0 + m) · n = 0 · n + m · n`:
+        (0 + m) · n
+      =⟨ “Left-identity of +” ⟩
+        m · n
+      =⟨ “Left-identity of +” ⟩
+        0 + m · n
+      =⟨ “Definition of · for 0” ⟩
+        0 · n + m · n
+    Induction step `(suc k + m) · n = suc k · n + m · n`:
+        (suc k + m) · n
+      = ⟨ “Definition of + for `suc`” ⟩
+         suc (k + m) · n
+      = ⟨ “Definition of · for `suc`” ⟩
+         n + (k + m) · n
+      = ⟨ Induction hypothesis ⟩
+         n + (k · n + m · n)
+      = ⟨ “Associativity of +” ⟩
+         (n + k · n) + m · n
+      = ⟨ “Definition of · for `suc`” ⟩
+         (suc k · n) + m · n
+
+Theorem “Associativity of ·”: (k · m) · n = k · (m · n)
+Proof:
+  By induction on `k : ℕ`:
+    Base case `(0 · m) · n = 0 · (m · n)`:
+        (0 · m) · n
+      = ⟨ “Definition of · for 0” ⟩
+        0 · n 
+      = ⟨ “Definition of · for 0” ⟩
+        0 
+      = ⟨ “Definition of · for 0” ⟩
+        0 · (m · n)
+    Induction step `(suc k · m) · n = suc k · (m · n)`:
+        (suc k · m) · n
+      = ⟨ “Definition of · for `suc`” ⟩
+        (m + k · m) · n
+      = ⟨ “Distributivity of · over +” ⟩
+        m · n + (k · m) · n
+      = ⟨ Induction hypothesis ⟩
+        m · n + k · (m · n)
+      = ⟨ “Definition of · for `suc`” ⟩
+        suc k · (m · n)

@@ -1,0 +1,181 @@
+Theorem (4.2) “Left-monotonicity of ∨” “Monotonicity of ∨”:
+    (p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r)
+Proof:
+    (p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r)
+  ≡⟨ “Definition of ⇒” (3.57) ⟩
+    (p ⇒ q) ⇒ (p ∨ r ∨ q ∨ r ≡ q ∨ r)
+  ≡⟨ “Idempotency of ∨” ⟩
+    (p ⇒ q) ⇒ (p ∨ q ∨ r ≡ q ∨ r)
+  ≡⟨ “Distributivity of ∨ over ≡” ⟩
+    (p ⇒ q) ⇒ (p ∨ q ≡ q) ∨ r
+  ≡⟨ “Definition of ⇒” (3.57) ⟩
+    (p ⇒ q) ⇒ (p ⇒ q) ∨ r — This is “Strengthening” (3.76a)
+
+Theorem “Distributivity of ∨ over ⇒”:
+    p ∨ (q ⇒ r) ≡ p ∨ q ⇒ p ∨ r
+Proof:
+    p ∨ q ⇒ p ∨ r
+  =⟨ “Definition of ⇒” (3.57)⟩
+    p ∨ q ∨ p ∨ r ≡ p ∨ r
+  =⟨ “Idempotency of ∨”⟩
+    p ∨ q ∨ r ≡ p ∨ r
+  =⟨ “Distributivity of ∨ over ≡”⟩
+    p ∨ (q ∨ r ≡ r)
+  =⟨ “Definition of ⇒” (3.57)⟩
+    p ∨ (q ⇒ r)
+
+Theorem “Left-monotonicity of ∨” “Monotonicity of ∨”:
+    (p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r)
+Proof:
+    (p ∨ r) ⇒ (q ∨ r)
+  =⟨ “Distributivity of ∨ over ⇒”  ⟩ 
+    (p ⇒ q) ∨ r 
+  ⇐⟨ “Strengthening” (3.76a) ⟩
+    p ⇒ q
+
+Theorem “Antitonicity of ¬”: (p ⇒ q) ⇒ (¬ q ⇒ ¬ p)
+Proof:
+    (p ⇒ q) ⇒ (¬ q ⇒ ¬ p)
+  =⟨ “Contrapositive” ⟩ 
+    (p ⇒ q) ⇒ (p ⇒ q) — This is “Reflexivity of ⇒”
+
+Theorem “Monotonicity of ⇒” “Right-monotonicity of ⇒”:
+    (p ⇒ q) ⇒ ((r ⇒ p) ⇒ (r ⇒ q))
+Proof:
+    (p ⇒ q)
+  ⇒ ⟨ “Strengthening” (3.76a) ⟩
+     ¬ r ∨ (p ⇒ q)
+  = ⟨ “Distributivity of ∨ over ⇒” ⟩
+     (¬ r ∨ p) ⇒ (¬ r ∨ q)
+  = ⟨ “Material implication” ⟩
+     (r ⇒ p) ⇒ (r ⇒ q)
+
+Theorem “Antitonicity of ⇒” “Left-antitonicity of ⇒”:
+    (p ⇒ q) ⇒ ((q ⇒ r) ⇒ (p ⇒ r))
+Proof:
+    (p ⇒ q)
+  ⇒⟨ “Strengthening” (3.76a) ⟩
+    (p ⇒ q) ∨ r
+  =⟨ “Contrapositive”  ⟩
+    (¬ q ⇒ ¬ p) ∨ r
+  =⟨ “Distributivity of ∨ over ⇒” ⟩
+    (¬ q ∨ r) ⇒ (¬ p ∨ r)
+  =⟨ “Material implication” ⟩
+    (q ⇒ r) ⇒ (p ⇒ r)
+
+Theorem “Left-monotonicity of ∨” “Monotonicity of ∨”:
+    (p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r)
+Proof:
+  Assuming `p ⇒ q`:
+      p ∨ r
+    ⇒⟨ “Strengthening” (3.76a) ⟩ 
+      (p ∨ q) ∨ r
+    =⟨ Assumption `p ⇒ q` with “Definition of ⇒” (3.57) ⟩ 
+      q ∨ r
+
+Theorem (4.2) “Left-monotonicity of ∨” “Monotonicity of ∨”:
+    (p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r)
+Proof:
+  Assuming `p ⇒ q`, `p ∨ r`:
+    By cases: `p`, `r`
+      Completeness: By Assumption `p ∨ r`
+      Case `p`:
+          true
+        =⟨ Assumption `p`⟩ 
+          p
+        ⇒⟨ Assumption `p ⇒ q` ⟩
+          q
+        ⇒⟨ “Strengthening” (3.76a) ⟩ 
+          q ∨ r
+      Case `r`:
+          true
+        =⟨ Assumption `r`⟩ 
+          r
+        ⇒⟨ “Strengthening” (3.76a) ⟩
+          q ∨ r
+
+
+Theorem (4.2) “Left-monotonicity of ∨” “Monotonicity of ∨”:
+    (p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r)
+Proof:
+  Assuming `p ⇒ q`, `p ∨ r`:
+    By cases: `p`, `r`
+      Completeness: By Assumption `p ∨ r`
+      Case `p`:
+          q ∨ r
+        ⇐⟨ “Strengthening” (3.76a) ⟩
+          q
+        ⇐⟨ Assumption `p ⇒ q` ⟩ 
+          p
+        =⟨ Assumption `p`⟩
+          true 
+      Case `r`:
+          q ∨ r
+        ⇐⟨ “Strengthening” (3.76a) ⟩
+          r
+        =⟨ Assumption `r`⟩
+          true
+
+Theorem (4.3) “Left-monotonicity of ∧” “Monotonicity of ∧”:
+    (p ⇒ q) ⇒ ((p ∧ r) ⇒ (q ∧ r))
+Proof:
+      (p ⇒ q) ⇒ ((p ∧ r) ⇒ (q ∧ r))
+    ≡⟨ “Definition of ⇒” (3.60) ⟩
+      (p ∧ q ≡ p) ⇒ ((p ∧ r) ⇒ (q ∧ r))
+  Proof for this:
+    Assuming `p ∧ q ≡ p`:
+        p ∧ r
+      =⟨ Assumption `p ∧ q ≡ p` ⟩ 
+        p ∧ q ∧ r
+      ⇒⟨ “Weakening” (3.76b) ⟩
+        q ∧ r
+
+Theorem “Monotonicity of ∨”:
+    (p ⇒ q) ⇒ (r ⇒ s) ⇒ (p ∨ r) ⇒ (q ∨ s)
+Proof:
+  Assuming `p ⇒ q`, `r ⇒ s`:
+      p ∨ r
+    ⇒⟨ “Monotonicity of ∨” with Assumption `p ⇒ q` ⟩
+      q ∨ r
+    ⇒⟨ “Monotonicity of ∨” with Assumption `r ⇒ s`⟩
+      q ∨ s
+
+Theorem (4.3) “Left-monotonicity of ∧” “Monotonicity of ∧”:
+    (p ⇒ q) ⇒ ((p ∧ r) ⇒ (q ∧ r))
+Proof:
+  Assuming `p ⇒ q`:
+      p ∧ r
+    = ⟨ Assumption `p ⇒ q` with “Definition of ⇒” (3.60) ⟩
+      p ∧ q ∧ r
+    ⇒⟨ “Strengthening” (3.76b) ⟩
+      q ∧ r
+
+Theorem (4.3) “Left-monotonicity of ∧” “Monotonicity of ∧”:
+    (p ⇒ q) ⇒ ((p ∧ r) ⇒ (q ∧ r))
+Proof:
+  Assuming `p ⇒ q` and using with “Definition of ⇒” (3.60):
+      p ∧ r
+    =⟨ Assumption `p ⇒ q` ⟩
+      p ∧ q ∧ r
+    ⇒⟨ “Strengthening” (3.76b) ⟩
+      q ∧ r
+
+Theorem “Monotonicity of ∧”:
+    (p ⇒ p') ⇒ (q ⇒ q') ⇒ ((p ∧ q) ⇒ (p' ∧ q'))
+Proof:
+  Assuming `p ⇒ p'`, `q ⇒ q'`:
+      p ∧ q
+    ⇒⟨ “Monotonicity of ∧” with Assumption `p ⇒ p'` ⟩
+      p' ∧ q
+    ⇒⟨ “Monotonicity of ∧” with Assumption `q ⇒ q'` ⟩
+      p' ∧ q'
+
+Theorem “Proof by contradiction”:  ¬ p ⇒ false  ≡  p
+Proof:
+    ¬ p ⇒ false
+  =⟨ “Material implication” ⟩
+    ¬ ¬ p ∨ false
+  =⟨ “Double negation” ⟩
+    p ∨ false
+  =⟨ “Identity of ∨” ⟩
+    p 

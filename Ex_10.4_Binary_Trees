@@ -1,0 +1,305 @@
+Declaration: Tree : Type → Type
+
+Declaration:          ◬   : Tree A
+Precedence 60 for:  _◿_◺_
+Non-associating:    _◿_◺_
+Declaration:        _◿_◺_ : Tree A → A → Tree A → Tree A
+
+Declaration: t1 : Tree ℕ
+Axiom “Definition of `t1`”:
+  t1 = ((◬ ◿ 2 ◺ ◬) ◿ 3 ◺ (◬ ◿ 5 ◺ ◬))
+       ◿ 7 ◺
+       (◬ ◿ 10 ◺ (◬ ◿ 11 ◺ ◬))
+
+Declaration: ｢_｣ : A → Tree A
+Axiom “Singleton tree”: ｢ x ｣ = ◬ ◿ x ◺ ◬
+
+Fact “Alternative definition of `t1`”:
+  t1 = (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣)
+       ◿ 7 ◺
+       (◬ ◿ 10 ◺ ｢ 11 ｣)
+Proof:
+  By “Definition of `t1`” and “Singleton tree”
+
+Declaration: _˘ : Tree A → Tree A
+Axiom “Mirror”: ◬ ˘  = ◬
+Axiom “Mirror”: (l ◿ x ◺ r) ˘  =  (r ˘) ◿ x ◺ (l ˘)
+
+Theorem “Mirroring singleton trees”: ｢ x ｣ ˘ = ｢ x ｣
+Proof:
+    ｢ x ｣ ˘
+  =⟨ “Singleton tree” ⟩
+    (◬ ◿ x ◺ ◬) ˘
+  =⟨ “Mirror” ⟩
+    (◬ ˘) ◿ x ◺ (◬ ˘)
+  =⟨ “Mirror” ⟩
+    ◬  ◿ x ◺ ◬
+  =⟨ “Singleton tree” ⟩
+    ｢ x ｣  
+  
+Axiom “Tree induction”:
+     P[t ≔ ◬]
+  ∧  ( ∀ l, r : Tree A; x : A
+       • P[t ≔ l] ∧ P[t ≔ r]  ⇒  P[t ≔ l ◿ x ◺ r]
+     )
+  ⇒  (∀ t : Tree A • P)
+
+Theorem “Self-inverse of tree mirror”: ∀ t : Tree A • (t ˘) ˘ = t
+Proof:
+  Using “Tree induction”:
+    Subproof for `◬ ˘ ˘ = ◬`: By “Mirror”
+    Subproof for `∀ l, r : Tree A; x : A
+         • (l ˘) ˘ = l ∧ (r ˘) ˘ = r
+         ⇒ (l ◿ x ◺ r)˘ ˘ = (l ◿ x ◺ r)`:
+       For any `l, r, x`:
+         Assuming “IHL” `(l ˘) ˘ = l`,
+                  “IHR” `(r ˘) ˘ = r`:
+             (l ◿ x ◺ r) ˘ ˘
+           =⟨ “Mirror” ⟩
+             (l ˘ ˘) ◿ x ◺ (r ˘ ˘)
+           =⟨ Assumptions “IHL” and “IHR” ⟩
+             l ◿ x ◺ r
+
+Declaration: size : Tree A → ℕ
+Axiom “Tree size”: size ◬  = 0
+Axiom “Tree size”: size (l ◿ x ◺ r)  =  size l + 1 + size r
+
+Lemma “Singleton tree size”: size ｢ x ｣ = 1
+Proof:
+    size ｢ x ｣
+  =⟨ “Singleton tree” ⟩
+    size (◬ ◿ x ◺ ◬)
+  =⟨ “Tree size” ⟩
+    0 + 1 + 0
+  =⟨ Evaluation ⟩
+    1   
+
+Fact “Size of `t1`”: size t1 = 6
+Proof:
+    size t1
+  =⟨ “Alternative definition of `t1`”,
+     “Singleton tree size”, “Tree size”,
+     “Identity of +” ⟩
+    1 + 1 + 1 + 1 + 1 + 1
+  =⟨ Evaluation ⟩
+    6
+
+Theorem “Size of mirrored tree”:
+    ∀ t : Tree A • size (t ˘) = size t
+Proof:
+  Using “Tree induction”:
+    Subproof for `size (◬ ˘) = size ◬`: By “Mirror”
+    Subproof for `∀ l, r : Tree A; x : A
+         • size (l ˘) = size l ∧ size (r ˘) = size r
+         ⇒ size ((l ◿ x ◺ r) ˘) = size (l ◿ x ◺ r)`:
+       For any `l, r, x`:
+         Assuming (L) `size (l ˘) = size l`,
+                  (R) `size (r ˘) = size r`:
+             size ((l ◿ x ◺ r) ˘)
+           =⟨ “Mirror” ⟩
+             size (r ˘ ◿ x ◺ l ˘)
+           =⟨ “Tree size” ⟩
+             size (r ˘) + 1 + size (l ˘) 
+           =⟨ Assumptions (L) and (R) ⟩
+             size r + 1 + size l
+           =⟨ “Tree size” ⟩
+             size (l ◿ x ◺ r)  
+
+Declaration: map : (A → B) → Tree A → Tree B
+Axiom “Tree map”: map f ◬ = ◬
+Axiom “Tree map”: map f (l ◿ x ◺ r) = (map f l) ◿ (f x) ◺ (map f r)
+
+Theorem “Size of mapped tree”:
+    ∀ t •  size (map f t) = size t
+Proof:
+  Using “Tree induction”:
+    Subproof for `size (map f ◬) = size ◬`:
+      By “Tree map”, “Tree size”
+    Subproof for `∀ l, r : Tree A; x : A • 
+                  size (map f l) = size l ∧ size (map f r) = size r
+                  ⇒ size (map f (l ◿ x ◺ r)) = size (l ◿ x ◺ r)`:
+      For any `l, r, x`:
+        Assuming (L) `size (map f l) = size l`,
+                 (R) `size (map f r) = size r`:
+            size (map f (l ◿ x ◺ r))
+          =⟨ “Tree map” ⟩
+            size ((map f l) ◿ (f x) ◺ (map f r))
+          =⟨ “Tree size” ⟩
+            size (map f l) + 1 + size (map f r)
+          =⟨ Assumption (L), Assumption (R) ⟩
+            size l + 1 + size r
+          =⟨ “Tree size” ⟩
+            size (l ◿ x ◺ r) 
+          
+Declaration: preOrder, inOrder, postOrder : Tree A → Seq A
+
+Axiom “Definition of `preOrder`”:
+     preOrder ◬ = 𝜖
+  ∧  preOrder (l ◿ x ◺ r) = x ◃ preOrder l ⌢ preOrder r
+
+Lemma “Singleton `preOrder`”: preOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+    preOrder ｢ x ｣ 
+  =⟨ “Singleton tree” ⟩
+    preOrder (◬ ◿ x ◺ ◬)
+  =⟨ “Definition of `preOrder`” ⟩
+    x ◃ preOrder ◬ ⌢ preOrder ◬
+  =⟨ “Definition of `preOrder`” ⟩
+    x ◃ 𝜖 ⌢ 𝜖
+  =⟨ “Left-identity of ⌢” ⟩
+    x ◃ 𝜖  
+    
+Fact: preOrder t1 = 7 ◃ 3 ◃ 2 ◃ 5 ◃ 10 ◃ 11 ◃ 𝜖
+Proof:
+    preOrder t1
+  =⟨ “Alternative definition of `t1`”,
+     “Definition of `preOrder`”,
+     “Singleton `preOrder`” ⟩
+    7 ◃ (3 ◃ (2 ◃ 𝜖) ⌢ 5 ◃ 𝜖) ⌢ (10 ◃ 𝜖 ⌢ 11 ◃ 𝜖)
+  =⟨ “Definition of ⌢ for 𝜖”, “Definition of ⌢ for ◃” ⟩
+     7 ◃ 3 ◃ 2 ◃ 5 ◃ 10 ◃ 11 ◃ 𝜖
+
+Axiom “Definition of `inOrder`”:
+     inOrder ◬ = 𝜖
+  ∧  inOrder (l ◿ x ◺ r) = inOrder l ⌢ x ◃ inOrder r
+
+Lemma “Singleton `inOrder`”: inOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+    inOrder ｢ x ｣ 
+  =⟨ “Singleton tree” ⟩
+    inOrder (◬ ◿ x ◺ ◬)
+  =⟨ “Definition of `inOrder`” ⟩
+    inOrder ◬ ⌢ x ◃ inOrder ◬
+  =⟨ “Definition of `inOrder`” ⟩
+    𝜖 ⌢ x ◃ 𝜖
+  =⟨ “Left-identity of ⌢” ⟩
+    x ◃ 𝜖 
+
+Fact: inOrder t1 = 2 ◃ 3 ◃ 5 ◃ 7 ◃ 10 ◃ 11 ◃ 𝜖
+Proof:
+    inOrder t1
+  =⟨ “Alternative definition of `t1`” ⟩
+    inOrder ((｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣)
+              ◿ 7 ◺
+            (◬ ◿ 10 ◺ ｢ 11 ｣))
+  =⟨ “Definition of `inOrder`” ⟩
+    inOrder (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣)
+    ⌢ (7 ◃ inOrder (◬ ◿ 10 ◺ ｢ 11 ｣))
+  =⟨ “Definition of `inOrder`” ⟩
+    (inOrder ｢ 2 ｣ ⌢ 3 ◃ inOrder ｢ 5 ｣) 
+    ⌢ (7 ◃ (inOrder ◬ ⌢ 10 ◃ inOrder ｢ 11 ｣ ))
+  =⟨ “Singleton `inOrder`”, “Definition of `inOrder`” ⟩
+    ( (2 ◃ 𝜖) ⌢ 3 ◃ 5 ◃ 𝜖) ⌢
+    (7 ◃ (𝜖 ⌢ 10 ◃ 11 ◃ 𝜖))
+  =⟨ “Definition of ⌢ for 𝜖”, “Definition of ⌢ for ◃” ⟩
+    2 ◃ 3 ◃ 5 ◃ 7 ◃ 10 ◃ 11 ◃ 𝜖 
+
+Axiom “Definition of `postOrder`”:
+     postOrder ◬ = 𝜖
+  ∧  postOrder (l ◿ x ◺ r) = postOrder l ⌢ postOrder r ▹ x
+
+Lemma “Singleton `postOrder`”: postOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+    postOrder ｢ x ｣ 
+  =⟨ “Singleton tree” ⟩
+    postOrder (◬ ◿ x ◺ ◬)
+  =⟨ “Definition of `postOrder`” ⟩
+    postOrder ◬ ⌢ postOrder ◬ ▹ x
+  =⟨ “Definition of `postOrder`” ⟩
+    𝜖 ⌢ 𝜖 ▹ x
+  =⟨ “Left-identity of ⌢” ⟩
+    𝜖 ▹ x
+  =⟨ “Definition of ▹ for 𝜖” ⟩
+    x ◃ 𝜖 
+
+Fact: postOrder t1 = 2 ◃ 5 ◃ 3 ◃ 11 ◃ 10 ◃ 7 ◃ 𝜖
+Proof:
+    postOrder t1
+  =⟨ “Alternative definition of `t1`” ⟩
+    postOrder ((｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣)
+              ◿ 7 ◺
+              (◬ ◿ 10 ◺ ｢ 11 ｣))
+  =⟨ “Definition of `postOrder`” ⟩
+    postOrder (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣) 
+    ⌢ postOrder (◬ ◿ 10 ◺ ｢ 11 ｣) ▹ 7
+  =⟨ “Definition of `postOrder`” ⟩
+    (postOrder ｢ 2 ｣ ⌢ postOrder ｢ 5 ｣ ▹ 3) 
+    ⌢ (postOrder ◬ ⌢ postOrder ｢ 11 ｣ ▹ 10) ▹ 7 
+  =⟨ “Singleton `postOrder`”, “Definition of `postOrder`” ⟩
+    ((2 ◃ 𝜖) ⌢ (5 ◃ 𝜖) ▹ 3) 
+    ⌢ (𝜖 ⌢ (11 ◃ 𝜖) ▹ 10) ▹ 7
+  =⟨ “Left-identity of ⌢” ⟩
+    ((2 ◃ 𝜖)  ⌢ (5 ◃ 𝜖) ▹ 3) 
+    ⌢ ((11 ◃ 𝜖) ▹ 10) ▹ 7
+  =⟨ “Definition of ▹ for ◃”, “Definition of ▹ for 𝜖” ⟩
+    ((2 ◃ 𝜖)  ⌢ 5 ◃ 3 ◃ 𝜖) 
+    ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖
+  =⟨ “Definition of ⌢ for ◃” ⟩
+    2 ◃ (𝜖  ⌢ 5 ◃ 3 ◃ 𝜖) 
+    ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖
+  =⟨ “Definition of ⌢ for 𝜖” ⟩
+    2 ◃ (5 ◃ 3 ◃ 𝜖) 
+    ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖
+  =⟨ “Definition of ⌢ for ◃” ⟩ 
+    2 ◃ (5 ◃ (3 ◃ 𝜖) ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖)
+  =⟨ “Definition of ⌢ for ◃” ⟩
+    2 ◃ (5 ◃ (3 ◃ (𝜖 ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖)))
+  =⟨ “Definition of ⌢ for 𝜖” ⟩  
+    2 ◃ 5 ◃ 3 ◃ 11 ◃ 10 ◃ 7 ◃ 𝜖   
+  
+Lemma “Definition of `map` for ⌢”: map f (xs ⌢ ys) = map f xs ⌢ map f ys
+Proof:
+  By induction on `xs : Seq A`:
+    Base case `map f (𝜖 ⌢ ys) = map f 𝜖 ⌢ map f ys`:
+      By “Left-identity of ⌢”, “Definition of `map` for 𝜖”
+    Induction step `∀ x : A • map f ((x ◃ xs) ⌢ ys) = map f (x ◃ xs) ⌢ map f ys`:
+      For any `x : A`:
+          map f (x ◃ xs) ⌢ map f ys
+        =⟨ “Definition of `map` for ◃” ⟩
+          (f x ◃ map f xs) ⌢ map f ys
+        =⟨ “Definition of ⌢ for ◃” ⟩
+          f x ◃ (map f xs ⌢ map f ys)
+        =⟨ Induction hypothesis ⟩
+          f x ◃ map f (xs ⌢ ys)
+        =⟨ “Definition of `map` for ◃” ⟩
+          map f (x ◃ (xs ⌢ ys))
+        =⟨ “Definition of ⌢ for ◃” ⟩
+          map f ((x ◃ xs) ⌢ ys)       
+
+Theorem “map commutes with inOrder”:
+   ∀ f : A → B • ∀ t : Tree A
+   • map f (inOrder t) = inOrder (map f t)
+Proof:
+  For any `f`:
+    Using “Tree induction”:
+      Subproof for `map f (inOrder ◬) = inOrder (map f ◬)`:
+          map f (inOrder ◬)
+        =⟨ “Definition of `inOrder`” ⟩
+          map f 𝜖
+        =⟨ “Definition of `map` for 𝜖”⟩
+          𝜖
+        =⟨ “Definition of `inOrder`” ⟩
+          inOrder ◬ 
+        =⟨ “Tree map” ⟩
+          inOrder (map f ◬)
+      Subproof for `∀ l, r : Tree A; x : A • 
+                    map f (inOrder l) = inOrder (map f l) ∧
+                    map f (inOrder r) = inOrder (map f r)
+                    ⇒    map f (inOrder (l ◿ x ◺ r)) 
+                       = inOrder (map f (l ◿ x ◺ r))`:
+        For any `l, r, x`:
+          Assuming (L) `map f (inOrder l) = inOrder (map f l)`,
+                   (R) `map f (inOrder r) = inOrder (map f r)`:
+              map f (inOrder (l ◿ x ◺ r))
+            =⟨ “Definition of `inOrder`” ⟩ 
+              map f (inOrder l ⌢ x ◃ inOrder r)
+            =⟨ “Definition of `map` for ⌢” ⟩       
+              map f (inOrder l) ⌢ map f (x ◃ inOrder r)
+            =⟨ “Definition of `map` for ◃” ⟩
+              map f (inOrder l) ⌢ f x ◃ map f (inOrder r) 
+            =⟨ Assumption (L), Assumption (R) ⟩
+              inOrder (map f l) ⌢ f x ◃ inOrder (map f r)
+            =⟨ “Definition of `inOrder`” ⟩  
+              inOrder (map f l ◿ f x ◺ map f r)
+            =⟨ “Tree map” ⟩  
+              inOrder (map f (l ◿ x ◺ r))

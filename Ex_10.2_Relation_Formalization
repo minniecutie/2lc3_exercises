@@ -1,0 +1,83 @@
+Calculation:
+    Aos ⦗ C ⨾ B ⦘ Jun
+  =⟨ “Relation composition” ⟩
+    ∃ A : P •  Aos ⦗ C ⦘ A ∧ A ⦗ B ⦘ Jun
+
+╍╍╍ There exists a person A such that Aos calls A and A 
+╍╍╍ is a brother of Jun
+
+Calculation:
+    Aos ⦗ ~ (C ⨾ ~ B) ⦘ Jun
+  =⟨ “Relation complement” ⟩
+    ¬ (Aos ⦗ C ⨾ ~ B ⦘ Jun)
+  =⟨ “Relation composition” ⟩
+    ¬ (∃ A : P • Aos ⦗ C ⦘ A ∧ A ⦗ ~ B ⦘ Jun)
+  =⟨ “Generalised De Morgan” (9.18b) ⟩
+    ∀ A : P • ¬ (Aos ⦗ C ⦘ A ∧ A ⦗ ~ B ⦘ Jun)
+  =⟨ “De Morgan”, “Relation complement”, “Double negation” ⟩
+    ∀ A : P • ¬ (Aos ⦗ C ⦘ A) ∨ A ⦗ B ⦘ Jun
+  =⟨ “Material implication” ⟩
+    ∀ A : P • Aos ⦗ C ⦘ A ⇒ A ⦗ B ⦘ Jun 
+   
+╍╍╍ For all person A, If Aos calls A then A is a brother of Jun
+
+Calculation:
+    Aos ⦗ ~ (~ C ⨾ B) ⦘ Jun
+  =⟨ “Relation complement” ⟩
+    ¬ (Aos ⦗ ~ C ⨾ B ⦘ Jun) 
+  =⟨ “Relation composition” ⟩
+    ¬ (∃ A : P • Aos ⦗ ~ C ⦘ A ∧ A ⦗ B ⦘ Jun)
+  =⟨ “Generalised De Morgan” (9.18b) ⟩
+    ∀ A : P • ¬ (Aos ⦗ ~ C ⦘ A ∧ A ⦗ B ⦘ Jun)
+  =⟨ “De Morgan”, “Relation complement”, “Double negation” ⟩
+    ∀ A : P • ¬ (A ⦗ B ⦘ Jun) ∨ Aos ⦗ C ⦘ A 
+  =⟨ “Material implication” ⟩
+    ∀ A : P • A ⦗ B ⦘ Jun ⇒ Aos ⦗ C ⦘ A 
+
+╍╍╍ If A is a brother of Jun, then Aos calls A
+
+Calculation:
+    Aos ⦗ ~ ((C ∩ ~ (B ⨾ C ˘)) ⨾ ~ B) ⦘ Jun
+  =⟨ “Relation complement” ⟩
+    ¬ (Aos ⦗ (C ∩ ~ (B ⨾ C ˘)) ⨾ ~ B ⦘ Jun)
+  =⟨ “Relation composition” ⟩
+    ¬ (∃ A • Aos ⦗ C ∩ ~ (B ⨾ C ˘) ⦘ A ∧ A ⦗ ~ B ⦘ Jun)
+  =⟨ “Relation intersection” ⟩
+    ¬ (∃ A • Aos ⦗ C ⦘ A ∧ Aos ⦗ ~ (B ⨾ C ˘) ⦘ A ∧ A ⦗ ~ B ⦘ Jun)
+  =⟨ “Relation complement” ⟩
+    ¬ (∃ A • Aos ⦗ C ⦘ A ∧ ¬ (Aos ⦗ B ⨾ C ˘ ⦘ A) ∧ ¬ (A ⦗ B ⦘ Jun))
+  =⟨ “Generalised De Morgan” (9.18b) ⟩
+    ∀ A • ¬ (Aos ⦗ C ⦘ A ∧ ¬ (Aos ⦗ B ⨾ C ˘ ⦘ A) ∧ ¬ (A ⦗ B ⦘ Jun))
+  =⟨ “De Morgan”, “Double negation” ⟩
+    ∀ A • ¬ (Aos ⦗ C ⦘ A) ∨ Aos ⦗ B ⨾ C ˘ ⦘ A ∨ A ⦗ B ⦘ Jun
+  =⟨ “Relation composition” ⟩
+    ∀ A • ¬ (Aos ⦗ C ⦘ A) ∨ (∃ D • Aos ⦗ B ⦘ D ∧ D ⦗ C ˘ ⦘ A) ∨ A ⦗ B ⦘ Jun
+  =⟨ “Relation converse” ⟩
+    ∀ A • ¬ (Aos ⦗ C ⦘ A) ∨ (∃ D • Aos ⦗ B ⦘ D ∧ A ⦗ C ⦘ D) ∨ A ⦗ B ⦘ Jun
+  =⟨ “Trading for ∀” (9.3a) ⟩
+    ∀ A ❙ Aos ⦗ C ⦘ A • (∃ D • Aos ⦗ B ⦘ D ∧ A ⦗ C ⦘ D) ∨ A ⦗ B ⦘ Jun
+  
+╍╍╍ If Aos calls A, then either one of them or both is true:
+╍╍╍ 1. A is a brother of Jun
+╍╍╍ 2. There exists a person D such that:
+╍╍╍      2a. A calls D
+╍╍╍      2b. Aos is a brother of D   
+  
+
+Axiom “Helen called somebody who called her”:
+    ∃ p • Helen ⦗ C ⦘ p ∧ p ⦗ C ⦘ Helen
+Calculation:
+    ∃ p • Helen ⦗ C ⦘ p ∧ p ⦗ C ⦘ Helen
+  =⟨ “Relation composition” ⟩
+    Helen ⦗ C ⨾ C ⦘ Helen 
+
+╍╍╍ There exists a person that calls Helen, and is called by Helen
+  
+Axiom “Aos called everybody who called a brother of Jun”:
+    ∀ p ❙ (∃ b • p ⦗ C ⦘ b ∧ b ⦗ B ⦘ Jun) • Aos ⦗ C ⦘ p
+Calculation:
+    ∀ p ❙ (∃ b • p ⦗ C ⦘ b ∧ b ⦗ B ⦘ Jun) • Aos ⦗ C ⦘ p
+  =⟨ “Relation composition” ⟩
+    ∀ p ❙ p ⦗ C ⨾ B ⦘ Jun • Aos ⦗ C ⦘ p  
+
+╍╍╍ For all people p that called a brother of Jun, Aos calls p  
